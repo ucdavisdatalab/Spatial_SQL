@@ -73,6 +73,8 @@ We need to make an empty database to put our files into.
 
 1. Expand the Databases entry in the Browser panel to see your new database in the list.
 
+## Add Data
+
 
 ## Enable Extensions
 Right now, our database is just a regular database without spatial functions.  We need to enable the PostGIS extension and the extensions that help us geocode.
@@ -95,15 +97,22 @@ I know this doesn't make much sense to you right now, but that's ok.  We just ne
 ## Anatomy of a query = what do they typically look like, caps/no caps, end with ;
 
 ## Some non-spatial Queries:
-Start simple: SELECT * FROM table;
-Add a WHERE clause: SELECT * FROM table WHERE column = 'something';
-Add a function: SELECT COUNT(column) FROM table WHERE column = 'something'
+Start simple: 
+``` SELECT * FROM table; ```
+
+Add a WHERE clause: 
+``` SELECT * FROM table WHERE column = 'something'; ``` 
+
+Add a function: 
+``` SELECT COUNT(column) FROM table WHERE column = 'something' ``` 
 
 ## Spatial Query Examples:
-SELECT ST_AsText(geom) FROM table;
-SELECT ST_Length(geom), strname FROM street_centerlines;
-SELECT ST_Length(ST_TRANSFORM(geom)), strname FROM street_centerlines;
-SELECT objectid, ST_AREA(ST_TRANSFORM(geom)) FROM buildings;
+Let's look at the geometries: ``` SELECT ST_AsText(geom) FROM table;``` 
+
+Getting the lengths of the lines, this doesn't work: ``` SELECT ST_Length(geom), strname FROM street_centerlines;``` 
+But this does: ``` SELECT ST_Length(ST_TRANSFORM(geom)), strname FROM street_centerlines;``` 
+
+Get the area of polygons: ``` SELECT objectid, ST_AREA(ST_TRANSFORM(geom)) FROM buildings;``` 
 
 ## Projections:
 SELECT UpdateGeometrySRID('db_table', 'geometry_field', EPSG);
@@ -117,10 +126,12 @@ SELECT UpdateGeometrySRID('db_table', 'geometry_field', EPSG);
 
 ## General Slides & Tutorials:
 [Todd Barr's Slides](https://www.slideshare.net/gis_todd/foss4g-2017-spatial-sql-for-rookies)
+
 [Mike Miller's Tutorial](http://millermountain.com/geospatialblog/2017/10/23/qgis-and-spatialite/)
 
 ## Geocoding with PostGIS
 [How to make a PostGIS geocoder in less than 5 days](https://experimentalcraft.wordpress.com/2017/11/01/how-to-make-a-postgis-tiger-geocoder-in-less-than-5-days/)... yours would only take 4 on your own since your PostGIS is already installed.
+
 [Batch geocoding with PostGIS](https://experimentalcraft.wordpress.com/2017/12/21/batch-geocoding-with-postgis/)
 
 *****Stoped at slide 56 in https://www.slideshare.net/gis_todd/foss4g-2017-spatial-sql-for-rookies
