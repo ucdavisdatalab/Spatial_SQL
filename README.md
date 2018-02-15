@@ -5,15 +5,19 @@ A introductory workshop on Spatial SQL using PostGIS
 # Concepts
 
 ## What is a database?
+A database is a set of data in tables that are related to each other in some way.  That's it.  It's just a collection of tables.
 
-You already use a database if you've done GIS.
+Generally each table can be connected to another table by a column that both tables have that store the information to match up the rows.  This column is called a **key**.  A key commonly used on campus is your student or employee ID number.
+
+You already use a database if you've done GIS.  A shapefile is essentially just a fancy a table.
 
 ## What is a Spatial Database?
-A spatial database is just a normal database with a column that holds the geometry information.
-The geometry/geography information is sored as a Binary Large Opject (BLOB).
+A spatial database is just a normal database with a column that holds the geometry information.  The geometry/geography information is sored as a Binary Large Object (BLOB).
 
 ## What is Spatial SQL?
-Spatial SQL is regular SQL but with some additional functions that perform spatial analysis.
+SQL stands for "structured query language" and it's a language that allows you to ask questions of a database.  Spatial SQL is regular SQL but with some additional functions that perform spatial analysis.
+
+If you've ever written an attribute query in ArcGIS or QGIS, you've worked with SQL.  Example: Hey GIS program, please highlight all the records in my attribute table that have "Yolo" in the "county" column!  In SQL, we would write ```SELECT * FROM county_shapefile WHERE county = 'Yolo'; ```  It's actually quicker to write that query than to fill out the interface in the GIS.
 
 ## Why do you want to learn spatial databases and spatial SQL?
 * It's a good way to work with large amounts of data
@@ -25,6 +29,7 @@ Spatial SQL is regular SQL but with some additional functions that perform spati
 
 ## What makes this hard?
 If you're a GIS user, you're probably used to a graphical user interface (GUI) where you can see your data, have tools with guided interfaces, and can see the results of your processing immediately.
+
 These aren't things you get with a typical database, however, we can connect our database to QGIS so we can see our results and with practice, you will get used to the typical workflow and seeing everything won't be so necessary.
 
 ## Databases that support Spatial SQL:
@@ -36,6 +41,7 @@ These aren't things you get with a typical database, however, we can connect our
 * Others too!
 
 ## Concepts:
+The spatial data can be accessed in two ways.  One is Geography, and the other is Geometry.
 1. Geography != Geometry
     i. Geography is QGS84
     i. Geography has limited spatial functions
@@ -46,6 +52,11 @@ These aren't things you get with a typical database, however, we can connect our
 
 ---------------------------------------------
 # Hands-On Tutorial
+
+## Data
+
+Possible sources:
+[Mother Jones' US Mass Shooting Dataset](https://www.motherjones.com/politics/2012/12/mass-shootings-mother-jones-full-data/)
 
 ## Installation
 Installing postgreSQL and PostGIS is a little tricky, but you only have to do it once.  The order of installation is important. 
