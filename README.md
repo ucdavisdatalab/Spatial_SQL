@@ -74,7 +74,9 @@ Download & install these programs in this order:
 2. PostGIS: https://postgis.net/install/  (windows latest bundle: http://download.osgeo.org/postgis/windows/pg10/)
    
     i. PostGIS makes postgreSQL have spatial capabilities (much like a super power) and install the bundle option because it comes with things you’ll need, saving a few steps
+    
     ii. Make sure you’ve installed postgreSQL first
+    
     iii. The installer should walk you through the installation options.
 
 ## Make a Database
