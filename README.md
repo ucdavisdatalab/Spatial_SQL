@@ -42,7 +42,9 @@ These aren't things you get with a typical database, however, we can connect our
 
 ## Concepts:
 The spatial data can be accessed in two ways.  One is Geography, and the other is Geometry.
+
 1. Geography != Geometry
+    
     i. Geography is QGS84
     i. Geography has limited spatial functions
     i. Geography is 2D
@@ -62,11 +64,15 @@ Possible sources:
 Installing postgreSQL and PostGIS is a little tricky, but you only have to do it once.  The order of installation is important. 
 
 Download & install these programs in this order:
+
 1. postgreSQL 10: https://www.postgresql.org/download/   = the database program that’s going to make all of this work
+
     i. The installer should walk you through installation options.  
     i. Write down the port (keeping the default is fine) and password you choose.  
     i. Pick a password you like to type because it comes up a lot.
+
 2. PostGIS: https://postgis.net/install/  (windows latest bundle: http://download.osgeo.org/postgis/windows/pg10/)
+   
     i. PostGIS makes postgreSQL have spatial capabilities (much like a super power) and install the bundle option because it comes with things you’ll need, saving a few steps
         i. Make sure you’ve installed postgreSQL first
         i. The installer should walk you through the installation options.
