@@ -68,14 +68,14 @@ Download & install these programs in this order:
 1. postgreSQL 10: https://www.postgresql.org/download/   = the database program that’s going to make all of this work
 
     i. The installer should walk you through installation options.  
-    i. Write down the port (keeping the default is fine) and password you choose.  
-    i. Pick a password you like to type because it comes up a lot.
+    ii. Write down the port (keeping the default is fine) and password you choose.  
+    iii. Pick a password you like to type because it comes up a lot.
 
 2. PostGIS: https://postgis.net/install/  (windows latest bundle: http://download.osgeo.org/postgis/windows/pg10/)
    
     i. PostGIS makes postgreSQL have spatial capabilities (much like a super power) and install the bundle option because it comes with things you’ll need, saving a few steps
-        i. Make sure you’ve installed postgreSQL first
-        i. The installer should walk you through the installation options.
+    ii. Make sure you’ve installed postgreSQL first
+    iii. The installer should walk you through the installation options.
 
 ## Make a Database
 We need to make an empty database to put our files into.
