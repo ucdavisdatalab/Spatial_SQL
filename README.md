@@ -115,8 +115,19 @@ Let's add some data to our database:
 
 You can repeat this process to add the other two datasets.  Call the *WBDHU8_Points_SF* table *centroids* and *WBDHU8_SF* table *watersheds*.
 
+Congratulations!  You now have a database with files related to the San Fransisco Bay's watersheds!
 
-## Anatomy of a query = what do they typically look like, caps/no caps, end with ;
+## The SQL Window
+
+Now we're just about ready to do some analysis with our database.  Click on the *Open SQL Window* Icon (it looks like a wrench laying on a document).  You may need to expand the window by dragging the lower right corner of the window out so you can see everything.
+
+You will type your queries into the big blank box at the top of the window (next to the 1 line number).  A query is a request for information from the database.
+
+You'll run the query by clicking the *Execute (F5)* button or pressing F5 on your keyboard.
+
+The results of the query will appear in the box below.  Sometimes the results will be a table; sometimes it will be a message.
+
+A query has a structure to it.  The most common one you'll see today is a "select statement".  These start with the SELECT command, followed by the information you want to know, then the name of the table you want the information from, and finally (and optionally) other parameters that limit the results or provide some important caveats.  Queries end with a semicolon.
 
 ## Some non-spatial Queries:
 Start simple: 
