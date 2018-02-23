@@ -55,16 +55,24 @@ The spatial data can be accessed in two ways.  One is Geography, and the other i
 ---------------------------------------------
 # Hands-On Tutorial
 
-## Data
-
-
-
 ## Installation
 **Install QGIS:** You should have installed QGIS version 2.18 or 3.0 from [QGIS.org](https://qgis.org/en/site/forusers/download.html).  At the time of writing, 3.0 was just released, so I would recommend 2.18 for now unless you are adventurous or fairly familiar with QGIS already.
 
-## Getting Started
+## Start QGIS
 Open QGIS. Start a new project by either clicking on the white rectangle icon (with the corner turned down) or selecting "new" under the Project menu. You now should have a blank map canvas ready to go.
 
+## Data
+
+You'll need to download the following data from the data folder in this repository or from [FigShare](https://figshare.com/s/a59d4d0a8e6d2fadf592):
+
+* Watershed Boundaries (Polygons)
+* Watershed Centroids (Points)
+* Rivers (Lines)
+
+Add all three files to your map canvas.  Explore their attribute tables to get familiar with the data you'll be using.
+
+
+## Starting the DB Manager Plugin
 We'll be using the DB Manager plugin, so let's make sure that is installed:
 
 1. Click the Database menu at the top of the QGIS window.  Do you have the DB Manager listed as an option in this menu?  If so, click the icon to open the tool and skip Step 2 below.  If not, move on to Step 2 below.
@@ -73,16 +81,40 @@ We'll be using the DB Manager plugin, so let's make sure that is installed:
     i. Click the Plugins menu at the top of the window and select "Manage and install plugins".  This will open the Plugins Manager.  
     ii. Make sure you're in the "All" tab on the left side of the tool, and then in the search box, start typing "DB Manager" to narrow down the options.  
     iii. Select "DB Manager" from the list to view the details about this plugin.  
-    iv. Click the "Install Plugin" button in the lower right corner to install it.  If this option isn't available, the tool is probably already installed and you just need to make sure the box next to the tool in the list is checked so that is is available.
-
+    iv. Click the *Install Plugin* button in the lower right corner to install it.  If this option isn't available, the tool is probably already installed and you just need to make sure the box next to the tool in the list is checked so that is is available.  Now go back to Step 1 above to start the tool.
 
 ## Make a Database
+You can think of this database as a folder in which you keep files that are related to each other.  You don't want to put data in this database that isn't related to the other data (you could, but that's not the point of a database).
+
+We'll need to make a new database to keep our spatial tables in:
+
+1. Locate your Browser Panel. By default, it usually sits above or below the Layers Panel on the left side of the Map Canvas.  If you've closed it (like your instructor tends to do), you can get it back with View Menu --> Panels --> Browser Panel
+1. Right click on the SpatiaLite item (it has the feather icon) and select *Create Database*
+1. Navigate to where you would like to keep your database, perhaps in the folder where you downloaded the data for this workshop.  Name your database *sfbay* because we'll be working with San Francisco Bay data.  Yes, it should be all lowercase.
+
+You may have noticed that there are many database format options available to you.  We're working with a SpatiaLite file today, but you can match your future databases to the needs of your project.
+
+Let's connect to our database:
+
+1. Open or locate the DB Manager that we found earier.
+1. Right click on the *SpatiaLite* option and select *New Connection*.
+1. Navigate to where you saved your *sfbay.sqlite* file, slect the file, and click *Open*.
+1. Expand the list (click on the > symbol) to see that your database is now available.
+1. If you expand the list next to the *sfbay.sqlite* database, you'll see if has some tables, but none of these contain data yet.
 
 
+## Load some data to the database
 
-## Tour of the interface
+Let's add some data to our database:
 
-## Load some data
+1. Click on *sfbay.sqlite* to select it in the list.
+1. Click on the *Table* menu, and select *Import Layer/File* to open the Import Vector Layer dialog.
+1. For the *Input*, drop down menu. Select the *Flowlines.geojson* file and click *Open*.
+1. In the *Table* box, type *flowlines* for the name of our new table.
+1. In the *Options* section, check the *Source SRID* box and in the space, type 3310 because the projection for this data is California Albers (NAD38) which has the SRID of 3310.
+
+You can repeat this process to add the other two datasets.  Call the *WBDHU8_Points_SF* table *centroids* and *WBDHU8_SF* table *watersheds*.
+
 
 ## Anatomy of a query = what do they typically look like, caps/no caps, end with ;
 
