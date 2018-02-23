@@ -1,5 +1,5 @@
 # Spatial_SQL
-A introductory workshop on Spatial SQL using PostGIS
+A introductory workshop on Spatial SQL using the QGIS DB Manager.  This workshop was written for QGIS verison 2.18 or 3.0.
 
 
 # Concepts
@@ -57,56 +57,27 @@ The spatial data can be accessed in two ways.  One is Geography, and the other i
 
 ## Data
 
-Possible sources:
-[Mother Jones' US Mass Shooting Dataset](https://www.motherjones.com/politics/2012/12/mass-shootings-mother-jones-full-data/)
+
 
 ## Installation
-Installing postgreSQL and PostGIS is a little tricky, but you only have to do it once.  The order of installation is important. 
+**Install QGIS:** You should have installed QGIS version 2.18 or 3.0 from [QGIS.org](https://qgis.org/en/site/forusers/download.html).  At the time of writing, 3.0 was just released, so I would recommend 2.18 for now unless you are adventurous or fairly familiar with QGIS already.
 
-Download & install these programs in this order:
+## Getting Started
+Open QGIS. Start a new project by either clicking on the white rectangle icon (with the corner turned down) or selecting "new" under the Project menu. You now should have a blank map canvas ready to go.
 
-1. postgreSQL 10: https://www.postgresql.org/download/   = the database program that’s going to make all of this work
+We'll be using the DB Manager plugin, so let's make sure that is installed:
 
-    i. The installer should walk you through installation options.  
-    ii. Write down the port (keeping the default is fine) and password you choose.  
-    iii. Pick a password you like to type because it comes up a lot.
+1. Click the Database menu at the top of the QGIS window.  Do you have the DB Manager listed as an option in this menu?  If so, click the icon to open the tool and skip Step 2 below.  If not, move on to Step 2 below.
+1. If the DB Manager is not in the Database menu, we need to enable the plug in:  
 
-2. PostGIS: https://postgis.net/install/  (windows latest bundle: http://download.osgeo.org/postgis/windows/pg10/)
-   
-    i. PostGIS makes postgreSQL have spatial capabilities (much like a super power) and install the bundle option because it comes with things you’ll need, saving a few steps
-    
-    ii. Make sure you’ve installed postgreSQL first
-    
-    iii. The installer should walk you through the installation options.
+    i. Click the Plugins menu at the top of the window and select "Manage and install plugins".  This will open the Plugins Manager.  
+    ii. Make sure you're in the "All" tab on the left side of the tool, and then in the search box, start typing "DB Manager" to narrow down the options.  
+    iii. Select "DB Manager" from the list to view the details about this plugin.  
+    iv. Click the "Install Plugin" button in the lower right corner to install it.  If this option isn't available, the tool is probably already installed and you just need to make sure the box next to the tool in the list is checked so that is is available.
+
 
 ## Make a Database
-We need to make an empty database to put our files into.
 
-1. Open PGAdmin 4.  This is the graphical user interface for postgreSQL that should have installed with the postgreSQL files. If PGAdmin 4 doesn’t start or gives an error, you may need to start the service that makes it run.  In the Windows search bar, search “services”.  In the Services window, right click postgresql-x64-10 and choose “start”.
-
-1. In the browser panel on the left side of the pgAdmin 4 window, click the + to expand Servers and PostgreSQL 10.  When it asks for your password, give it the password you wrote down during the installation process. (If it gives you an error, start the service... see above.)
-
-1. Right click on PostgreSQL 10 -> Create -> Database
-
-1. In the Database name field, give it a name with lowercase letters.  I named mine maptime.  Leave the owner drop-down on postgres.  Click Save.
-
-1. Expand the Databases entry in the Browser panel to see your new database in the list.
-
-## Add Data
-
-
-## Enable Extensions
-Right now, our database is just a regular database without spatial functions.  We need to enable the PostGIS extension and the extensions that help us geocode.
-
-1. Open the Query Tool: in the Tools menu at the top of the screen, select “Query Tool”.  The top section of the query tool is where you type SQL commands.  Underneath this is where the results of your queries are displayed.
-
-1. Enable the PostGIS extension to give the database spatial capabilities by copying and pasting this code into the query tool and clicking the run button (it looks like a lightning bolt… why?  I don’t know.):
-
-```
-CREATE EXTENSION postgis;
-```
-
-I know this doesn't make much sense to you right now, but that's ok.  We just need to get the database tool running, and then we can start learning.
 
 
 ## Tour of the interface
