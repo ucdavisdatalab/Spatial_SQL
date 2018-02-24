@@ -134,35 +134,44 @@ Non-spatial queries are queries that don't involve the geometry column (the spat
 
 We'll start by investigating our *flowlines* data.  The *flowlines* are linear features that carry water from one place to another.  Some are nature features like rivers or streams, others are man-made like canals.
 
-Let's look at the whole table:
+### Let's look at the whole table:
+
 ``` SELECT * FROM flowlines; ```
 
 The asterisk (\*) means "everything" or "give me all the columns".  You could read the query as "Select everything from the flowlines table."
 
 The result should look very much like the attribute table you explored earlier, but with a couple of additional columns.  The import process added an *id* field and a *geom* field.  The *geom* field contains information that allows the database tool to know where that particular object should be located in space, but unfortunately, it doesn't look like anything we understand as humans.  We'll learn to deal with this column more in a little while.
 
-Add a WHERE clause: 
+### Add a WHERE clause: 
+
 ``` SELECT * FROM flowlines WHERE FTYPE = 460; ``` 
 
 This query limits our results to just the rows where the *FTYPE* column is 460, which corresponds to the natural rivers and streams (not canals).
 
-Add a function: 
+### Add a function: 
+
 ``` SELECT COUNT(id) FROM flowlines WHERE FTYPE = 460; ``` 
 
 Here we've added the function COUNT().  So we've asked the database tool to count all of the IDs but only if they have an FYTYPE of 460.
 
+### Summarize Data
+
 What if we wanted to know how many lines there were of each FTYPE?
+
 ``` SELECT FTYPE, COUNT(id) FROM flowlines GROUP BY FTYPE; ```
 
 Here, I've asked for a table with the FTYPE and the count of each FTYPE, and finally that it should summarize (group by) the FTYPE.
 
 If I don't like the column name that it automatically generates - COUNT(id) - I can give it an alias with the AS command:
+
 ``` SELECT FTYPE, COUNT(id) AS NumberOfLines FROM flowlines GROUP BY FTYPE; ```
 
 This is especially handy if you're making a table for people unfamiliar with your data.
 
 ## Spatial Query Examples:
-Let's look at the geometries: ``` SELECT ST_AsText(geom) FROM table;``` 
+Let's look at the geometries: 
+
+``` SELECT ST_AsText(geom) FROM table;``` 
 
 Getting the lengths of the lines, this doesn't work: ``` SELECT ST_Length(geom), strname FROM street_centerlines;``` 
 But this does: ``` SELECT ST_Length(ST_TRANSFORM(geom)), strname FROM street_centerlines;``` 
