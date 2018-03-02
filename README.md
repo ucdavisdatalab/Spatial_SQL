@@ -27,7 +27,7 @@ If you've ever written an attribute query in ArcGIS or QGIS, you've worked with 
 * One database file stores many, many datasets --> easier data management
 * Write a query instead of making a new file (no exporting of results to shapefile necessary!)
 
-## What makes this hard?
+## What makes this challenging?
 If you're a GIS user, you're probably used to a graphical user interface (GUI) where you can see your data, have tools with guided interfaces, and can see the results of your processing immediately.
 
 These aren't things you get with a typical database manager tool, however, we can connect our database to QGIS so we can see our results and with practice, you will get used to the typical workflow and seeing everything won't be so necessary.
@@ -182,7 +182,36 @@ Getting the lengths of the lines: ```SELECT id, ST_Length(geom) FROM flowlines;`
 Get the area of polygons: ```SELECT NAME, ST_AREA(geom) FROM watersheds;``` 
 
 ## Projections:
-SELECT UpdateGeometrySRID('db_table', 'geometry_field', EPSG);
+Because we are working with spatial data, we need to know how to handle projections.
+
+## Set the Projection
+When you import your data into the DB Manager, it asked you what the SRID (EPSG Code) was for your data.  It's easy to forget to do this or to put in the wrong one if you're in a hurry.  If you discover that you've made a mistake, you don't need to re-import the table; you can set the SRID to the correct projection with an update command.  For our data it would look like this: 
+
+```UPDATE flowlines SET geom = SetSRID(geom, 3310);```
+
+This query replaces the contents of the *geom* column with the results of the SetSRID command.  In our case, it doesn't really do anything new since we had our projection set correctly, but you should know how to do this, so we did.
+
+## Reproject
+To change the projection of a dataset, you need to use the *Transform* or *ST_Transform* command.
+
+Let's transform our watershed data into UTM Zone 10 North, the zone that San Fransisco falls into.
+
+First, we'll start with a query that results in a returning information (but doesn't make a new table):
+
+```SELECT id, HUC8, NAME, geom FROM watersheds;```
+
+We have a table with a subset of the columns from the original watersheds table.  Now let's work on transforming the *geom* column.  We'll add a function around the *geom* column to reproject the data.  26910 is the SRID for UTM Zone 10 N.
+
+```SELECT id, HUC8, NAME, ST_Transform(geom, 26910) FROM watersheds;```
+
+It may look like nothing happened, but the column heading on the *geom* column should have changed.  Finally, we'll want do something to keep this data.  Remember that a SELECT statement just returns information, it doesn't save it.  We have two options.  (1) We could overwrite the *geom* column of the *watersheds* table, but that will mean the projection won't match the other data we have.  (2) The other option is to make a new table with a different projection.  We can do this by adding a CREATE TABLE statement to the query we already have:
+
+```CREATE TABLE watershedsUTM AS SELECT id, HUC8, NAME, ST_Transform(geom, 26910) as geom FROM watersheds;```
+
+To see the new table in the list, we'll need to refresh our database.  From the Database menu at the top of the DB Manager window, select *Refresh*.  Now we can see the table, but it's just a table.  The database doesn't seem to know the table is actually polygons.
+
+```SELECT * FROM watershedsUTM;``` Shows that all the columns we asked for, including the *geom* column are there.  What's going on?
+
 
 ## Spatial Analysis:
 
@@ -194,21 +223,22 @@ Buffer
 Distance
 Reproject
 
-Docs to look up functions
+Save a new table
 
 
 
 # Additional Resources:
 
+## Spatial SQL Resources:
+
+[SpatiaLite Function Reference List](http://www.gaia-gis.it/gaia-sins/spatialite-sql-4.2.0.html)
+
 ## General Slides & Tutorials:
+
 [Todd Barr's Slides](https://www.slideshare.net/gis_todd/foss4g-2017-spatial-sql-for-rookies)
 
 [Mike Miller's Tutorial](http://millermountain.com/geospatialblog/2017/10/23/qgis-and-spatialite/)
 
-## Geocoding with PostGIS
-[How to make a PostGIS geocoder in less than 5 days](https://experimentalcraft.wordpress.com/2017/11/01/how-to-make-a-postgis-tiger-geocoder-in-less-than-5-days/)... yours would only take 4 on your own since your PostGIS is already installed.
-
-[Batch geocoding with PostGIS](https://experimentalcraft.wordpress.com/2017/12/21/batch-geocoding-with-postgis/)
 
 *****Stoped at slide 56 in https://www.slideshare.net/gis_todd/foss4g-2017-spatial-sql-for-rookies
 
