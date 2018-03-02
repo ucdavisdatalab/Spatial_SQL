@@ -48,11 +48,13 @@ The spatial data can be accessed in two ways.  One is Geography, and the other i
 1. Geography != Geometry
 
     i. Geography is QGS84
-    i. Geography has limited spatial functions
-    i. Geography is 2D
-    i. Geography is faster for generating visualizations
-    i. Geometry is for full analysis
-    i. Geometry can be 3D
+    ii. Geography has limited spatial functions
+    iii. Geography is 2D
+    iv. Geography is faster for generating visualizations
+    v. Geometry is for full analysis
+    vi. Geometry can be 3D
+    
+    
 
 ---------------------------------------------
 # Hands-On Tutorial
@@ -148,7 +150,7 @@ The result should look very much like the attribute table you explored earlier, 
 
 ``` SELECT * FROM flowlines WHERE FTYPE = 460; ``` 
 
-This query limits our results to just the rows where the *FTYPE* column is 460, which corresponds to the natural rivers and streams (not canals).
+This query limits our results to just the rows where the *FTYPE* column is 460, which corresponds to the natural rivers and streams (not canals).  "Where" in this case does **NOT** indicate location, but rather a condition of the data.
 
 ### Add a function: 
 
@@ -168,23 +170,31 @@ If I don't like the column name that it automatically generates - COUNT(id) - I 
 
 ``` SELECT FTYPE, COUNT(id) AS NumberOfLines FROM flowlines GROUP BY FTYPE; ```
 
-This is especially handy if you're making a table for people unfamiliar with your data.
+This is especially handy if you're making a table for people unfamiliar with your data or SQL.
 
 ## Spatial Query Examples:
 Let's look at the geometries: 
 
 ``` SELECT ST_AsText(geom) FROM table;``` 
 
-Getting the lengths of the lines, this doesn't work: ``` SELECT ST_Length(geom), strname FROM street_centerlines;``` 
-But this does: ``` SELECT ST_Length(ST_TRANSFORM(geom)), strname FROM street_centerlines;``` 
+Getting the lengths of the lines: ```SELECT id, ST_Length(geom) FROM flowlines;``` 
 
-Get the area of polygons: ``` SELECT objectid, ST_AREA(ST_TRANSFORM(geom)) FROM buildings;``` 
+Get the area of polygons: ```SELECT NAME, ST_AREA(geom) FROM watersheds;``` 
 
 ## Projections:
 SELECT UpdateGeometrySRID('db_table', 'geometry_field', EPSG);
 
 ## Spatial Analysis:
 
+
+Sum the line length by FCODE
+
+Intersect
+Buffer
+Distance
+Reproject
+
+Docs to look up functions
 
 
 
