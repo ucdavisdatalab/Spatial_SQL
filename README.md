@@ -172,26 +172,34 @@ If I don't like the column name that it automatically generates - COUNT(id) - I 
 
 This is especially handy if you're making a table for people unfamiliar with your data or SQL.
 
-## Spatial Query Examples:
+## Basic Spatial Query Examples:
 Let's look at the geometries: 
 
-``` SELECT ST_AsText(geom) FROM table;``` 
+```SELECT ST_AsText(geom) FROM flowlines;``` 
+
+You can make columns in the results tables larger by placing your mouse cursor over the edge of the column and dragging it out once the expander handle appears (it looks like two arrows pointing different directions).
 
 Getting the lengths of the lines: ```SELECT id, ST_Length(geom) FROM flowlines;``` 
 
+What are the units of the length query?  The units are meters because the units for the projection (California Albers; SRID 3310) are meters.
+
+We just found the length of the individual *flowlines*.  That was not a very informative query.  It would be more useful to know what the total length of the lines are summed by their FCODE.  ```SELECT FCODE, ST_Length(geom) FROM flowlines GROUP BY FCODE;```
+
 Get the area of polygons: ```SELECT NAME, ST_AREA(geom) FROM watersheds;``` 
+
+Remember that if you don't like the column headings, you can alias them with *AS*.
 
 ## Projections:
 Because we are working with spatial data, we need to know how to handle projections.
 
-## Set the Projection
+### Set the Projection
 When you import your data into the DB Manager, it asked you what the SRID (EPSG Code) was for your data.  It's easy to forget to do this or to put in the wrong one if you're in a hurry.  If you discover that you've made a mistake, you don't need to re-import the table; you can set the SRID to the correct projection with an update command.  For our data it would look like this: 
 
 ```UPDATE flowlines SET geom = SetSRID(geom, 3310);```
 
 This query replaces the contents of the *geom* column with the results of the SetSRID command.  In our case, it doesn't really do anything new since we had our projection set correctly, but you should know how to do this, so we did.
 
-## Reproject
+### Reproject
 To change the projection of a dataset, you need to use the *Transform* or *ST_Transform* command.
 
 Let's transform our watershed data into UTM Zone 10 North, the zone that San Fransisco falls into.
@@ -220,16 +228,18 @@ Now we could add this to our map canvas to see the polygons.  Right click on the
 
 
 ## Spatial Analysis:
+Not surprisingly, you can do more than just get lengths and areas, or change projections.
 
 
-Sum the line length by FCODE
 
 Intersect
 Buffer
 Distance
 Reproject
 
-Save a new table
+spatial join
+
+
 
 
 
