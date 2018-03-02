@@ -210,7 +210,13 @@ It may look like nothing happened, but the column heading on the *geom* column s
 
 To see the new table in the list, we'll need to refresh our database.  From the Database menu at the top of the DB Manager window, select *Refresh*.  Now we can see the table, but it's just a table.  The database doesn't seem to know the table is actually polygons.
 
-```SELECT * FROM watershedsUTM;``` Shows that all the columns we asked for, including the *geom* column are there.  What's going on?
+```SELECT * FROM watershedsUTM;``` Shows that all the columns we asked for, including the *geom* column are there.  What's going on?  We need to recover the geometry column so the database will recognize the table as a spatial table.
+
+```SELECT RecoverGeometryColumn('watershedsUTM', 'geom', 26910, 'MULTIPOLYGON', 'XY');```
+
+This query will return a single column and row.  Now we need to vacuum the database (yes, that sounds a little odd).  From the *Database* menu, select *Run Vacuum*.  Now the icon next to the *watershedsUTM* table should look like a set of polygons.
+
+Now we could add this to our map canvas to see the polygons.  Right click on the *watershedsUTM* table in the tree, and select *add to map canvas*.  Note that we just reprojected the data, so it won't look too much different.
 
 
 ## Spatial Analysis:
