@@ -241,6 +241,9 @@ spatial join
 
 
 
+# Conclusion
+Today we've gotten an introduction to Spatial Databases and Spatial SQL.  This is certainly not all you can do with these tools.  To encourage you to keep learning, I've provided more resources below.  Additionally, a well-crafted Google search can return helpful posts and tutorials for learning new skills.
+
 
 
 # Additional Resources:
