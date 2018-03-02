@@ -12,7 +12,7 @@ Generally each table can be connected to another table by a column that both tab
 You already use a database if you've done GIS.  A shapefile is essentially just a fancy a table.
 
 ## What is a Spatial Database?
-A spatial database is just a normal database with a column that holds the geometry information.  The geometry/geography information is sored as a Binary Large Object (BLOB).
+A spatial database is just a normal database with a column that holds the geometry information.  The geometry/geography information is sored as a Binary Large Object (BLOB).  The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.
 
 ## What is Spatial SQL?
 SQL stands for "structured query language" and it's a language that allows you to ask questions of a database.  Spatial SQL is regular SQL but with some additional functions that perform spatial analysis.
@@ -30,7 +30,7 @@ If you've ever written an attribute query in ArcGIS or QGIS, you've worked with 
 ## What makes this hard?
 If you're a GIS user, you're probably used to a graphical user interface (GUI) where you can see your data, have tools with guided interfaces, and can see the results of your processing immediately.
 
-These aren't things you get with a typical database, however, we can connect our database to QGIS so we can see our results and with practice, you will get used to the typical workflow and seeing everything won't be so necessary.
+These aren't things you get with a typical database manager tool, however, we can connect our database to QGIS so we can see our results and with practice, you will get used to the typical workflow and seeing everything won't be so necessary.
 
 ## Databases that support Spatial SQL:
 * Oracle
@@ -40,11 +40,13 @@ These aren't things you get with a typical database, however, we can connect our
 * PostGRES --> PostGIS
 * Others too!
 
+We'll be working with the DB Manager that comes with QGIS,
+
 ## Concepts:
 The spatial data can be accessed in two ways.  One is Geography, and the other is Geometry.
 
 1. Geography != Geometry
-    
+
     i. Geography is QGS84
     i. Geography has limited spatial functions
     i. Geography is 2D
@@ -98,7 +100,7 @@ Let's connect to our database:
 
 1. Open or locate the DB Manager that we found earier.
 1. Right click on the *SpatiaLite* option and select *New Connection*.
-1. Navigate to where you saved your *sfbay.sqlite* file, slect the file, and click *Open*.
+1. Navigate to where you saved your *sfbay.sqlite* file, slect the file, and click *Open*..
 1. Expand the list (click on the > symbol) to see that your database is now available.
 1. If you expand the list next to the *sfbay.sqlite* database, you'll see if has some tables, but none of these contain data yet.
 
