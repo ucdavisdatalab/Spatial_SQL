@@ -230,15 +230,23 @@ Now we could add this to our map canvas to see the polygons.  Right click on the
 ## Spatial Analysis:
 Not surprisingly, you can do more than just get lengths and areas, or change projections.
 
-
+### Intersect
 
 Intersect
-Buffer
-Distance
-Reproject
 
+### Distance
+
+Distance
+
+### Spatial Join
 spatial join
 
+### Buffer & Nesting Functions
+One interesting thing about SQL is that you can nest functions to do a series of functions in one query.  For example, maybe I want to find out the area (in square kilometers) within 1 kilometer of all the flowlines.
+
+SELECT sum(ST_Area(ST_Buffer(geom, 1000)))/1000000 FROM flowlines;
+
+Here, we take the sum of the area of the buffer of 1000 meters, then divide the whole thing by 1,000,000 to convert square meters to square kilometers.  Wow.  But I didn't have to make a bunch of intermediate files and add columns to an attribute table, then save a CSV, then sum it all up in Excel.  Now which option sounds crazier?  Perhaps you're starting to see some of the power of spatial SQL.
 
 
 # Conclusion
