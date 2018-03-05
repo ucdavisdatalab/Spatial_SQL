@@ -241,13 +241,15 @@ ST_Contains tells us if a line is completely within a particular watersheds poly
 
 
 ## Spatial Analysis:
-Not surprisingly, you can do more than just get lengths and areas, or change projections.
+Not surprisingly, you can do more than just get lengths and areas of existing geometries, or change projections.
 
 
 ### Distance
+Let's find out which watershed is closest to the city of San Fransisco.  We could go about this a number of ways, but let's find the distance from the city's center point to the centroid of each watershed:
 
-Distance
+```SELECT ST_Distance(MakePoint(37.7749, -122.4194), centroids.geom) FROM centroids;```
 
+How could you make this table more informative?  Could you add or rename some columns?
  
 
 ### Buffer & Nesting Functions
