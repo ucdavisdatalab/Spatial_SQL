@@ -239,7 +239,15 @@ Intersect
 Distance
 
 ### Spatial Join
-spatial join
+Spatial joins allow us to combine information from one table with another based on the location associated with each record.  Let's see if we can figure out which watershed each of our flowlines is in:
+
+```
+SELECT flowlines.*, watersheds.NAME as Watershed_Name
+FROM flowlines, watersheds
+WHERE ST_Contains(watersheds.geom, flowlines.geom);
+```
+
+Your table should look just like your *flowlines* table, but we've added the *NAME* column from our *watersheds* table (but called it "Watershed_Name" because this will make more sense if we needed to use the this data later and didn't remember where this information came from.  
 
 ### Buffer & Nesting Functions
 One interesting thing about SQL is that you can nest functions to do a series of functions in one query.  For example, maybe I want to find out the area (in square kilometers) within 1 kilometer of all the flowlines.
