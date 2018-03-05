@@ -226,19 +226,7 @@ This query will return a single column and row.  Now we need to vacuum the datab
 
 Now we could add this to our map canvas to see the polygons.  Right click on the *watershedsUTM* table in the tree, and select *add to map canvas*.  Note that we just reprojected the data, so it won't look too much different.
 
-
-## Spatial Analysis:
-Not surprisingly, you can do more than just get lengths and areas, or change projections.
-
-### Intersect
-
-Intersect
-
-### Distance
-
-Distance
-
-### Spatial Join
+## Spatial Join
 Spatial joins allow us to combine information from one table with another based on the location associated with each record.  Let's see if we can figure out which watershed each of our flowlines is in:
 
 ```
@@ -247,7 +235,20 @@ FROM flowlines, watersheds
 WHERE ST_Contains(watersheds.geom, flowlines.geom);
 ```
 
-Your table should look just like your *flowlines* table, but we've added the *NAME* column from our *watersheds* table (but called it "Watershed_Name" because this will make more sense if we needed to use the this data later and didn't remember where this information came from.  
+Your table should look just like your *flowlines* table, but we've added the *NAME* column from our *watersheds* table (but called it "Watershed_Name" because this will make more sense if we needed to use the this data later and didn't remember where this information came from. 
+
+ST_Contains tells us if a line is completely within a particular watersheds polygon.  How would you change this query to identify which watershed each line *intersects* rather than is *contained by*? Hint: [SpatiaLite Function Reference List](http://www.gaia-gis.it/gaia-sins/spatialite-sql-4.2.0.html) 
+
+
+## Spatial Analysis:
+Not surprisingly, you can do more than just get lengths and areas, or change projections.
+
+
+### Distance
+
+Distance
+
+ 
 
 ### Buffer & Nesting Functions
 One interesting thing about SQL is that you can nest functions to do a series of functions in one query.  For example, maybe I want to find out the area (in square kilometers) within 1 kilometer of all the flowlines.
