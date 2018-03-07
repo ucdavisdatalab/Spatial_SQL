@@ -16,7 +16,10 @@ You already use a database if you've done GIS.  A shapefile is essentially just 
 
 This is an example of a database diagram for the files involved in a Marxan analysis.  At least one column in each table relates to a column in another table (indicated in this diagram by a line drawn between the two columns).
 ![image](https://experimentalcraft.files.wordpress.com/2013/08/marxantables.png)
+
 Image Credit: [Michele Tobias](https://experimentalcraft.wordpress.com/2013/08/23/marxan-table-relationships/)
+
+[Schmierer, et al. 2007](https://www.joe.org/joe/2007august/tt7.php) have a couple of diagrams of the relationships between the SSURGO tables.  Unfortunately, the journal posted their images in .gif format so I can't make them visible here.  Check out the link though!
 
 ## What is a Spatial Database?
 A spatial database is just a normal database with a column in the tables that holds the spatial information commonly called the "geometry".  The geometry information is sored as a Binary Large Object (BLOB).  The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.
