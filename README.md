@@ -14,6 +14,10 @@ Generally each table can be connected to another table by a column that both tab
 
 You already use a database if you've done GIS.  A shapefile is essentially just a fancy a table.
 
+This is an example of a database diagram for the files involved in a Marxan analysis.  At least one column in each table relates to a column in another table (indicated in this diagram by a line drawn between the two columns).
+![image](https://experimentalcraft.files.wordpress.com/2013/08/marxantables.png)
+Image Credit: [Michele Tobias](https://experimentalcraft.wordpress.com/2013/08/23/marxan-table-relationships/)
+
 ## What is a Spatial Database?
 A spatial database is just a normal database with a column in the tables that holds the spatial information commonly called the "geometry".  The geometry information is sored as a Binary Large Object (BLOB).  The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.
 
@@ -27,7 +31,7 @@ If you've ever written an attribute query in ArcGIS or QGIS, you've worked with 
 * Faster processing of data compared with working through a graphical user interface.
 * Typically faster to run a process in a spatial database than in a GIS program
 * Store lots of data (compare with shapefile's 70m row limit)
-* One database file stores many, many datasets --> easier data management
+* One database file stores many, many tables --> easier data management
 * Write a query instead of making a new file (no exporting of results to shapefile necessary!)
 
 ## What makes this challenging?
