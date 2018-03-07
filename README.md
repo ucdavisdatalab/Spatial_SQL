@@ -1,5 +1,5 @@
 # Spatial_SQL
-A introductory workshop on Spatial SQL using the QGIS DB Manager and SpatiaLite.  This workshop was written for QGIS verison 2.18 or 3.0.
+An introductory workshop on Spatial SQL using the QGIS DB Manager and SpatiaLite.  This workshop was written for QGIS version 2.18 or 3.0.
 
 ## Expected Learning Outcomes
 This workshop is intended to give you an introduction to spatial SQL and working with a database manager with some examples of common analysis processes as well as present you with resources for continued learning.  This workshop cannot teach you everything you could possibly need to know about databases, but rather is an introduction.
@@ -22,7 +22,7 @@ Image Credit: [Michele Tobias](https://experimentalcraft.wordpress.com/2013/08/2
 [Schmierer, et al. 2007](https://www.joe.org/joe/2007august/tt7.php) have a couple of diagrams of the relationships between the SSURGO tables.  Unfortunately, the journal posted their images in .gif format so I can't make them visible here.  Check out the link though!
 
 ## What is a Spatial Database?
-A spatial database is just a normal database with a column in the tables that holds the spatial information commonly called the "geometry".  The geometry information is sored as a Binary Large Object (BLOB).  The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.
+A spatial database is just a normal database with a column in the tables that holds the spatial information commonly called the "geometry".  The geometry information is stored as a Binary Large Object (BLOB).  The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.
 
 ## What is Spatial SQL?
 SQL stands for "structured query language" and it's a language that allows you to ask questions of a database.  Spatial SQL is regular SQL but with some additional functions that perform spatial analysis.
@@ -80,7 +80,7 @@ We'll be using the DB Manager plugin, so let's make sure that is installed:
     i. Click the Plugins menu at the top of the window and select "Manage and install plugins".  This will open the Plugins Manager.  
     ii. Make sure you're in the "All" tab on the left side of the tool, and then in the search box, start typing "DB Manager" to narrow down the options.  
     iii. Select "DB Manager" from the list to view the details about this plugin.  
-    iv. Click the *Install Plugin* button in the lower right corner to install it.  If this option isn't available, the tool is probably already installed and you just need to make sure the box next to the tool in the list is checked so that is is available.  Now go back to Step 1 above to start the tool.
+    iv. Click the *Install Plugin* button in the lower right corner to install it.  If this option isn't available, the tool is probably already installed and you just need to make sure the box next to the tool in the list is checked so that is available.  Now go back to Step 1 above to start the tool.
 
 ## Make a Database
 You can think of a database as a folder in which you keep tables that are related to each other.  You don't want to put data in this database that isn't related to the other data (you could, but that's not the point of a database).
@@ -114,7 +114,7 @@ Let's add some data to our database:
 
 You can repeat this process to add the other two datasets.  Call the *WBDHU8_Points_SF* table *centroids* and *WBDHU8_SF* table *watersheds*.
 
-Congratulations!  You now have a database with files related to the San Fransisco Bay's watersheds!
+Congratulations!  You now have a database with files related to the San Francisco Bay's watersheds!
 
 ## The SQL Window
 
@@ -137,7 +137,7 @@ We'll start by investigating our *flowlines* data.  The *flowlines* are linear f
 
 ``` SELECT * FROM flowlines; ```
 
-The asterisk (\*) means "everything" or "give me all the columns".  You could read the query as "Select everything from the flowlines table."
+The asterisk (\*) means "everything" or "give me all the columns".  You could read the query as "Select everything from the *flowlines* table."
 
 The result should look very much like the attribute table you explored earlier, but with a couple of additional columns.  The import process added an *id* field and a *geom* field.  The *geom* field contains information that allows the database tool to know where that particular object should be located in space, but unfortunately, it doesn't look like anything we understand as humans.  We'll learn to deal with this column more in a little while.
 
@@ -170,7 +170,7 @@ This is especially handy if you're making a table for people unfamiliar with you
 ## Basic Spatial Query Examples:
 
 ### View Geometry
-Let's start understanding spatial queires by looking at the geometries column: 
+Let's start understanding spatial queries by looking at the geometries column: 
 
 ```SELECT ST_AsText(geom) FROM flowlines;``` 
 
@@ -205,7 +205,7 @@ This query replaces the contents of the *geom* column with the results of the Se
 ### Reproject
 To change the projection of a dataset, you need to use the *Transform* or *ST_Transform* command.
 
-Let's transform our watershed data into UTM Zone 10 North, the zone that San Fransisco falls into.
+Let's transform our watershed data into UTM Zone 10 North, the zone that San Francisco falls into.
 
 First, we'll start with a query that results in a returning information (but doesn't make a new table):
 
@@ -248,7 +248,7 @@ You don't have to save a query as a table to view it in QGIS.  Sometimes you jus
 1. After you run the code to do the spatial join above, you will see a check box below the table that says *Load as new layer*.  Click in the box to check it off.  New options will appear.
 1. Check the box next to *Geometry column* and select *geom* from the list.
 1. Fill in the *Layer name (prefix)* with "Flowlines in Watersheds".
-1. Click the *Load* button.  It may take it a few minutes to load because the flowlines layer is large.
+1. Click the *Load* button.  It may take it a few minutes to load because the *flowlines* layer is large.
 
 Now you have access to the *Layer Properties* and all the other tools you might use with any other vector layer in QGIS.  For fun, let's style this layer:
 
@@ -265,7 +265,7 @@ Not surprisingly, you can use a spatial database to do more than just get length
 
 
 ### Distance
-Let's find out which watershed is closest to the city of San Fransisco.  We could go about this a number of ways, but let's find the distance from the city's center point to the centroid of each watershed:
+Let's find out which watershed is closest to the city of San Francisco.  We could go about this a number of ways, but let's find the distance from the city's center point to the centroid of each watershed:
 
 ```SELECT ST_Distance(MakePoint(37.7749, -122.4194), centroids.geom) FROM centroids;```
 
@@ -275,7 +275,7 @@ How could you make this table more informative?  Could you add or rename some co
  
 
 ### Buffer & Nesting Functions
-One interesting thing about SQL is that you can nest functions to do a series of functions in one query like you just saw above, but it can get more complex.  For example, maybe I want to find out the area (in square kilometers) within 1 kilometer of all the flowlines.
+One interesting thing about SQL is that you can nest functions to do a series of functions in one query like you just saw above, but it can get more complex.  For example, maybe I want to find out the area (in square kilometers) within 1 kilometer of all the *flowlines*.
 
 ```SELECT sum(ST_Area(ST_Buffer(geom, 1000)))/1000000 FROM flowlines;```
 
