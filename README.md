@@ -300,15 +300,3 @@ Today we've gotten an introduction to Spatial Databases and Spatial SQL.  This i
 [Todd Barr's Slides](https://www.slideshare.net/gis_todd/foss4g-2017-spatial-sql-for-rookies)
 
 [Mike Miller's Tutorial](http://millermountain.com/geospatialblog/2017/10/23/qgis-and-spatialite/)
-
-
-*****Stoped at slide 56 in https://www.slideshare.net/gis_todd/foss4g-2017-spatial-sql-for-rookies
-
-
-
-
-
-
-
-
-
