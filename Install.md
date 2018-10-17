@@ -30,3 +30,6 @@
 
  * If you have a package manager look for spatialite-gui
  * To install from source, get it [here](https://www.gaia-gis.it/fossil/spatialite_gui/index).
+
+
+**Now Back to the [workshop tutorial](README.md)**
