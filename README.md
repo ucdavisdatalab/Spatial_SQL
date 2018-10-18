@@ -1,8 +1,8 @@
-# Spatial_SQL
-An introductory workshop on Spatial SQL using the QGIS DB Manager and SpatiaLite.  This workshop was written for QGIS version 2.18 or 3.0.
+# Spatial SQL with SpatiaLite
+An introductory workshop on Spatial SQL using SpatiaLite.  
 
 ## Expected Learning Outcomes
-This workshop is intended to give you an introduction to spatial SQL and working with a database manager with some examples of common analysis processes as well as present you with resources for continued learning.  This workshop cannot teach you everything you could possibly need to know about databases, but rather is an introduction.
+This workshop is intended to give you an introduction to spatial SQL and working with a graphical user interface with some examples of common analysis processes as well as present you with resources for continued learning.  This workshop cannot teach you everything you could possibly need to know about databases, but rather is an introduction.
 
 
 # Concepts
