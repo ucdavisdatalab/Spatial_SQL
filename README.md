@@ -85,10 +85,10 @@ You can think of a database as a folder in which you keep tables that are relate
 
 We'll need to make a new empty database to keep our spatial tables in:
 
-1. Click the "Creating a new (empty) SQLite Database" ![alt text](https://github.com/MicheleTobias/Spatial_SQL/tree/master/images/SpatiaLite_Button_NewDB.PNG)
+1. Click the "Creating a new (empty) SQLite Database" ![alt text](https://github.com/MicheleTobias/Spatial_SQL/blob/master/images/SpatiaLite_Button_NewDB.PNG)
 1. Navigate to where you would like to keep your database, perhaps in the folder where you downloaded the data for this workshop.  Name your database *sfbay.sqlite* because we'll be working with San Francisco Bay data.  Yes, it should be all lowercase. Click OK.
 
-![alt text](https://github.com/MicheleTobias/Spatial_SQL/tree/master/images/SpatiaLite_Inteface_ConnectedDB.PNG)
+![alt text](https://github.com/MicheleTobias/Spatial_SQL/blob/master/images/SpatiaLite_Inteface_ConnectedDB.PNG)
 
 Note that Spatialite cna only connect to one database at a time, so if you want to work with another database, disconnect this one.
 
@@ -96,7 +96,7 @@ Note that Spatialite cna only connect to one database at a time, so if you want 
 
 Let's add some data to our database:
 
-1. Click the "Load Shapefile" button. ![alt text](https://github.com/MicheleTobias/Spatial_SQL/tree/master/images/SpatiaLite_Button_LoadShapefile.PNG)
+1. Click the "Load Shapefile" button. ![alt text](https://github.com/MicheleTobias/Spatial_SQL/blob/master/images/SpatiaLite_Button_LoadShapefile.PNG)
 1. Navigate to your workshop data folder.
 1. Select the *Flowlines.shp* file and click *Open*.
 1. In the *Table Name* box, type *flowlines* for the name of our new table.
