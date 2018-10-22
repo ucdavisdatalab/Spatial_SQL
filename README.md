@@ -15,6 +15,7 @@ Generally each table can be connected to another table by a column that both tab
 You already use a database if you've done GIS.  A shapefile is essentially just a fancy a table.
 
 Below is an example of a database diagram for the files involved in a Marxan analysis.  At least one column in each table relates to a column in another table (indicated in this diagram by a line drawn between the two columns).  Documenting a database with a diagram like this is common practice.  It provides a quick visual reference to the data contained in each table and how the tables relate to each other.
+
 ![image](https://experimentalcraft.files.wordpress.com/2013/08/marxantables.png)
 
 Image Credit: [Michele Tobias](https://experimentalcraft.wordpress.com/2013/08/23/marxan-table-relationships/)
@@ -55,7 +56,7 @@ We'll be working with SpatiaLite, because it works on all the common computer op
 
 ## Installation
 
-**Install SpatiaLite:**  The instructions for intalling SpatiaLite varies depending on your operating sytsem.  We've provided a [guide to installing the software](https://github.com/MicheleTobias/Spatial_SQL/blob/master/Install.mdf).
+**Install SpatiaLite:**  The instructions for intalling SpatiaLite varies depending on your operating sytsem.  We've provided a [guide to installing the software](https://github.com/MicheleTobias/Spatial_SQL/blob/master/Install.md).
 
 **Install QGIS:** You should have installed QGIS version 2.18 or 3.0 from [QGIS.org](https://qgis.org/en/site/forusers/download.html).  This workshop is written for version 2.18; the instructions may also work for 3.0 but haven't been tested yet.  We'll be using QGIS to visualize our spatial data tables that we import into our SpatiaLite database.
 
@@ -70,7 +71,7 @@ You'll need to download the following data from the data folder in this reposito
 
 If you downloaded a .zip file, be sure to unzip it.  
 
-![alt text](https://github.com/MicheleTobias/Spatial_SQL/tree/master/images/DataPreview.png)
+![alt text](https://github.com/MicheleTobias/Spatial_SQL/blob/master/images/DataPreview.png)
 
 
 ## Starting SpatiaLite
