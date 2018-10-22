@@ -126,7 +126,9 @@ We'll start by investigating our *flowlines* data.  The *flowlines* are linear f
 
 ### Let's look at the whole table:
 
-``` SELECT * FROM flowlines; ```
+```SQL 
+SELECT * FROM flowlines; 
+```
 
 The asterisk (\*) means "everything" or "give me all the columns".  You could read the query as "Select everything from the *flowlines* table."
 
@@ -134,13 +136,17 @@ The result should look very much like an attribute table you might expect to see
 
 ### Add a WHERE clause: 
 
-``` SELECT * FROM flowlines WHERE FTYPE = 460; ``` 
+```SQL
+SELECT * FROM flowlines WHERE FTYPE = 460; 
+``` 
 
 This query limits our results to just the rows where the number in the *FTYPE* column is 460, which corresponds to the natural rivers and streams (not canals).  "Where" in this case does **NOT** indicate location, but rather a condition of the data.
 
 ### Add a function: 
 
-``` SELECT COUNT(PK_UID) FROM flowlines WHERE FTYPE = 460; ``` 
+```SQL
+SELECT COUNT(PK_UID) FROM flowlines WHERE FTYPE = 460; 
+``` 
 
 Here we've added the function COUNT().  So we've asked the database tool to count all of the IDs but only if they have an FYTYPE of 460.
 
@@ -148,13 +154,17 @@ Here we've added the function COUNT().  So we've asked the database tool to coun
 
 What if we wanted to know how many lines there were of each *FTYPE*?
 
-``` SELECT FTYPE, COUNT(PK_UID) FROM flowlines GROUP BY FTYPE; ```
+```SQL
+SELECT FTYPE, COUNT(PK_UID) FROM flowlines GROUP BY FTYPE;
+```
 
 Here, I've asked for a table with the *FTYPE* and the count of each *PK_UID*, and finally that it should summarize (group by) the *FTYPE*.
 
 If I don't like the column name that it automatically generates - ```COUNT(PK_UID)``` - I can give it an alias with the AS command:
 
-``` SELECT FTYPE, COUNT(PK_UID) AS NumberOfLines FROM flowlines GROUP BY FTYPE; ```
+```SQL 
+SELECT FTYPE, COUNT(PK_UID) AS NumberOfLines FROM flowlines GROUP BY FTYPE; 
+```
 
 This is especially handy if you're making a table for people unfamiliar with your data or SQL or if you need the column name to be something specific.
 
@@ -163,23 +173,32 @@ This is especially handy if you're making a table for people unfamiliar with you
 ### View Geometry
 Let's start understanding spatial queries by looking at the geometries column: 
 
-```SELECT ST_AsText(geometry) FROM flowlines;``` 
+```SQL 
+SELECT ST_AsText(geometry) FROM flowlines;
+``` 
 
 *ST_AsText()* lets us see the geometry string in human-readable form.  This isn't very useful most of the time, but perhaps it's comforting to know it's there.  You can make columns in the results tables larger by placing your mouse cursor over the edge of the column and dragging it out once the expander handle appears (it looks like two arrows pointing different directions).
 
 ### Length
-Let's do an analysis that you might come across.  Let's get the lengths of each of the *flowlines*: ```SELECT PK_UID, ST_Length(geometry) FROM flowlines;``` 
+Let's do an analysis that you might come across.  Let's get the lengths of each of the *flowlines*: 
+```SQL
+SELECT PK_UID, ST_Length(geometry) FROM flowlines;
+``` 
 
 What are the units of the length query?  The units are meters because the units for the projection (California Albers; SRID 3310) are meters.
 
 We just found the length of the individual *flowlines*.  That was not a very informative query.  It would be more useful to know what the total length of the lines are summed by their FCODE.  
 
-```SELECT FCODE, SUM(ST_Length(geometry)) FROM flowlines GROUP BY FCODE;```
+```SQL
+SELECT FCODE, SUM(ST_Length(geometry)) FROM flowlines GROUP BY FCODE;
+```
 
 ### Area
 Let's look at an example to get the area of the *watershed* polygons: 
 
-```SELECT NAME, ST_AREA(geometry) FROM watersheds;``` 
+```SQL
+SELECT NAME, ST_AREA(geometry) FROM watersheds;
+``` 
 
 Remember that if you don't like the column headings, you can alias them with *as*.
 
@@ -189,7 +208,9 @@ Because we are working with spatial data, we need to know how to handle projecti
 ### Set the Projection
 When you import your data into Spatialite, it asked you what the SRID (EPSG Code) was for your data.  It's easy to forget to do this or to put in the wrong one if you're in a hurry.  If you discover that you've made a mistake, you don't need to re-import the table; you can set the SRID to the correct projection with an update command.  For our data it would look like this: 
 
-```UPDATE flowlines SET geom = SetSRID(geometry, 3310);```
+```SQL
+UPDATE flowlines SET geom = SetSRID(geometry, 3310);
+```
 
 This query replaces the contents of the *geom* column with the results of the SetSRID command.  In our case, it doesn't really do anything new since we had our projection set correctly, but you should know how to do this, so we did.
 
@@ -200,21 +221,31 @@ Let's transform our watershed data into UTM Zone 10 North, the zone that San Fra
 
 First, we'll start with a query that results in a returning information (but doesn't make a new table):
 
-```SELECT PK_UID, HUC8, NAME, geometry FROM watersheds;```
+```SQL
+SELECT PK_UID, HUC8, NAME, geometry FROM watersheds;
+```
 
 We have a table with a subset of the columns from the original watersheds table.  Now let's work on transforming the *geom* column.  We'll add a function around the *geometry* column to reproject the data.  26910 is the SRID for UTM Zone 10 N.
 
-```SELECT PK_UID, HUC8, NAME, ST_Transform(geometry, 26910) FROM watersheds;```
+```SQL
+SELECT PK_UID, HUC8, NAME, ST_Transform(geometry, 26910) FROM watersheds;
+```
 
 It may look like nothing happened, but the column heading on the *geom* column should have changed.  Finally, we'll want do something to keep this data.  Remember that a SELECT statement just returns information, it doesn't save it.  We have two options.  (1) We could overwrite the *geometry* column of the *watersheds* table, but that will mean the projection won't match the other data we have.  (2) The other option is to make a new table with a different projection.  We can do this by adding a CREATE TABLE statement to the query we already have:
 
-```CREATE TABLE watershedsUTM AS SELECT PK_UID, HUC8, NAME, ST_Transform(geometry, 26910) as geometry FROM watersheds;```
+```SQL
+CREATE TABLE watershedsUTM AS 
+SELECT PK_UID, HUC8, NAME, ST_Transform(geometry, 26910) as geometry 
+FROM watersheds;
+```
 
 To see the new table in the list, we'll need to refresh our database.  From the Database menu at the top of the DB Manager window, select *Refresh*.  Now we can see the table, but it's just a table.  The database doesn't seem to know the table is actually polygons.
 
 ```SELECT * FROM watershedsUTM;``` Shows that all the columns we asked for, including the *geometry* column are there.  What's going on?  We need to recover the geometry column so the database will recognize the table as a spatial table.
 
-```SELECT RecoverGeometryColumn('watershedsUTM', 'geometry', 26910, 'MULTIPOLYGON', 'XY');```
+```SQL
+SELECT RecoverGeometryColumn('watershedsUTM', 'geometry', 26910, 'MULTIPOLYGON', 'XY');
+```
 
 This query will return a single column and row.  Now we need to vacuum the database (yes, that sounds a little odd).  Run the command ```VACUUM;``` in the SQL Query panel.  This will clean up any issues created by all the changes we just made to the database.
 
@@ -222,7 +253,7 @@ This query will return a single column and row.  Now we need to vacuum the datab
 ## Spatial Join
 Spatial joins allow us to combine information from one table with another based on the location associated with each record.  Let's see if we can figure out which watershed each of our flowlines is in:
 
-```
+```SQL
 SELECT flowlines.*, watersheds.NAME as Watershed_Name
 FROM flowlines, watersheds
 WHERE ST_Contains(watersheds.geometry, flowlines.geometry);
@@ -278,7 +309,10 @@ Not surprisingly, you can use a spatial database to do more than just get length
 ### Distance
 Let's find out which watershed is closest to the city of San Francisco.  We could go about this a number of ways, but let's find the distance from the city's center point to the centroid of each watershed:
 
-```SELECT ST_Distance(MakePoint(37.7749, -122.4194), centroids.geometry) FROM centroids;```
+```SQL
+SELECT ST_Distance(MakePoint(37.7749, -122.4194), centroids.geometry) 
+FROM centroids;
+```
 
 Here we used *MakePoint()* to turn a set of latitude/longitude coordinates into a format that  the database tool understands, then put the results into the *Distance()* function.
 
@@ -288,7 +322,9 @@ How could you make this table more informative?  Could you add or rename some co
 ### Buffer & Nesting Functions
 One interesting thing about SQL is that you can nest functions to do a series of functions in one query like you just saw above, but it can get more complex.  For example, maybe I want to find out the area (in square kilometers) within 1 kilometer of all the *flowlines*.
 
-```SELECT sum(ST_Area(ST_Buffer(geom, 1000)))/1000000 FROM flowlines;```
+```SQL
+SELECT sum(ST_Area(ST_Buffer(geom, 1000)))/1000000 FROM flowlines;
+```
 
 Here, we take the sum of the area of the buffer of 1000 meters, then divide the whole thing by 1,000,000 to convert square meters to square kilometers.  Wow.  That's pretty complicated.  But I didn't have to make a bunch of intermediate files and add columns to an attribute table, then save a CSV, then sum it all up in Excel.  Now which option sounds crazier?  Perhaps you're starting to see some of the power of spatial SQL.
 
