@@ -4,11 +4,18 @@ An introductory workshop on Spatial SQL using SpatiaLite.
 ## Expected Learning Outcomes
 This workshop is intended to give you an introduction to spatial SQL through working with a graphical user interface (GUI) with some examples of common analysis processes as well as present you with resources for continued learning.  This workshop cannot teach you everything you could possibly need to know about databases, but rather is an introduction.
 
+## Objectives
+
+* Import data into an sqlite database
+* Write queries to answer questions about the data
+* Understand the difference between attribute queries and geometry queries
+* View spatial tables and views in QGIS
+
 
 # Concepts
 
 ## What is a database?
-A database is a set of data in tables that are related to each other in some way.  That's it.  It's just a collection of tables.
+A database is a set of data in tables that are related to each other in some way.  That's it.  **A database is just a collection of related tables.**
 
 Generally each table can be connected to another table by a column that both tables have that store the information to match up the rows.  This column is called a **key**.  A key commonly used on campus is your student or employee ID number.
 
@@ -23,10 +30,10 @@ Image Credit: [Michele Tobias](https://experimentalcraft.wordpress.com/2013/08/2
 [Schmierer, et al. 2007](https://www.joe.org/joe/2007august/tt7.php) have a couple of diagrams of the relationships between the SSURGO tables.  Unfortunately, the journal posted their images in .gif format so I can't make them visible here.  Check out the link though!
 
 ## What is a Spatial Database?
-A spatial database is just a normal database with a column in the tables that holds the spatial information commonly called the "geometry".  The geometry information is stored as a Binary Large Object (BLOB).  The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.
+A spatial database is a normal database (i.e. a set of related tables) but the tables have a column that holds the spatial information commonly called the "geometry".  The geometry information is stored as a Binary Large Object (BLOB).  The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.
 
 ## What is Spatial SQL?
-SQL stands for "structured query language" and it's a language that allows you to ask questions of a database.  Spatial SQL is regular SQL but with some additional functions that perform spatial analysis.
+SQL stands for "structured query language" and it's a language that allows you to ask questions of a database.  Spatial SQL is regular SQL but with some additional functions that perform spatial analysis.  Spatial SQL functions typically work on the geometry column.
 
 If you've ever written an attribute query in ArcGIS or QGIS, you've worked with SQL.  Example: Hey GIS program, please highlight all the records in my attribute table that have "Yolo" in the "county" column!  In SQL, we would write ```SELECT * FROM county_shapefile WHERE county = 'Yolo'; ```  It's actually quicker to write that query than to fill out the interface in the GIS.
 
@@ -45,7 +52,7 @@ If you're a GIS user, you're probably used to a graphical user interface (GUI) w
 * MySQL
 * SQL Server
 * SpatiaLite
-* PostGRES --> PostGIS
+* PostGRES with the PostGIS extension
 * Others too!
 
 We'll be working with SpatiaLite, because it works on all the common computer operating systems and is fairly easy to install.  Once you learn the basics, you can choose the database program that best fits your needs.
@@ -58,12 +65,14 @@ We'll be working with SpatiaLite, because it works on all the common computer op
 
 **Install SpatiaLite:**  The instructions for intalling SpatiaLite varies depending on your operating sytsem.  We've provided a [guide to installing the software](https://github.com/MicheleTobias/Spatial_SQL/blob/master/Install.md).
 
-**Install QGIS:** You should have installed QGIS version 2.18 or 3.0 from [QGIS.org](https://qgis.org/en/site/forusers/download.html).  This workshop is written for version 2.18; the instructions may also work for 3.0 but haven't been tested yet.  We'll be using QGIS to visualize our spatial data tables that we import into our SpatiaLite database.
+**Install QGIS:** You should have installed QGIS version 3.4 or 3.8 from [QGIS.org](https://qgis.org/en/site/forusers/download.html).  This workshop was written with QGIS 3.8.  We'll be using QGIS to visualize our spatial data tables that we import into our SpatiaLite database.
 
 
 ## Data
 
-You'll need to download the following data from the data folder in this repository or from [FigShare](https://figshare.com/articles/SpatiaLite_Workshop_Data/7227581):
+The data we'll be working with is a set of hydrology-related data for the San Francisco Bay Watershed.
+
+You'll need to download the following data from the data folder in this repository or from [Michele's FigShare](https://figshare.com/articles/SpatiaLite_Workshop_Data/7227581):
 
 * Watershed Boundaries (Polygons)
 * Watershed Centroids (Points)
@@ -77,7 +86,7 @@ If you downloaded a .zip file, be sure to unzip it.
 ## Starting SpatiaLite
 Let's start by opening Spatialite:
 
-1. In your computer's file explorer, navigate to the Spatialite folder you recently unzipped.
+1. In your computer's file explorer, navigate to the folder where you downloaded your SpatiaLite install files.
 1. Start Spatialite by running the Spatialite_gui.exe file in this folder.
 
 ## Make a Database
@@ -85,18 +94,18 @@ You can think of a database as a folder in which you keep tables that are relate
 
 We'll need to make a new empty database to keep our spatial tables in:
 
-1. Click the "Creating a new (empty) SQLite Database" ![alt text](https://github.com/MicheleTobias/Spatial_SQL/blob/master/images/SpatiaLite_Button_NewDB.PNG)
+1. Click the "Creating a new (empty) SQLite Database" ![alt text](https://github.com/MicheleTobias/Spatial_SQL/blob/master/images/SpatiaLite_Button_NewDB.PNG)  *Note: several buttons have similar names.  DO NOT make a Memory-DB. It's not the same thing.*
 1. Navigate to where you would like to keep your database, perhaps in the folder where you downloaded the data for this workshop.  Name your database *sfbay.sqlite* because we'll be working with San Francisco Bay data.  Yes, it should be all lowercase. Click OK.
 
 ![alt text](https://github.com/MicheleTobias/Spatial_SQL/blob/master/images/SpatiaLite_Inteface_ConnectedDB.PNG)
 
-Note that Spatialite cna only connect to one database at a time, so if you want to work with another database, disconnect this one.
+Note that Spatialite can only connect to one database at a time, so if you want to work with another database, disconnect this one.
 
 ## Load some data to the database
 
 Let's add some data to our database:
 
-1. Click the "Load Shapefile" button. ![alt text](https://github.com/MicheleTobias/Spatial_SQL/blob/master/images/SpatiaLite_Button_LoadShapefile.PNG)
+1. Click the "Load Shapefile" button. ![alt text](https://github.com/MicheleTobias/Spatial_SQL/blob/master/images/SpatiaLite_Button_LoadShapefile.PNG)  *Note: DO NOT load a virtual shapefile.*
 1. Navigate to your workshop data folder.
 1. Select the *Flowlines.shp* file and click *Open*.
 1. In the *Table Name* box, type *flowlines* for the name of our new table.
@@ -117,9 +126,10 @@ You'll run the query by clicking the *Execute SQL Statement* button to the right
 
 The results of the query will appear in the box below.  Sometimes the results will be a table; sometimes it will be a message.
 
-A query has a structure.  The most common one you'll see today is a "select statement".  These start with the SELECT command, followed by the information you want to know, then the name of the table you want the information from, and finally (and optionally) other parameters that limit the results or provide some important caveats.  Queries end with a semicolon.
-
 ## Non-spatial Queries
+
+A query has a structure.  The most common one you'll see today is a "select statement".  These start with the SELECT command, followed by the information you want to know, then the name of the table you want the information from, and finally (and optionally) other parameters that limit the results or provide some important caveats.  All queries end with a semicolon.
+
 Non-spatial queries are queries that don't involve the geometry column (the spatial information) of our table.
 
 We'll start by investigating our *flowlines* data.  The *flowlines* are linear features that carry water from one place to another.  Some are nature features like rivers or streams, others are man-made like canals.
@@ -132,7 +142,7 @@ SELECT * FROM flowlines;
 
 The asterisk (\*) means "everything" or "give me all the columns".  You could read the query as "Select everything from the *flowlines* table."
 
-The result should look very much like an attribute table you might expect to see in a graphical GIS, but with one additional column.  The import process added *geometry* field.  The *geom* field contains information that allows the database tool to know where that particular object should be located in space, but unfortunately, it doesn't look like anything we understand as humans.  We'll learn to deal with this column more in a little while.
+The result should look very much like an attribute table you might expect to see in a graphical GIS, but with one additional column.  The import process added *geometry* field.  The *geometry* field contains information that allows the database tool to know where that particular object should be located in space, but unfortunately, it doesn't look like anything we understand as humans.  We'll learn to deal with this column more in a little while.
 
 ### Add a WHERE clause: 
 
@@ -145,7 +155,7 @@ This query limits our results to just the rows where the number in the *FTYPE* c
 ### Add a function: 
 
 ```SQL
-SELECT COUNT(PK_UID) FROM flowlines WHERE FTYPE = 460; 
+SELECT COUNT(pk_uid) FROM flowlines WHERE FTYPE = 460; 
 ``` 
 
 Here we've added the function COUNT().  So we've asked the database tool to count all of the IDs but only if they have an FYTYPE of 460.
@@ -155,34 +165,44 @@ Here we've added the function COUNT().  So we've asked the database tool to coun
 What if we wanted to know how many lines there were of each *FTYPE*?
 
 ```SQL
-SELECT FTYPE, COUNT(PK_UID) FROM flowlines GROUP BY FTYPE;
+SELECT FTYPE, COUNT(pk_uid) FROM flowlines GROUP BY FTYPE;
 ```
 
-Here, I've asked for a table with the *FTYPE* and the count of each *PK_UID*, and finally that it should summarize (group by) the *FTYPE*.
+Here, I've asked for a table with the columns *FTYPE* and the count of each *pk_uid*, and finally that it should summarize (group by) the *FTYPE*.
 
-If I don't like the column name that it automatically generates - ```COUNT(PK_UID)``` - I can give it an alias with the AS command:
+If I don't like the column name that it automatically generates - ```COUNT(pk_uid)``` - I can give it an alias with the AS command:
 
 ```SQL 
-SELECT FTYPE, COUNT(PK_UID) AS NumberOfLines FROM flowlines GROUP BY FTYPE; 
+SELECT FTYPE, COUNT(pk_uid) AS NumberOfLines FROM flowlines GROUP BY FTYPE; 
 ```
 
 This is especially handy if you're making a table for people unfamiliar with your data or SQL or if you need the column name to be something specific.
 
+We've just looked a few options for querying non-spatial data.  See the [Intro to SQL Workshop](https://github.com/MicheleTobias/Workshop-SQL) for more.
+
 ## Basic Spatial Query Examples:
+
+Now we'll learn about spatial queries.  Spatial queries typically operate on the geometry column of a table.  Sometimes it will be called "geom" instead of "geometry", but what matters is the data it contains.
 
 ### View Geometry
 Let's start understanding spatial queries by looking at the geometries column: 
 
 ```SQL 
+SELECT geometry FROM flowlines;
+``` 
+
+That result doesn't tell us very much information since a BLOB is not human-readable.  Let's look at it in plain text so we can read it:
+
+```SQL 
 SELECT ST_AsText(geometry) FROM flowlines;
 ``` 
 
-*ST_AsText()* lets us see the geometry string in human-readable form.  This isn't very useful most of the time, but perhaps it's comforting to know it's there.  You can make columns in the results tables larger by placing your mouse cursor over the edge of the column and dragging it out once the expander handle appears (it looks like two arrows pointing different directions).
+*ST_AsText()* is a function that perates on the geometry colum to let us see the geometry string in human-readable form.  This isn't very useful most of the time, but perhaps it's comforting to know it's there.  *Note: You can make columns in the results tables larger by placing your mouse cursor over the edge of the column and dragging it out once the expander handle appears (it looks like two arrows pointing different directions).*
 
 ### Length
 Let's do an analysis that you might come across.  Let's get the lengths of each of the *flowlines*: 
 ```SQL
-SELECT PK_UID, ST_Length(geometry) FROM flowlines;
+SELECT pk_uid, ST_Length(geometry) FROM flowlines;
 ``` 
 
 What are the units of the length query?  The units are meters because the units for the projection (California Albers; SRID 3310) are meters.
@@ -194,7 +214,14 @@ SELECT FCODE, SUM(ST_Length(geometry)) FROM flowlines GROUP BY FCODE;
 ```
 
 ### Area
-Let's look at an example to get the area of the *watershed* polygons: 
+
+First, let's look at our watershed polygon table so we know what's in it:
+
+```SQL
+SELECT * FROM watersheds;
+```
+
+Now, let's look at an example to get the area of the *watershed* polygons: 
 
 ```SQL
 SELECT NAME, ST_AREA(geometry) FROM watersheds;
@@ -222,39 +249,40 @@ Let's transform our watershed data into UTM Zone 10 North, the zone that San Fra
 First, we'll start with a query that results in a returning information (but doesn't make a new table):
 
 ```SQL
-SELECT PK_UID, HUC8, NAME, geometry FROM watersheds;
+SELECT pk_uid, huc8, name, geometry FROM watersheds;
 ```
 
 We have a table with a subset of the columns from the original watersheds table.  Now let's work on transforming the *geom* column.  We'll add a function around the *geometry* column to reproject the data.  26910 is the SRID for UTM Zone 10 N.
 
 ```SQL
-SELECT PK_UID, HUC8, NAME, ST_Transform(geometry, 26910) FROM watersheds;
+SELECT pk_uid, huc8, name, ST_Transform(geometry, 26910) FROM watersheds;
 ```
 
 It may look like nothing happened, but the column heading on the *geom* column should have changed.  Finally, we'll want do something to keep this data.  Remember that a SELECT statement just returns information, it doesn't save it.  We have two options.  (1) We could overwrite the *geometry* column of the *watersheds* table, but that will mean the projection won't match the other data we have.  (2) The other option is to make a new table with a different projection.  We can do this by adding a CREATE TABLE statement to the query we already have:
 
 ```SQL
-CREATE TABLE watershedsUTM AS 
+CREATE TABLE watersheds_utm_10n AS 
 SELECT PK_UID, HUC8, NAME, ST_Transform(geometry, 26910) as geometry 
 FROM watersheds;
 ```
 
-To see the new table in the list, we'll need to refresh our database.  From the Database menu at the top of the DB Manager window, select *Refresh*.  Now we can see the table, but it's just a table.  The database doesn't seem to know the table is actually polygons.
+To see the new table in the list, we'll need to refresh our database.  On the left panel, right click on "User Data" and select *Refresh*.  Now we can see the table, but it's just a table.  Notice that the icon is different from the other tables.  The database doesn't seem to know the table is actually polygons.
 
-```SELECT * FROM watershedsUTM;``` Shows that all the columns we asked for, including the *geometry* column are there.  What's going on?  We need to recover the geometry column so the database will recognize the table as a spatial table.
+```SELECT * FROM watersheds_utm_10n;``` Shows that all the columns we asked for, including the *geometry* column are there.  What's going on?  We need to recover the geometry column so the database will recognize the table as a spatial table.
 
 ```SQL
-SELECT RecoverGeometryColumn('watershedsUTM', 'geometry', 26910, 'MULTIPOLYGON', 'XY');
+SELECT RecoverGeometryColumn('watersheds_utm_10n', 'geometry', 26910, 'MULTIPOLYGON', 'XY');
 ```
 
-This query will return a single column and row.  Now we need to vacuum the database (yes, that sounds a little odd).  Run the command ```VACUUM;``` in the SQL Query panel.  This will clean up any issues created by all the changes we just made to the database.
+This query will return a single column and row with the number 1 in the only cell.  If it returns 0, the query didn't work.  Now we need to vacuum the database (yes, that sounds a little odd).  Run the command ```VACUUM;``` in the SQL Query panel.  This will clean up any issues created by all the changes we just made to the database.
 
+You may need to refresh your database list again before the icon will change.
 
 ## Spatial Join
-Spatial joins allow us to combine information from one table with another based on the location associated with each record.  Let's see if we can figure out which watershed each of our flowlines is in:
+Spatial joins allow us to combine information from one table with another based on the location associated with each record.  When we write a query involving two or more tables, we need to specify which table any column names come from.  We do this by giving the table name before the column - ```table.column``` .  Let's see if we can figure out which watershed each of our flowlines is in:
 
 ```SQL
-SELECT flowlines.*, watersheds.NAME as Watershed_Name
+SELECT flowlines.*, watersheds.name as watershed_name
 FROM flowlines, watersheds
 WHERE ST_Contains(watersheds.geometry, flowlines.geometry);
 ```
@@ -289,12 +317,12 @@ AND FTYPE = 460
 AND watersheds.name LIKE 'Tomales-Drake Bays';
 ```
 
-This is a non-spatial view.  To have the database recognize it as a spatial view, we need one more step that registers the view in the table that keeps track of which views are spatial.  (If this sounds complicated, just file this away as a step that needs to get done.)
+Refresh your table list to see if on the left side of the screen.  This is a non-spatial view.  To have the database recognize it as a spatial view, we need one more step that registers the view in the table that keeps track of which views are spatial.  (If this sounds complicated, just file this away as a step that needs to get done.)
 
 ```SQL
 INSERT INTO views_geometry_columns
 (view_name, view_geometry, view_rowid, f_table_name, f_geometry_column, read_only)
-VALUES ('rivers_tomales', 'geometry', lower('PK_UID'), 'flowlines', 'geometry', 0);
+VALUES ('rivers_tomales', 'geometry', 'pk_uid', 'flowlines', 'geometry', 0);
 ```
 
 What does this query do?  I'll break it down.
@@ -303,20 +331,21 @@ What does this query do?  I'll break it down.
 
 ```(view_name, view_geometry, view_rowid, f_table_name, f_geometry_column, read_only)``` is the list of columns we want to put information into in the *views_geometry_columns* table.  We'll be making a new row of data in this table, and these are the columns where that data is going to go.
 
-```VALUES ('rivers_tomales', 'geometry', lower('PK_UID'), 'flowlines', 'geometry', 0)``` *VALUES* says to the database, "here is the list of items to put in the columns I told you about in the last line", then we put the list of things in parentheses.  So 'rivers_tomales' (the new table name) will go into the 'view_name' field. 'geometry' is the geometry column for the view so it goes into the 'view_geometry' field of the table. I wrapped 'PK_UID' (the ID column) in the lower() function because it complained that the input had to be lowercase.  Lower() just turns all the input characters into their lower case counterparts.  'flowlines' is the table that our 'rivers_tomales' view inherits its spatial data from and it has a geometry column called 'geometry' as well.  Finally, 'read_only' takes either a 0 to make the table read-only or 1 to make it writable.  Read-only is a good choice here since we won't be adding or changing the view's contents.
+```VALUES ('rivers_tomales', 'geometry', lower('PK_UID'), 'flowlines', 'geometry', 0)``` *VALUES* says to the database, "here is the list of items to put in the columns I told you about in the last line", then we put the list of things in parentheses.  So 'rivers_tomales' (the new table name) will go into the 'view_name' field. 'geometry' is the geometry column for the view so it goes into the 'view_geometry' field of the table. 'flowlines' is the table that our 'rivers_tomales' view inherits its spatial data from and it has a geometry column called 'geometry' as well.  Finally, 'read_only' takes either a 0 to make the table read-only or 1 to make it writable.  Read-only is a good choice here since we won't be adding or changing the view's contents.
 
+```SELECT * FROM rivers_tomales;``` to see your new view.  It will function just like a table.
 
 
 ## Viewing Tables in QGIS
 
 Tables and views are usefull, but this is spatial data so it might be nice to look at the data in map form.  We can look at our spatial tables and views directly in QGIS.  Let's look at some of our tables and views:
 
-1. Open QGIS (2.18 or 3.0)
-1. In the Browser Panel (usually on the left by default... add it if it's missing: *View* menu -> *Panels* -> *Browser Panel*).  Click to expand the Spatialite list.  There's no *sfbay* database yet!
+1. Open QGIS
+1. In the Browser Panel (usually on the left by default... add it if it's missing: *View* menu -> *Panels* -> *Browser Panel*).  Scroll down to find the SpatiaLite icon.  If you've previously connected SpatiaLite tables, there will be a small triangle to expland the list.  If not, it's just the icon and text label.
 1. Right click on the Spatialite section in the Browser Panel and select *New connection*
-1. Navigate to and select your *sfbay.sqlite* database.  Click *ok*.
-1. In the Browser Panel, expand your *sfbay*.sqlite database to see the tables and views
-1. Double click the tables or views to add them to the map canvas.  **Note:** Tables and (especially) views with a lot of records will take a while to load.  I advise adding one at a time and saving after each table addition just in case it crashes.
+1. Navigate to and select your *sfbay.sqlite* database.  Click *Open*.
+1. In the Browser Panel, expand your *sfbay*.sqlite database to see the tables and views.  It will list the tables we created plus some default tables that come with the database that we don't need to worry about.
+1. Double click the tables or views to add them to the map canvas.  **Note:** Tables and (especially) views with a lot of records will take a while to load.  If a dialog asks about the CRS transformation you want to use, select the default option and click *OK*.  I advise adding one at a time and saving yoru QGIS project after each table addition just in case it crashes.
 1. Now you can access the symbology, labels, and other standard tools in the *Layer Properties* for each layer, just as you would any other spatial dataset in QGIS.
 
 
@@ -328,11 +357,11 @@ Not surprisingly, you can use a spatial database to do more than just get length
 Let's find out which watershed is closest to the city of San Francisco.  We could go about this a number of ways, but let's find the distance from the city's center point to the centroid of each watershed:
 
 ```SQL
-SELECT ST_Distance(MakePoint(37.7749, -122.4194), centroids.geometry) 
+SELECT ST_Distance(MakePoint(37.7749, -122.4194, 3310), centroids.geometry) 
 FROM centroids;
 ```
 
-Here we used *MakePoint()* to turn a set of latitude/longitude coordinates into a format that  the database tool understands, then put the results into the *Distance()* function.
+Here we used *MakePoint()* to turn a set of latitude/longitude coordinates into a format that  the database tool understands in the CA Albers projection (EPSG 3310), then put the results into the *Distance()* function.
 
 How could you make this table more informative?  Could you add or rename some columns?
  
@@ -341,7 +370,7 @@ How could you make this table more informative?  Could you add or rename some co
 One interesting thing about SQL is that you can nest functions to do a series of functions in one query like you just saw above, but it can get more complex.  For example, maybe I want to find out the area (in square kilometers) within 1 kilometer of all the *flowlines*.
 
 ```SQL
-SELECT sum(ST_Area(ST_Buffer(geom, 1000)))/1000000 FROM flowlines;
+SELECT sum(ST_Area(ST_Buffer(geometry, 1000)))/1000000 FROM flowlines;
 ```
 
 Here, we take the sum of the area of the buffer of 1000 meters, then divide the whole thing by 1,000,000 to convert square meters to square kilometers.  Wow.  That's pretty complicated.  But I didn't have to make a bunch of intermediate files and add columns to an attribute table, then save a CSV, then sum it all up in Excel.  Now which option sounds crazier?  Perhaps you're starting to see some of the power of spatial SQL.
