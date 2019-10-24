@@ -4,7 +4,7 @@
 
   * Get the [7-zip archive program](https://www.7-zip.org/) 64 bit should work for most people.
   * Install 7-zip (You need this to "unzip a 7z format")
-  * Get the [Spatialite Installer](http://www.gaia-gis.it/gaia-sins/windows-bin-x86/spatialite_gui-4.3.0a-win-x86.7z) 
+  * Get the [Spatialite Installer](http://www.gaia-gis.it/gaia-sins/windows-bin-NEXTGEN-x86/spatialite_gui-NG-win-x86.7z) 
   * Use 7-zip to extract the files where you want them.
   * Click the exe to use
   
