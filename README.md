@@ -236,7 +236,7 @@ Because we are working with spatial data, we need to know how to handle projecti
 When you import your data into Spatialite, it asked you what the SRID (EPSG Code) was for your data.  It's easy to forget to do this or to put in the wrong one if you're in a hurry.  If you discover that you've made a mistake, you don't need to re-import the table; you can set the SRID to the correct projection with an update command.  For our data it would look like this: 
 
 ```SQL
-UPDATE flowlines SET geom = SetSRID(geometry, 3310);
+UPDATE flowlines SET geometry = SetSRID(geometry, 3310);
 ```
 
 This query replaces the contents of the *geom* column with the results of the SetSRID command.  In our case, it doesn't really do anything new since we had our projection set correctly, but you should know how to do this, so we did.
