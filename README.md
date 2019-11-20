@@ -1,6 +1,8 @@
 # Spatial SQL with SpatiaLite
 An introductory workshop on Spatial SQL using SpatiaLite.  
 
+**Authors:** [Michele Tobias](https://github.com/MicheleTobias) & [Naomi Kalman](https://github.com/nbkalman)
+
 ## Expected Learning Outcomes
 This workshop is intended to give you an introduction to spatial SQL through working with a graphical user interface (GUI) with some examples of common analysis processes as well as present you with resources for continued learning.  This workshop cannot teach you everything you could possibly need to know about databases, but rather is an introduction.
 
@@ -120,7 +122,7 @@ You should see your three tables listed in the panel on the left.  Congratulatio
 
 Now we're just about ready to do some analysis with our database.  You may need to expand the Spatialite window by dragging the lower right corner of the window out so you can see everything.
 
-You will type your queries into the big blank box at the top right of the window.  A query is a request for information from the database.
+A query is a request for information from the database.  You will type your queries into the big blank box at the top right of the window.  
 
 You'll run the query by clicking the *Execute SQL Statement* button to the right of the query box.
 
@@ -224,22 +226,35 @@ SELECT * FROM watersheds;
 Now, let's look at an example to get the area of the *watershed* polygons: 
 
 ```SQL
-SELECT NAME, ST_AREA(geometry) FROM watersheds;
+SELECT name, ST_Area(geometry) FROM watersheds;
 ``` 
 
-Remember that if you don't like the column headings, you can alias them with *as*.
+Remember that if you don't like the resulting column headings, you can alias them with *AS*. Note that this only changes the column name in the query output, not the underlying table.
+
+```SQL
+SELECT name, ST_Area(geometry) AS Area FROM watersheds;
+``` 
 
 ## Projections:
 Because we are working with spatial data, we need to know how to handle projections.
 
 ### Set the Projection
-When you import your data into Spatialite, it asked you what the SRID (EPSG Code) was for your data.  It's easy to forget to do this or to put in the wrong one if you're in a hurry.  If you discover that you've made a mistake, you don't need to re-import the table; you can set the SRID to the correct projection with an update command.  For our data it would look like this: 
+When you imported your data into Spatialite, it asked you what the SRID (EPSG Code) was for your data.  It's easy to forget to do this or to put in the wrong one if you're in a hurry.  If you discover that you've made a mistake, you don't need to re-import the table; you can set the SRID to the correct projection with an update command.  
+
+To check your projection, you can ask the database to look in one of its internal tables. For our data, it looks like this:
+
+```SQL
+SELECT * FROM geometry_columns
+WHERE f_table_name = 'flowlines';
+```
+
+For our data, setting the projection would look like this: 
 
 ```SQL
 UPDATE flowlines SET geometry = SetSRID(geometry, 3310);
 ```
 
-This query replaces the contents of the *geom* column with the results of the SetSRID command.  In our case, it doesn't really do anything new since we had our projection set correctly, but you should know how to do this, so we did.
+This query replaces the contents of the *geometry* column with the results of the SetSRID command.  In our case, it doesn't really do anything new since we had our projection set correctly, but you should know how to do this, so we did.
 
 ### Reproject
 To change the projection of a dataset, you need to use the *Transform* or *ST_Transform* command.
@@ -258,11 +273,11 @@ We have a table with a subset of the columns from the original watersheds table.
 SELECT pk_uid, huc8, name, ST_Transform(geometry, 26910) FROM watersheds;
 ```
 
-It may look like nothing happened, but the column heading on the *geom* column should have changed.  Finally, we'll want do something to keep this data.  Remember that a SELECT statement just returns information, it doesn't save it.  We have two options.  (1) We could overwrite the *geometry* column of the *watersheds* table, but that will mean the projection won't match the other data we have.  (2) The other option is to make a new table with a different projection.  We can do this by adding a CREATE TABLE statement to the query we already have:
+It may look like nothing happened, but the column heading on the *geometry* column should have changed.  Finally, we'll want do something to keep this data.  Remember that a SELECT statement just returns information, it doesn't save it.  We have two options.  (1) We could overwrite the *geometry* column of the *watersheds* table, but that will mean the projection won't match the other data we have.  (2) The other option is to make a new table with a different projection.  We can do this by adding a CREATE TABLE statement to the query we already have (adding an alias to the geometry column):
 
 ```SQL
 CREATE TABLE watersheds_utm_10n AS 
-SELECT PK_UID, HUC8, NAME, ST_Transform(geometry, 26910) as geometry 
+SELECT pk_uid, huc8, name, ST_Transform(geometry, 26910) AS geometry 
 FROM watersheds;
 ```
 
@@ -274,7 +289,9 @@ To see the new table in the list, we'll need to refresh our database.  On the le
 SELECT RecoverGeometryColumn('watersheds_utm_10n', 'geometry', 26910, 'MULTIPOLYGON', 'XY');
 ```
 
-This query will return a single column and row with the number 1 in the only cell.  If it returns 0, the query didn't work.  Now we need to vacuum the database (yes, that sounds a little odd).  Run the command ```VACUUM;``` in the SQL Query panel.  This will clean up any issues created by all the changes we just made to the database.
+This query will return a single column and row with the number 1 in the only cell.  If it returns 0, the query didn't work.  
+
+Now we need to vacuum the database (yes, that sounds a little odd).  Run the command ```VACUUM;``` in the SQL Query panel.  This will clean up any issues created by all the changes we just made to the database.
 
 You may need to refresh your database list again before the icon will change.
 
@@ -282,7 +299,7 @@ You may need to refresh your database list again before the icon will change.
 Spatial joins allow us to combine information from one table with another based on the location associated with each record.  When we write a query involving two or more tables, we need to specify which table any column names come from.  We do this by giving the table name before the column - ```table.column``` .  Let's see if we can figure out which watershed each of our flowlines is in:
 
 ```SQL
-SELECT flowlines.*, watersheds.name as watershed_name
+SELECT flowlines.*, watersheds.name AS watershed_name
 FROM flowlines, watersheds
 WHERE ST_Contains(watersheds.geometry, flowlines.geometry);
 ```
@@ -299,7 +316,7 @@ Let's make a view!  Let's say we want to have a view that contains all the river
 First, let's make a query to make sure we're getting the information we want.
 
 ```SQL
-SELECT flowlines.*, watersheds.name as watershed_name
+SELECT flowlines.*, watersheds.name AS watershed_name
 FROM flowlines, watersheds
 WHERE ST_Contains(watersheds.geometry, flowlines.geometry)
 AND FTYPE = 460
@@ -310,7 +327,7 @@ That query looks like what we want.  Let's make it into a view.  View creation s
 
 ```SQL
 CREATE VIEW rivers_tomales AS
-SELECT flowlines.*, watersheds.name as watershed_name
+SELECT flowlines.*, watersheds.name AS watershed_name
 FROM flowlines, watersheds
 WHERE ST_Contains(watersheds.geometry, flowlines.geometry)
 AND FTYPE = 460
@@ -333,6 +350,8 @@ What does this query do?  I'll break it down.
 
 ```VALUES ('rivers_tomales', 'geometry', lower('PK_UID'), 'flowlines', 'geometry', 0)``` *VALUES* says to the database, "here is the list of items to put in the columns I told you about in the last line", then we put the list of things in parentheses.  So 'rivers_tomales' (the new table name) will go into the 'view_name' field. 'geometry' is the geometry column for the view so it goes into the 'view_geometry' field of the table. 'flowlines' is the table that our 'rivers_tomales' view inherits its spatial data from and it has a geometry column called 'geometry' as well.  Finally, 'read_only' takes either a 0 to make the table read-only or 1 to make it writable.  Read-only is a good choice here since we won't be adding or changing the view's contents.
 
+Refresh your table list to see that rivers_tomales is now a spatial view. 
+
 ```SELECT * FROM rivers_tomales;``` to see your new view.  It will function just like a table.
 
 
@@ -345,7 +364,7 @@ Tables and views are usefull, but this is spatial data so it might be nice to lo
 1. Right click on the Spatialite section in the Browser Panel and select *New connection*
 1. Navigate to and select your *sfbay.sqlite* database.  Click *Open*.
 1. In the Browser Panel, expand your *sfbay*.sqlite database to see the tables and views.  It will list the tables we created plus some default tables that come with the database that we don't need to worry about.
-1. Double click the tables or views to add them to the map canvas.  **Note:** Tables and (especially) views with a lot of records will take a while to load.  If a dialog asks about the CRS transformation you want to use, select the default option and click *OK*.  I advise adding one at a time and saving yoru QGIS project after each table addition just in case it crashes.
+1. Double click the tables or views to add them to the map canvas.  **Note:** Tables and (especially) views with a lot of records will take a while to load.  If a dialog asks about the CRS transformation you want to use, select the default option and click *OK*.  I advise adding one at a time and saving your QGIS project after each table addition just in case it crashes.
 1. Now you can access the symbology, labels, and other standard tools in the *Layer Properties* for each layer, just as you would any other spatial dataset in QGIS.
 
 
