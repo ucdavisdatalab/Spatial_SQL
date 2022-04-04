@@ -2,11 +2,10 @@
 
 ## Windows
 
-  * Get the [7-zip archive program](https://www.7-zip.org/) 64 bit should work for most people.
-  * Install 7-zip (You need this to "unzip a 7z format")
-  * Get the [Spatialite Installer](http://www.gaia-gis.it/gaia-sins/windows-bin-NEXTGEN-x86/spatialite_gui-NG-win-x86.7z) 
-  * Use 7-zip to extract the files where you want them.
-  * Click the exe to use
+  * Download and install the [7-zip archive program](https://www.7-zip.org/) 64 bit should work for most people. 7-zip is a more sophisticated tool for zipping and unzipping files than the standard Windows tool.
+  * Download the [Spatialite Installer](http://www.gaia-gis.it/gaia-sins/windows-bin-amd64/) file called `spatialite-tools-5.0.1-win-amd64.7z`
+  * Use 7-zip to extract the files where you want them by right clicking on the `spatialite-tools-5.0.1-win-amd64.7z`file in your browser. For Windows 11, you may need to choose "Show more options" first. Select "7-Zip" then "Extract files...", and then make your selections about where to put the files that will be extracted.
+  * Click the spatialite_gui.exe to use
   
   *We've direct linked as it can be very hard to find the pre-made ready to use program.*
 
