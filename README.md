@@ -3,7 +3,7 @@ An introductory workshop on Spatial SQL using SpatiaLite.
 
 **Authors:** [Michele Tobias](https://github.com/MicheleTobias) & [Naomi Kalman](https://github.com/nbkalman)
 
-## Expected Learning Outcomes
+## Workshop Description
 This workshop is intended to give you an introduction to spatial SQL through working with a graphical user interface (GUI) with some examples of common analysis processes as well as present you with resources for continued learning.  This workshop cannot teach you everything you could possibly need to know about databases, but rather is an introduction.
 
 ## Objectives
