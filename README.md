@@ -29,20 +29,16 @@ An introductory understanding of SQL is recommended, but not mandatory. For exam
 ## What is a database?
 A database is a set of data in tables that are related to each other in some way.  That's it.  **A database is just a collection of related tables.**
 
-Generally each table can be connected to another table by a column that both tables have that store the information to match up the rows.  This column is called a **key**.  A key commonly used on campus is your student or employee ID number.
+Generally each table can be connected to another table by a column that both tables have that store the information to match up the rows.  This column is called a **key**.  For example, your student or employee ID number is a key commonly used on campus.
 
-You already use a database if you've done GIS.  A shapefile is essentially just a fancy a table.
-
-Below is an example of a database diagram for the files involved in a Marxan analysis.  At least one column in each table relates to a column in another table (indicated in this diagram by a line drawn between the two columns).  Documenting a database with a diagram like this is common practice.  It provides a quick visual reference to the data contained in each table and how the tables relate to each other.
-
-![image](https://experimentalcraft.files.wordpress.com/2013/08/marxantables.png)
-
-Image Credit: [Michele Tobias](https://experimentalcraft.wordpress.com/2013/08/23/marxan-table-relationships/)
-
-[Schmierer, et al. 2007](https://www.joe.org/joe/2007august/tt7.php) have a couple of diagrams of the relationships between the SSURGO tables.  Unfortunately, the journal posted their images in .gif format so I can't make them visible here.  Check out the link though!
+If you've done GIS, you already use a database.  A shapefile is essentially just a fancy a table. And if you're ever joined a .csv table to a shapefile, you've performed a database process called a join. Using multiple spatial datasets in a GIS relates the data by location, if not by tabular data.
 
 ## What is a Spatial Database?
-A spatial database is a normal database (i.e. a set of related tables) but the tables have a column that holds the spatial information commonly called the "geometry".  The geometry information is stored as a Binary Large Object (BLOB).  The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.
+A spatial database is a normal database (i.e. a set of related tables) but at least one of the tables has a column that holds the spatial information commonly called the "geometry".  The geometry information is stored as a Binary Large Object (BLOB).  The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.
+
+Below is an example of a database entity relationship diagram for tables in an example (imaginary, yet plausible) spatial database.  At least one column in each table relates to a column in another table (indicated in this diagram by a line drawn between the two columns).  Documenting a database with a diagram like this is common practice.  It provides a quick visual reference to the data contained in each table and how the tables relate to each other. The `city` table is a spatial table. The `geometry` column provides the spatial information that allows the city polygons to be mapped.  The other tables are tabular data that can be joined to the spatial table using the key, in this case, the Federal Information Processing System (FIPS) Code, a system that assigns unique numeric codes to geographic entities such as cities, counties, and states. FIPS codes help us have a standardized key that prevents mismatches from variations in names (such as "Davis" vs. "City of Davis").
+
+![image](/images/ERD_Example.png)
 
 ## What is Spatial SQL?
 SQL stands for "structured query language" and it's a language that allows you to ask questions of a database.  Spatial SQL is regular SQL but with some additional functions that perform spatial analysis.  Spatial SQL functions typically work on the geometry column.
@@ -54,10 +50,10 @@ If you've ever written an attribute query in ArcGIS or QGIS, you've worked with 
 * Typically faster to run a process in a spatial database than in a desktop GIS program
 * Store lots of data (compare with shapefile's 70m row limit)
 * One database file stores many, many tables --> easier data management
-* Write a query instead of making a new file (no exporting of results to shapefile necessary!)
+* Write a query instead of making a new file (no exporting of intermediate results to shapefile necessary!)
 
 ## What makes this challenging?
-If you're a GIS user, you're probably used to a graphical user interface (GUI) where you can see your data, have tools with guided interfaces, and can see the results of your processing immediately.  These aren't things you get with a typical database manager tool, however, we can connect our database to QGIS so we can see our results and with practice, you will get used to the typical workflow and seeing everything won't be so necessary.
+If you're a GIS user, you're probably used to a graphical user interface (GUI) where you can see your data, have tools with guided interfaces, and can see the results of your processing immediately.  These aren't things you get with a typical database manager tool, however, we can connect our database to QGIS so we can see our results and, with practice, you will get used to the typical workflow and seeing everything won't be so necessary.
 
 ## Databases that support Spatial SQL:
 * Oracle
