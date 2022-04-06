@@ -4,14 +4,24 @@ An introductory workshop on Spatial SQL using SpatiaLite.
 **Authors:** [Michele Tobias](https://github.com/MicheleTobias) & [Naomi Kalman](https://github.com/nbkalman)
 
 ## Workshop Description
-This workshop is intended to give you an introduction to spatial SQL through working with a graphical user interface (GUI) with some examples of common analysis processes as well as present you with resources for continued learning.  This workshop cannot teach you everything you could possibly need to know about databases, but rather is an introduction.
+This workshop is intended to give participants an introduction to working with **spatial data** using SQL. We will work with a graphical user interface (GUI) and explore some examples of common analysis processes as well as present participants with resources for continued learning.  This workshop will give participants a solid foundation on which to build further learning.
 
-## Objectives
-
-* Import data into an sqlite database
-* Write queries to answer questions about the data
+## Learning Objectives
+By the end of this workshop, participants will be able to
+* Import data into an spatialite database
+* Write queries to answer questions about spatial data
 * Understand the difference between attribute queries and geometry queries
 * View spatial tables and views in QGIS
+
+## Prerequisites
+An introductory understanding of SQL is recommended, but not mandatory. For example, knowing how to compose a SELECT statement using SQL and the general concept of joining tables will serve learners well. For learners without a foundation in SQL, we recommend attending or reviewing the materials for DataLab's [Introduction to Databases and Data Storage Technologies](https://ucdavisdatalab.github.io/workshop_intro_to_data_storage/), which introduces the concept of databases, and [Intro to SQL for Querying Databases](https://ucdavisdatalab.github.io/workshop_intro_to_sql/), which teaches the basics of querying data using SQL.
+
+
+## Software
+
+**Install SpatiaLite GUI:**  The instructions for intalling SpatiaLite GUI varies depending on your operating sytsem.  We've provided a [guide to installing the software](https://github.com/MicheleTobias/Spatial_SQL/blob/master/Install.md). These workshop materials were most recently written for Spatialite version 5.0.0 and Spatialite GUI 2.1.0-beta1.
+
+**Install QGIS:** You should have installed QGIS version 3.24 from [QGIS.org](https://qgis.org/en/site/forusers/download.html). Recent older versions of QGIS will also suffice.  We'll be using QGIS to visualize our spatial data tables that we import into our SpatiaLite database.
 
 
 # Concepts
@@ -62,12 +72,6 @@ We'll be working with SpatiaLite, because it works on all the common computer op
 
 ---------------------------------------------
 # Hands-On Tutorial
-
-## Installation
-
-**Install SpatiaLite:**  The instructions for intalling SpatiaLite varies depending on your operating sytsem.  We've provided a [guide to installing the software](https://github.com/MicheleTobias/Spatial_SQL/blob/master/Install.md).
-
-**Install QGIS:** You should have installed QGIS version 3.4 or 3.8 from [QGIS.org](https://qgis.org/en/site/forusers/download.html).  This workshop was written with QGIS 3.8.  We'll be using QGIS to visualize our spatial data tables that we import into our SpatiaLite database.
 
 
 ## Data
