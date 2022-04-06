@@ -76,7 +76,7 @@ We'll be working with SpatiaLite, because it works on all the common computer op
 
 The data we'll be working with is a set of hydrology-related data for the San Francisco Bay Watershed.
 
-You'll need to download the following data from the data folder in this repository or from [Michele's FigShare](https://figshare.com/articles/SpatiaLite_Workshop_Data/7227581):
+You'll need to download the following data from the data folder in this repository or from [this Box folder](https://ucdavis.box.com/s/wb5ui86q8z7ppylvcqb8o8pqqawpsj43) (click the download button in the upper right corner to download all the data in one .zip file):
 
 * Watershed Boundaries (Polygons)
 * Watershed Centroids (Points)
@@ -91,7 +91,7 @@ If you downloaded a .zip file, be sure to unzip it.
 Let's start by opening Spatialite:
 
 1. In your computer's file explorer, navigate to the folder where you downloaded your SpatiaLite install files.
-1. Start Spatialite by running the Spatialite_gui.exe file in this folder.
+1. Start Spatialite by running the spatialite_gui.exe file in this folder.
 
 ## Make a Database
 You can think of a database as a folder in which you keep tables that are related to each other.  You don't want to put data in this database that isn't related to the other data (you could, but that's not the point of a database).
