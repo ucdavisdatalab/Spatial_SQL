@@ -43,7 +43,9 @@ Below is an example of a database entity relationship diagram for tables in an e
 ## What is Spatial SQL?
 SQL stands for "structured query language" and it's a language that allows you to ask questions of a database.  Spatial SQL is regular SQL but with some additional functions that perform spatial analysis.  Spatial SQL functions typically work on the geometry column.
 
-If you've ever written an attribute query in ArcGIS or QGIS, you've worked with SQL.  Example: Hey GIS program, please highlight all the records in my attribute table that have "Yolo" in the "county" column!  In SQL, we would write ```SELECT * FROM county_shapefile WHERE county = 'Yolo'; ```  It's actually quicker to write that query than to fill out the interface in the GIS.
+If you've ever written an attribute query in ArcGIS or QGIS, you've worked with SQL.  Example: Hey GIS program, please highlight all the records in my attribute table that have "Yolo" in the "county" column!  In SQL, we would write ```SELECT * FROM city WHERE county = 'Yolo'; ```  It's actually quicker to write that query than to fill out the interface in the GIS.
+
+A spatial join is an example of a spatial operation that you may have performed in a GIS that can also be performed using SQL. For example, if we had a shapefile of business locations, we might query which businesses are inside of city boundaries. ```SELECT * from businesses WHERE ST_Intersects(businesses.geometry, city.geometry);```
 
 ## Why do you want to learn to work with spatial databases and spatial SQL?
 * It's a good way to work with large amounts of data
