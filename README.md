@@ -45,9 +45,9 @@ SQL stands for "structured query language" and it's a language that allows you t
 
 If you've ever written an attribute query in ArcGIS or QGIS, you've worked with SQL.  Example: Hey GIS program, please highlight all the records in my attribute table that have "Yolo" in the "county" column!  In SQL, we would write ```SELECT * FROM city WHERE county = 'Yolo'; ```  It's actually quicker to write that query than to fill out the interface in the GIS.
 
-A spatial join is an example of a spatial operation that you may have performed in a GIS that can also be performed using SQL. For example, if we had a shapefile of business locations, we might query which businesses are inside of city boundaries. ```SELECT * from businesses, cities WHERE ST_Intersects(businesses.geometry, city.geometry);``` It's much quicker to write the query than fill out the spatial join interface.
+A spatial join is an example of a spatial operation that you may have performed in a GIS that can also be performed using SQL. For example, if we had a dataset of business locations, we might query which businesses are inside of city boundaries. ```SELECT * from businesses, cities WHERE ST_Intersects(businesses.geometry, city.geometry);``` It's much quicker to write the query than fill out the spatial join interface.
 
-## Why do you want to learn to work with spatial databases and spatial SQL?
+## Why should you learn to work with spatial databases and spatial SQL?
 * It's a good way to work with large amounts of data
 * Typically faster to run a process in a spatial database than in a desktop GIS program
 * Store lots of data (compare with shapefile's 70m row limit)
