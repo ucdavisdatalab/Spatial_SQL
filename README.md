@@ -91,7 +91,7 @@ If you downloaded a .zip file, be sure to unzip it.
 Let's start by opening Spatialite:
 
 1. In your computer's file explorer, navigate to the folder where you downloaded your SpatiaLite install files.
-1. Start Spatialite by running the spatialite_gui.exe file in this folder.
+1. Start Spatialite by running the `spatialite_gui.exe` file in this folder.
 
 ## Make a Database
 You can think of a database as a folder in which you keep tables that are related to each other.  You don't want to put data in this database that isn't related to the other data (you could, but that's not the point of a database).
