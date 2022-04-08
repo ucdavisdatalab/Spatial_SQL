@@ -373,8 +373,11 @@ Tables and views are usefull, but this is spatial data so it might be nice to lo
 1. Right click on the Spatialite section in the Browser Panel and select *New connection*
 1. Navigate to and select your *sfbay.sqlite* database.  Click *Open*.
 1. In the Browser Panel, expand your *sfbay*.sqlite database to see the tables and views.  It will list the tables we created plus some default tables that come with the database that we don't need to worry about.
-1. Double click the tables or views to add them to the map canvas.  **Note:** Tables and (especially) views with a lot of records will take a while to load.  If a dialog asks about the CRS transformation you want to use, select an option that makes sense for your data, then click *OK*.  I advise adding one at a time and saving your QGIS project after each table addition just in case it crashes.
-1. Now you can access the symbology, labels, and other standard tools in the *Layer Properties* for each layer, just as you would any other spatial dataset in QGIS.
+1. Double click the tables or views to add them to the map canvas.  
+
+**Note:** Tables and (especially) views with a lot of records will take a while to load.  If a dialog asks about the CRS transformation you want to use, select an option that makes sense for your data, then click *OK*.  I advise adding one at a time and saving your QGIS project after each table addition just in case it crashes.
+
+Now you can access the symbology, labels, and other standard tools in the *Layer Properties* for each layer, just as you would any other spatial dataset in QGIS.
 
 **NOTE:** QGIS' DB Manager tool is an alternative to Spatialite that comes standard with QGIS and can connect to a number of spatial databases.
 
@@ -391,7 +394,7 @@ SELECT ST_Distance(MakePoint(37.7749, -122.4194, 3310), centroids.geometry)
 FROM centroids;
 ```
 
-Here we used *MakePoint()* to turn a set of latitude/longitude coordinates into a format that  the database tool understands in the CA Albers projection (EPSG 3310), then put the results into the *Distance()* function.
+Here we used `MakePoint()` to turn a set of latitude/longitude coordinates into a format that  the database tool understands in the CA Albers projection (EPSG 3310), then put the results into the `Distance()` function.
 
 How could you make this table more informative?  Could you add or rename some columns?
  
