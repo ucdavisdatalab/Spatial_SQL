@@ -114,9 +114,12 @@ Let's add some data to our database:
 1. Select the *Flowlines.shp* file and click *Open*.
 1. In the *Table Name* box, type *flowlines* for the name of our new table.
 1. In the *SRID* box, type 3310 because the projection for this data is California Albers (NAD38) which has the SRID of 3310.
-1. Review the other options, but you can leave the defaults as they are.  Click *OK* when you're done.
+2. In the *Column Names* section, pick "Convert to Lowercase" so all of our column names will be lowercase letters
+3. For *DBF DATE Values*, choose "as PlainText strings" so our dates will be human readable
+4. For *Primary Key Column*, choose "Automatic". This option will create an incremented pk_uid column to ensure we have a primary key for our table.
+5. Review the other options, but you can leave the defaults as they are.  Click *OK* when you're done.
 
-You can repeat this process to add the other two datasets.  Call the *WBDHU8_Points_SF* table *centroids* and *WBDHU8_SF* table *watersheds*.
+You can repeat this process to add the other two datasets.  Call the *WBDHU8_Points_SF* table *centroids* and *WBDHU8_SF* table *watersheds*. The other parameters will be the same as for the flowlines table.
 
 You should see your three tables listed in the panel on the left.  Congratulations!  You now have a database with files related to the San Francisco Bay's watersheds!
 
@@ -124,7 +127,7 @@ You should see your three tables listed in the panel on the left.  Congratulatio
 
 Now we're just about ready to do some analysis with our database.  You may need to expand the Spatialite window by dragging the lower right corner of the window out so you can see everything.
 
-A query is a request for information from the database.  You will type your queries into the big blank box at the top right of the window.  
+A **query** is a request for information from the database.  You will type your queries into the big blank box at the top right of the window.  
 
 You'll run the query by clicking the *Execute SQL Statement* button to the right of the query box.
 
@@ -136,7 +139,7 @@ A query has a structure.  The most common one you'll see today is a "select stat
 
 Non-spatial queries are queries that don't involve the geometry column (the spatial information) of our table.
 
-We'll start by investigating our *flowlines* data.  The *flowlines* are linear features that carry water from one place to another.  Some are nature features like rivers or streams, others are man-made like canals.
+We'll start by investigating our *flowlines* data.  The *flowlines* are linear features that carry water from one place to another.  Some are natural features like rivers or streams, others are human-made like canals.
 
 ### Let's look at the whole table:
 
@@ -148,36 +151,38 @@ The asterisk (\*) means "everything" or "give me all the columns".  You could re
 
 The result should look very much like an attribute table you might expect to see in a graphical GIS, but with one additional column.  The import process added *geometry* field.  The *geometry* field contains information that allows the database tool to know where that particular object should be located in space, but unfortunately, it doesn't look like anything we understand as humans.  We'll learn to deal with this column more in a little while.
 
+NOTE: traditionally, reserved words like `SELECT` are writen in all caps, while table and column names are lower case, however, if you don't follow these rules, your code will still work.
+
 ### Add a WHERE clause: 
 
 ```SQL
-SELECT * FROM flowlines WHERE FTYPE = 460; 
+SELECT * FROM flowlines WHERE ftype = 460; 
 ``` 
 
-This query limits our results to just the rows where the number in the *FTYPE* column is 460, which corresponds to the natural rivers and streams (not canals).  "Where" in this case does **NOT** indicate location, but rather a condition of the data.
+This query limits our results to just the rows where the number in the *ftype* column is 460, which corresponds to the natural rivers and streams (not canals).  "Where" in this case does **NOT** indicate location, but rather a condition of the data.
 
 ### Add a function: 
 
 ```SQL
-SELECT COUNT(pk_uid) FROM flowlines WHERE FTYPE = 460; 
+SELECT COUNT(pk_uid) FROM flowlines WHERE ftype = 460; 
 ``` 
 
-Here we've added the function COUNT().  So we've asked the database tool to count all of the IDs but only if they have an FYTYPE of 460.
+Here we've added the function COUNT().  So we've asked the database tool to count all of the IDs but only if they have an ftype of 460.
 
 ### Summarize Data
 
-What if we wanted to know how many lines there were of each *FTYPE*?
+What if we wanted to know how many lines there were of each *ftype*?
 
 ```SQL
-SELECT FTYPE, COUNT(pk_uid) FROM flowlines GROUP BY FTYPE;
+SELECT ftype, COUNT(pk_uid) FROM flowlines GROUP BY ftype;
 ```
 
 Here, I've asked for a table with the columns *FTYPE* and the count of each *pk_uid*, and finally that it should summarize (group by) the *FTYPE*.
 
-If I don't like the column name that it automatically generates - ```COUNT(pk_uid)``` - I can give it an alias with the AS command:
+If I don't like the column name that it automatically generates - `COUNT(pk_uid)` - I can give it an alias with the AS command:
 
 ```SQL 
-SELECT FTYPE, COUNT(pk_uid) AS NumberOfLines FROM flowlines GROUP BY FTYPE; 
+SELECT ftype, COUNT(pk_uid) AS count_lines FROM flowlines GROUP BY ftype; 
 ```
 
 This is especially handy if you're making a table for people unfamiliar with your data or SQL or if you need the column name to be something specific.
@@ -201,7 +206,7 @@ That result doesn't tell us very much information since a BLOB is not human-read
 SELECT ST_AsText(geometry) FROM flowlines;
 ``` 
 
-*ST_AsText()* is a function that perates on the geometry colum to let us see the geometry string in human-readable form.  This isn't very useful most of the time, but perhaps it's comforting to know it's there.  *Note: You can make columns in the results tables larger by placing your mouse cursor over the edge of the column and dragging it out once the expander handle appears (it looks like two arrows pointing different directions).*
+*ST_AsText()* is a function that operates on the geometry colum to let us see the geometry string in human-readable form.  This isn't very useful most of the time, but perhaps it's comforting to know it's there.  *Note: You can make columns in the results tables larger by placing your mouse cursor over the edge of the column and dragging it out once the expander handle appears (it looks like two arrows pointing different directions).*
 
 ### Length
 Let's do an analysis that you might come across.  Let's get the lengths of each of the *flowlines*: 
@@ -211,10 +216,10 @@ SELECT pk_uid, ST_Length(geometry) FROM flowlines;
 
 What are the units of the length query?  The units are meters because the units for the projection (California Albers; SRID 3310) are meters.
 
-We just found the length of the individual *flowlines*.  That was not a very informative query.  It would be more useful to know what the total length of the lines are summed by their FCODE.  
+We just found the length of the individual *flowlines*.  That was not a very informative query.  It would be more useful to know what the total length of the lines are summed by their fcode.  
 
 ```SQL
-SELECT FCODE, SUM(ST_Length(geometry)) FROM flowlines GROUP BY FCODE;
+SELECT fcode, SUM(ST_Length(geometry)) FROM flowlines GROUP BY fcode;
 ```
 
 ### Area
@@ -234,7 +239,7 @@ SELECT name, ST_Area(geometry) FROM watersheds;
 Remember that if you don't like the resulting column headings, you can alias them with *AS*. Note that this only changes the column name in the query output, not the underlying table.
 
 ```SQL
-SELECT name, ST_Area(geometry) AS Area FROM watersheds;
+SELECT name, ST_Area(geometry) AS area FROM watersheds;
 ``` 
 
 ## Projections:
@@ -259,7 +264,7 @@ UPDATE flowlines SET geometry = SetSRID(geometry, 3310);
 This query replaces the contents of the *geometry* column with the results of the SetSRID command.  In our case, it doesn't really do anything new since we had our projection set correctly, but you should know how to do this, so we did.
 
 ### Reproject
-To change the projection of a dataset, you need to use the *Transform* or *ST_Transform* command.
+To change the projection of a dataset, you need to use the `Transform` or `ST_Transform` command.
 
 Let's transform our watershed data into UTM Zone 10 North, the zone that San Francisco falls into.
 
@@ -321,7 +326,7 @@ First, let's make a query to make sure we're getting the information we want.
 SELECT flowlines.*, watersheds.name AS watershed_name
 FROM flowlines, watersheds
 WHERE ST_Contains(watersheds.geometry, flowlines.geometry)
-AND FTYPE = 460
+AND ftype = 460
 AND watersheds.name LIKE 'Tomales-Drake Bays';
 ```
 
@@ -332,7 +337,7 @@ CREATE VIEW rivers_tomales AS
 SELECT flowlines.*, watersheds.name AS watershed_name
 FROM flowlines, watersheds
 WHERE ST_Contains(watersheds.geometry, flowlines.geometry)
-AND FTYPE = 460
+AND ftype = 460
 AND watersheds.name LIKE 'Tomales-Drake Bays';
 ```
 
@@ -350,7 +355,9 @@ What does this query do?  I'll break it down.
 
 ```(view_name, view_geometry, view_rowid, f_table_name, f_geometry_column, read_only)``` is the list of columns we want to put information into in the *views_geometry_columns* table.  We'll be making a new row of data in this table, and these are the columns where that data is going to go.
 
-```VALUES ('rivers_tomales', 'geometry', lower('PK_UID'), 'flowlines', 'geometry', 0)``` *VALUES* says to the database, "here is the list of items to put in the columns I told you about in the last line", then we put the list of things in parentheses.  So 'rivers_tomales' (the new table name) will go into the 'view_name' field. 'geometry' is the geometry column for the view so it goes into the 'view_geometry' field of the table. 'flowlines' is the table that our 'rivers_tomales' view inherits its spatial data from and it has a geometry column called 'geometry' as well.  Finally, 'read_only' takes either a 0 to make the table read-only or 1 to make it writable.  Read-only is a good choice here since we won't be adding or changing the view's contents.
+```VALUES ('rivers_tomales', 'geometry', 'pk_uid', 'flowlines', 'geometry', 0)``` 
+
+*VALUES* says to the database, "here is the list of items to put in the columns I told you about in the last line", then we put the list of things in parentheses.  So 'rivers_tomales' (the new table name) will go into the 'view_name' field. 'geometry' is the geometry column for the view so it goes into the 'view_geometry' field of the table. 'flowlines' is the table that our 'rivers_tomales' view inherits its spatial data from and it has a geometry column called 'geometry' as well.  Finally, 'read_only' takes either a 0 to make the table read-only or 1 to make it writable.  Read-only is a good choice here since we won't be adding or changing the view's contents.
 
 Refresh your table list to see that rivers_tomales is now a spatial view. 
 
@@ -361,13 +368,15 @@ Refresh your table list to see that rivers_tomales is now a spatial view.
 
 Tables and views are usefull, but this is spatial data so it might be nice to look at the data in map form.  We can look at our spatial tables and views directly in QGIS.  Let's look at some of our tables and views:
 
-1. Open QGIS
+1. Open QGIS and start a new project
 1. In the Browser Panel (usually on the left by default... add it if it's missing: *View* menu -> *Panels* -> *Browser Panel*).  Scroll down to find the SpatiaLite icon.  If you've previously connected SpatiaLite tables, there will be a small triangle to expland the list.  If not, it's just the icon and text label.
 1. Right click on the Spatialite section in the Browser Panel and select *New connection*
 1. Navigate to and select your *sfbay.sqlite* database.  Click *Open*.
 1. In the Browser Panel, expand your *sfbay*.sqlite database to see the tables and views.  It will list the tables we created plus some default tables that come with the database that we don't need to worry about.
-1. Double click the tables or views to add them to the map canvas.  **Note:** Tables and (especially) views with a lot of records will take a while to load.  If a dialog asks about the CRS transformation you want to use, select the default option and click *OK*.  I advise adding one at a time and saving your QGIS project after each table addition just in case it crashes.
+1. Double click the tables or views to add them to the map canvas.  **Note:** Tables and (especially) views with a lot of records will take a while to load.  If a dialog asks about the CRS transformation you want to use, select an option that makes sense for your data, then click *OK*.  I advise adding one at a time and saving your QGIS project after each table addition just in case it crashes.
 1. Now you can access the symbology, labels, and other standard tools in the *Layer Properties* for each layer, just as you would any other spatial dataset in QGIS.
+
+**NOTE:** QGIS' DB Manager tool is an alternative to Spatialite that comes standard with QGIS and can connect to a number of spatial databases.
 
 
 ## More Spatial Analysis:
