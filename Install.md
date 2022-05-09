@@ -10,6 +10,8 @@
 
   
   *We've direct linked as it can be very hard to find the pre-made ready to use program.*
+  
+Another option is to install Spatialite GUI with the [MSYS2 Package Manager for Windows](https://packages.msys2.org/package/mingw-w64-x86_64-spatialite-gui?repo=mingw64).
 
 ## Mac
 
