@@ -314,7 +314,7 @@ Today we've gotten an introduction to Spatial Databases and Spatial SQL.  This i
 
 [SpatiaLite Function Reference List](http://www.gaia-gis.it/gaia-sins/spatialite-sql-4.2.0.html)
 
-[SpatiaLite Cookbook](https://www.gaia-gis.it/spatialite-3.0.0-BETA/spatialite-cookbook/index.html)
+[SpatiaLite Cookbook](https://www.gaia-gis.it/gaia-sins/spatialite-cookbook-5/index.html)
 
 ## General Slides & Tutorials:
 
