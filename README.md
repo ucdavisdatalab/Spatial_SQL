@@ -59,7 +59,7 @@ If you're a GIS user, you're probably used to a graphical user interface (GUI) w
 Frequently Asked Question: Can I use spatial databases with R or Python? Yes! Look for libraries that can read data from your database file or can query your database to create data tables to use in your code.
 
 ## Databases that support Spatial SQL:
-* DB Browser in QGIS
+* DB Manager in QGIS
 * Oracle
 * MySQL
 * SQL Server
@@ -67,7 +67,7 @@ Frequently Asked Question: Can I use spatial databases with R or Python? Yes! Lo
 * PostGRES with the PostGIS extension
 * Others too!
 
-We'll be working with the DB (database) Browswer in QGIS, because it works on all the common computer operating systems and is fairly easy to install. QGIS also allows us to seamlessly view our results on a map. Once you learn the basics, you can choose the database program that best fits your needs.
+We'll be working with the DB (database) Manager in QGIS, because it works on all the common computer operating systems and is fairly easy to install. QGIS also allows us to seamlessly view our results on a map. Once you learn the basics, you can choose the database program that best fits your needs.
 
 
 ---------------------------------------------
@@ -143,11 +143,11 @@ Congratulations!  You now have a database with files related to the San Francisc
 
 ## The SQL Window
 
-Now we're just about ready to do some analysis with our database.  Click on the *SQL Window* Icon (it looks like a wrench laying on a document). ![alt text](images/QGIS_SQLWindow.png) You may need to expand the window by dragging the lower right corner of the window out so you can see everything.
+Now we're just about ready to do some analysis with our database.  Click on the *SQL Window* Icon. ![alt text](images/QGIS_SQLWindow.png) You may need to expand the window by dragging the lower right corner of the window out so you can see everything.
 
-You will type your queries into the big blank box at the top of the window (next to the 1 line number).  A query is a request for information from the database.
+A query is a request for information from the database. You will type your queries into the big blank box at the top of the window (next to the 1 line number).  
 
-You'll run the query by clicking the *Execute* button or pressing F5 on your keyboard.
+You'll run the query by clicking the *Execute* button (or hover over the button and it will pop up a tool tip telling you what the keyboard keystrokes are on your system).
 
 The results of the query will appear in the box below.  Sometimes the results will be a table; sometimes it will be a message.
 
@@ -168,27 +168,27 @@ The result should look very much like the attribute table you explored earlier, 
 
 ### Add a WHERE clause: 
 
-``` SELECT * FROM flowlines WHERE FTYPE = 460; ``` 
+``` SELECT * FROM flowlines WHERE ftype = 460; ``` 
 
-This query limits our results to just the rows where the number in the *FTYPE* column is 460, which corresponds to the natural rivers and streams (not canals).  "Where" in this case does **NOT** indicate location, but rather a condition of the data.
+This query limits our results to just the rows where the number in the *ftype* column is 460, which corresponds to the natural rivers and streams (not canals).  "Where" in this case does **NOT** indicate location, but rather a condition of the data.
 
 ### Add a function: 
 
-``` SELECT COUNT(id) FROM flowlines WHERE FTYPE = 460; ``` 
+``` SELECT COUNT(id) FROM flowlines WHERE ftype = 460; ``` 
 
 Here we've added the function COUNT().  So we've asked the database tool to count all of the IDs but only if they have an FYTYPE of 460.
 
 ### Summarize Data
 
-What if we wanted to know how many lines there were of each *FTYPE*?
+What if we wanted to know how many lines there were of each *ftype*?
 
-``` SELECT FTYPE, COUNT(id) FROM flowlines GROUP BY FTYPE; ```
+``` SELECT ftype, COUNT(id) FROM flowlines GROUP BY ftype; ```
 
 Here, I've asked for a table with the *FTYPE* and the count of each *id*, and finally that it should summarize (group by) the *FTYPE*.
 
 If I don't like the column name that it automatically generates - ```COUNT(id)``` - I can give it an alias with the AS command:
 
-``` SELECT FTYPE, COUNT(id) AS NumberOfLines FROM flowlines GROUP BY FTYPE; ```
+``` SELECT ftype, COUNT(id) AS NumberOfLines FROM flowlines GROUP BY ftype; ```
 
 This is especially handy if you're making a table for people unfamiliar with your data or SQL or if you need the column name to be something specific.
 
@@ -206,9 +206,9 @@ Let's do an analysis that you might come across.  Let's get the lengths of each 
 
 What are the units of the length query?  The units are meters because the units for the projection (California Albers; SRID 3310) are meters.
 
-We just found the length of the individual *flowlines*.  That was not a very informative query.  It would be more useful to know what the total length of the lines are summed by their FCODE.  
+We just found the length of the individual *flowlines*.  That was not a very informative query.  It would be more useful to know what the total length of the lines are summed by their fcode.  
 
-```SELECT FCODE, ST_Length(geom) FROM flowlines GROUP BY FCODE;```
+```SELECT fcode, SUM(ST_Length(geom)) FROM flowlines GROUP BY fcode;```
 
 ### Area
 Let's look at an example to get the area of the *watershed* polygons: 
@@ -255,6 +255,8 @@ This query will return a single column and row.  Now we need to vacuum the datab
 Now we could add this to our map canvas to see the polygons.  Right click on the *watershedsUTM* table in the tree, and select *add to map canvas*.  Note that we just reprojected the data, so it won't look too much different.
 
 ## Spatial Join
+Let's go back to the DB Browswer window and look at some more complex queries. 
+
 Spatial joins allow us to combine information from one table with another based on the location associated with each record.  Let's see if we can figure out which watershed each of our flowlines is in:
 
 ```
@@ -271,6 +273,7 @@ ST_Contains tells us if a line is completely within a particular watersheds poly
 You don't have to save a query as a table to view it in QGIS.  Sometimes you just want to see the results, but don't need to keep a table that you might not need later.  Let's see the spatial join we just did in the QGIS map canvas:
 
 1. After you run the code to do the spatial join above, you will see a check box below the table that says *Load as new layer*.  Click in the box to check it off.  New options will appear.
+1. Check the box next to  *Column with unique values* and select *id* from the list.
 1. Check the box next to *Geometry column* and select *geom* from the list.
 1. Fill in the *Layer name (prefix)* with "Flowlines in Watersheds".
 1. Click the *Load* button.  It may take it a few minutes to load because the *flowlines* layer is large.
@@ -286,7 +289,7 @@ Now you have access to the *Layer Properties* and all the other tools you might 
 
 
 ## Spatial Analysis:
-Not surprisingly, you can use a spatial database to do more than just get lengths and areas of existing geometries, or change projections.
+Not surprisingly, you can use a spatial database to do more than just get lengths and areas of existing geometries, or change projections. Let's go back to the DB Manager.
 
 
 ### Distance
@@ -304,7 +307,7 @@ One interesting thing about SQL is that you can nest functions to do a series of
 
 ```SELECT sum(ST_Area(ST_Buffer(geom, 1000)))/1000000 FROM flowlines;```
 
-Here, we take the sum of the area of the buffer of 1000 meters, then divide the whole thing by 1,000,000 to convert square meters to square kilometers.  Wow.  That's pretty complicated.  But I didn't have to make a bunch of intermediate files and add columns to an attribute table, then save a CSV, then sum it all up in Excel.  Now which option sounds crazier?  Perhaps you're starting to see some of the power of spatial SQL.
+Here, we take the sum of the area of the buffer of 1000 meters, then divide the whole thing by 1,000,000 to convert square meters to square kilometers.  Wow.  That's pretty complicated.  But I didn't have to make a bunch of intermediate files and add columns to an attribute table, then save a CSV, then sum it all up in Excel.  Now which option sounds more complicated?  Perhaps you're starting to see some of the power of spatial SQL.
 
 
 
