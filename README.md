@@ -101,6 +101,8 @@ We'll be using the DB Manager plugin, so let's make sure that is installed:
     ii. Make sure you're in the "All" tab on the left side of the tool, and then in the search box, start typing "DB Manager" to narrow down the options.  
     iii. Select "DB Manager" from the list to view the details about this plugin.  
     iv. Click the *Install Plugin* button in the lower right corner to install it.  If this option isn't available, the tool is probably already installed and you just need to make sure the box next to the tool in the list is checked so that is available.  Now go back to Step 1 above to start the tool.
+	
+![alt text](images/QGIS_DBBrowser_StartUp.png)
 
 ## Make a Database
 You can think of a database as a folder in which you keep tables that are related to each other.  You don't want to put data in this database that isn't related to the other data (you could, but that's not the point of a database).
@@ -108,17 +110,17 @@ You can think of a database as a folder in which you keep tables that are relate
 We'll need to make a new database to keep our spatial tables in:
 
 1. Locate your Browser Panel. By default, it usually sits above or below the Layers Panel on the left side of the Map Canvas.  If you've closed it (like your instructor tends to do), you can get it back with *View* Menu --> *Panels* --> *Browser Panel*
-1. Right click on the SpatiaLite item (it has the feather icon) and select *Create Database*
-1. Navigate to where you would like to keep your database, perhaps in the folder where you downloaded the data for this workshop.  Name your database *sfbay* because we'll be working with San Francisco Bay data.  Yes, it should be all lowercase.
+1. Right click on the SpatiaLite item (it has the feather icon) ![alt text](images/QGIS_Spatialite_Icon.png) and select *Create Database*
+1. Navigate to where you would like to keep your database, perhaps in the folder where you downloaded the data for this workshop.  Name your database *sfbay.sqlite* because we'll be working with San Francisco Bay data.  Yes, it should be all lowercase.
 
-You may have noticed that there are many database format options available to you besides SpatiaLite.  We're working with a SpatiaLite file today, but you can match your future databases to the needs of your project.  Different database formats have different functions available and can be better for certain types of analysis.  For example, PostGIS is great for geocoding.
+You may have noticed that there are many database format options available to you besides SpatiaLite.  We're working with a SpatiaLite file today, but you can match your future databases to the needs of your project.  Different database formats have different functions available and can be better for certain types of analysis.  For example, PostGIS is great for geocoding and also for working with very large datasets, among other things.
 
 Let's connect to our database:
 
 1. Open or locate the DB Manager that we found earier.
 1. Right click on the *SpatiaLite* option and select *New Connection*.
 1. Navigate to where you saved your *sfbay.sqlite* file, slect the file, and click *Open*.
-1. Expand the list (click on the > symbol) in the *Tree Panel* on the left to see that your database is now available.
+1. Expand the list (click on the > symbol) in the *Providers Panel* on the left to see that your database is now available.
 1. If you expand the list next to the *sfbay.sqlite* database, you'll see if has some tables, but none of these contain data yet.  We'll add some data next.
 
 
@@ -126,11 +128,14 @@ Let's connect to our database:
 
 Let's add some data to our database:
 
-1. Click on *sfbay.sqlite* in the *Tree Panel* to select it in the list.
+1. Click on *sfbay.sqlite* in the *Providers Panel* to select it in the list.
 1. Click on the *Table* menu, and select *Import Layer/File* to open the Import Vector Layer dialog.
-1. For the *Input*, drop down menu. Select the *Flowlines.geojson* file and click *Open*.
-1. In the *Table* box, type *flowlines* for the name of our new table.
-1. In the *Options* section, check the *Source SRID* box and in the space, type 3310 because the projection for this data is California Albers (NAD38) which has the SRID of 3310.
+1. For the *Input*, click the button with the three dots (ellipsis mark) to browse your files. Select the *Flowlines.shp* file and click *Open*. If you're familiar with shapefiles, you might wonder, "Do I need to select all of the files that comprise a shapefile?" No, you just need to select the .shp and QGIS will know to look for the rest.
+1. In the *Table* box, type *flowlines* for the name of our new table - all lowercase
+1. In the *Options* section, check the *Source SRID* box. Use the "Select SRID" button to open the projection dialog. In the filter box at the top, type 3310 to narrow down the options. Select "NAD83 / California Albers EPSG:3310" for the Coordinate Reference System because the projection for this data is California Albers (NAD38) which has the SRID of 3310.
+1. NOTE: There are many other options here that you may find useful later. In particular, the Encoding option allows you to tell QGIS which character encoding you are using. Did your characters show up as rectangles or other unreadable characters? Reimport your data and specify your character encoding.
+
+You should see a pop-up that says "Import was successful." Click OK.
 
 You can repeat this process to add the other two datasets.  Call the *WBDHU8_Points_SF* table *centroids* and *WBDHU8_SF* table *watersheds*.
 
@@ -138,7 +143,7 @@ Congratulations!  You now have a database with files related to the San Francisc
 
 ## The SQL Window
 
-Now we're just about ready to do some analysis with our database.  Click on the *Open SQL Window* Icon (it looks like a wrench laying on a document).  You may need to expand the window by dragging the lower right corner of the window out so you can see everything.
+Now we're just about ready to do some analysis with our database.  Click on the *SQL Window* Icon (it looks like a wrench laying on a document). ![alt text](images/QGIS_SQLWindow.png) You may need to expand the window by dragging the lower right corner of the window out so you can see everything.
 
 You will type your queries into the big blank box at the top of the window (next to the 1 line number).  A query is a request for information from the database.
 
