@@ -63,18 +63,36 @@ repo:
 
 [bookdown]: https://bookdown.org/yihui/bookdown/html.html#html
 
-# Workshop: YOUR WORKSHOP TITLE
+# Workshop: Spatial SQL
 
 _[UC Davis DataLab](https://datalab.ucdavis.edu/)_  
-_QUARTER YEAR_  
-_Instructor: YOUR NAME <<YOUR_EMAIL@ucdavis.edu>>_  
-_Maintainer: MAINTAINER'S NAME <<MAINTAINER_EMAIL@ucdavis.edu>>_
+_Spring 2024_  
+_Instructor: Michele Tobias <<mmtobias@ucdavis.edu>>_  
+_Maintainer: Michele Tobias <<mmtobias@ucdavis.edu>>_
+_Authors: Michele Tobias <<mmtobias@ucdavis.edu>> & Naomi Kalman <<nbkalman@ucdavis.edu>>_
 
-* [Reader](https://ucdavisdatalab.github.io/YOUR_REPOSITORY/)
-* [Event Page](https://datalab.ucdavis.edu/eventscalendar/YOUR_EVENT/)
+* [Reader](https://github.com/ucdavisdatalab/Spatial_SQL)
+<!-- * [Event Page](https://datalab.ucdavis.edu/eventscalendar/YOUR_EVENT/) -->
 
 YOUR DESCRIPTION, LEARNING GOALS, PREREQUISITES, ETC
 
+## Workshop Description
+
+This workshop is intended to give participants an introduction to working with **spatial data** using SQL. We will work with a graphical user interface (GUI) and explore some examples of common analysis processes as well as present participants with resources for continued learning. This workshop will give participants a solid foundation on which to build further learning.
+
+### Learning Objectives
+
+By the end of this workshop, participants will be able to
+
+* Import data into an spatialite database
+* Write queries to answer questions about spatial data
+* Understand the difference between attribute queries and geometry queries
+* View spatial tables and views in QGIS
+* Use terminology related to spatial databases to facilitate future learning
+
+### Prerequisites
+
+An introductory understanding of SQL is recommended, but not mandatory. For example, knowing how to compose a SELECT statement using SQL and the general concept of joining tables will serve learners well. For learners without a foundation in SQL, we recommend attending or reviewing the materials for DataLab's [Introduction to Databases and Data Storage Technologies](https://ucdavisdatalab.github.io/workshop_intro_to_databases/), which introduces the concept of databases, and [Intro to SQL for Querying Databases](https://ucdavisdatalab.github.io/workshop_intro_to_sql/), which teaches the basics of querying data using SQL.
 
 ## Contributing
 
