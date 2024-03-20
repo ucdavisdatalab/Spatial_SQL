@@ -1,4 +1,4 @@
-# Spatial Analysis:
+# Spatial Analysis
 
 Not surprisingly, you can use a spatial database to do more than just get lengths and areas of existing geometries, or change projections. Let's go back to the DB Manager.
 

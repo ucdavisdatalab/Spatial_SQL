@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>12 Assessment | Spatial SQL</title>
-  <meta name="description" content="12 Assessment | Spatial SQL" />
+  <title>7 Spatial Queries | Spatial SQL</title>
+  <meta name="description" content="7 Spatial Queries | Spatial SQL" />
   <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="12 Assessment | Spatial SQL" />
+  <meta property="og:title" content="7 Spatial Queries | Spatial SQL" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="ucdavisdatalab/Spatial_SQL" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="12 Assessment | Spatial SQL" />
+  <meta name="twitter:title" content="7 Spatial Queries | Spatial SQL" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="additional-resources.html"/>
-
+<link rel="prev" href="review-non-spatial-queries.html"/>
+<link rel="next" href="viewing-a-query-to-qgis.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -164,17 +164,75 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="assessment" class="section level1 hasAnchor" number="12">
-<h1><span class="header-section-number">12</span> Assessment<a href="assessment.html#assessment" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="spatial-queries" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">7</span> Spatial Queries<a href="spatial-queries.html#spatial-queries" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="basic-spatial-query-examples" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Basic Spatial Query Examples:<a href="spatial-queries.html#basic-spatial-query-examples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="view-geometry" class="section level3 hasAnchor" number="7.1.1">
+<h3><span class="header-section-number">7.1.1</span> View Geometry<a href="spatial-queries.html#view-geometry" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s start understanding spatial queries by looking at the geometries column:</p>
+<p><code>SELECT ST_AsText(geom) FROM flowlines;</code></p>
+<p><em>ST_AsText()</em> lets us see the geometry string in human-readable form. This isn’t very useful most of the time, but perhaps it’s comforting to know it’s there. You can make columns in the results tables larger by placing your mouse cursor over the edge of the column and dragging it out once the expander handle appears (it looks like two arrows pointing different directions).</p>
+</div>
+<div id="length" class="section level3 hasAnchor" number="7.1.2">
+<h3><span class="header-section-number">7.1.2</span> Length<a href="spatial-queries.html#length" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s do an analysis that you might come across. Let’s get the lengths of each of the <em>flowlines</em>: <code>SELECT id, ST_Length(geom) FROM flowlines;</code></p>
+<p>What are the units of the length query? The units are meters because the units for the projection (California Albers; SRID 3310) are meters.</p>
+<p>We just found the length of the individual <em>flowlines</em>. That was not a very informative query. It would be more useful to know what the total length of the lines are summed by their fcode.</p>
+<p><code>SELECT fcode, SUM(ST_Length(geom)) FROM flowlines GROUP BY fcode;</code></p>
+</div>
+<div id="area" class="section level3 hasAnchor" number="7.1.3">
+<h3><span class="header-section-number">7.1.3</span> Area<a href="spatial-queries.html#area" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s look at an example to get the area of the <em>watershed</em> polygons:</p>
+<p><code>SELECT NAME, ST_AREA(geom) FROM watersheds;</code></p>
+<p>Remember that if you don’t like the column headings, you can alias them with <em>as</em>.</p>
+</div>
+</div>
+<div id="projections" class="section level2 hasAnchor" number="7.2">
+<h2><span class="header-section-number">7.2</span> Projections:<a href="spatial-queries.html#projections" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Because we are working with spatial data, we need to know how to handle projections.</p>
+<div id="set-the-projection" class="section level3 hasAnchor" number="7.2.1">
+<h3><span class="header-section-number">7.2.1</span> Set the Projection<a href="spatial-queries.html#set-the-projection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>When you import your data into the DB Manager, it asked you what the SRID (EPSG Code) was for your data. It’s easy to forget to do this or to put in the wrong one if you’re in a hurry. If you discover that you’ve made a mistake, you don’t need to re-import the table; you can set the SRID to the correct projection with an update command. For our data it would look like this:</p>
+<p><code>UPDATE flowlines SET geom = SetSRID(geom, 3310);</code></p>
+<p>This query replaces the contents of the <em>geom</em> column with the results of the SetSRID command. In our case, it doesn’t really do anything new since we had our projection set correctly, but you should know how to do this, so we did.</p>
+</div>
+<div id="reproject" class="section level3 hasAnchor" number="7.2.2">
+<h3><span class="header-section-number">7.2.2</span> Reproject<a href="spatial-queries.html#reproject" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To change the projection of a dataset, you need to use the <em>Transform</em> or <em>ST_Transform</em> command.</p>
+<p>Let’s transform our watershed data into UTM Zone 10 North, the zone that San Francisco falls into.</p>
+<p>First, we’ll start with a query that results in a returning information (but doesn’t make a new table):</p>
+<p><code>SELECT id, HUC8, NAME, geom FROM watersheds;</code></p>
+<p>We have a table with a subset of the columns from the original watersheds table. Now let’s work on transforming the <em>geom</em> column. We’ll add a function around the <em>geom</em> column to reproject the data. 26910 is the SRID for UTM Zone 10 N.</p>
+<p><code>SELECT id, HUC8, NAME, ST_Transform(geom, 26910) FROM watersheds;</code></p>
+<p>It may look like nothing happened, but the column heading on the <em>geom</em> column should have changed. Finally, we’ll want do something to keep this data. Remember that a SELECT statement just returns information, it doesn’t save it. We have two options. (1) We could overwrite the <em>geom</em> column of the <em>watersheds</em> table, but that will mean the projection won’t match the other data we have. (2) The other option is to make a new table with a different projection. We can do this by adding a CREATE TABLE statement to the query we already have:</p>
+<p><code>CREATE TABLE watershedsUTM AS SELECT id, HUC8, NAME, ST_Transform(geom, 26910) as geom FROM watersheds;</code></p>
+<p>To see the new table in the list, we’ll need to refresh our database. From the Database menu at the top of the DB Manager window, select <em>Refresh</em>. Now we can see the table, but it’s just a table. The database doesn’t seem to know the table is actually polygons.</p>
+<p><code>SELECT * FROM watershedsUTM;</code> Shows that all the columns we asked for, including the <em>geom</em> column are there. What’s going on? We need to recover the geometry column so the database will recognize the table as a spatial table.</p>
+<p><code>SELECT RecoverGeometryColumn('watershedsUTM', 'geom', 26910, 'MULTIPOLYGON', 'XY');</code></p>
+<p>This query will return a single column and row. Now we need to vacuum the database (yes, that sounds a little odd). From the <em>Database</em> menu, select <em>Run Vacuum</em>. Now the icon next to the <em>watershedsUTM</em> table should look like a set of polygons.</p>
+<p>Now we could add this to our map canvas to see the polygons. Right click on the <em>watershedsUTM</em> table in the tree, and select <em>add to map canvas</em>. Note that we just reprojected the data, so it won’t look too much different.</p>
+</div>
+</div>
+<div id="spatial-join" class="section level2 hasAnchor" number="7.3">
+<h2><span class="header-section-number">7.3</span> Spatial Join<a href="spatial-queries.html#spatial-join" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let’s go back to the DB Browswer window and look at some more complex queries.</p>
+<p>Spatial joins allow us to combine information from one table with another based on the location associated with each record. Let’s see if we can figure out which watershed each of our flowlines is in:</p>
+<pre><code>SELECT flowlines.*, watersheds.NAME as Watershed_Name
+FROM flowlines, watersheds
+WHERE ST_Contains(watersheds.geom, flowlines.geom);</code></pre>
+<p>Your table should look just like your <em>flowlines</em> table, but we’ve added the <em>NAME</em> column from our <em>watersheds</em> table (but called it “Watershed_Name” because this will make more sense if we needed to use the this data later and didn’t remember where this information came from).</p>
+<p>ST_Contains tells us if a line is completely within a particular watersheds polygon. How would you change this query to identify which watershed each line <em>intersects</em> rather than is <em>contained by</em>? Hint: <a href="http://www.gaia-gis.it/gaia-sins/spatialite-sql-4.2.0.html">SpatiaLite Function Reference List</a></p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="additional-resources.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="review-non-spatial-queries.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="viewing-a-query-to-qgis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -195,7 +253,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/99_assessment.Rmd",
+"link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/07_spatial_queries.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -203,7 +261,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/99_assessment.Rmd",
+"link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/07_spatial_queries.Rmd",
 "text": null
 },
 "download": ["_main.pdf"],

@@ -10,4 +10,4 @@ You'll need to download the following data from the data folder in this reposito
 
 If you downloaded a .zip file, be sure to unzip it.  
 
-![alt text](/images/DataPreview.png)
+![alt text](./images/DataPreview.png "a map showing the watershed polygon boundaries overlayed with the river lines and centroid points")

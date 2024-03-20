@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>12 Assessment | Spatial SQL</title>
-  <meta name="description" content="12 Assessment | Spatial SQL" />
+  <title>9 Spatial Analysis | Spatial SQL</title>
+  <meta name="description" content="9 Spatial Analysis | Spatial SQL" />
   <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="12 Assessment | Spatial SQL" />
+  <meta property="og:title" content="9 Spatial Analysis | Spatial SQL" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="ucdavisdatalab/Spatial_SQL" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="12 Assessment | Spatial SQL" />
+  <meta name="twitter:title" content="9 Spatial Analysis | Spatial SQL" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="additional-resources.html"/>
-
+<link rel="prev" href="viewing-a-query-to-qgis.html"/>
+<link rel="next" href="conclusion.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -164,17 +164,31 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="assessment" class="section level1 hasAnchor" number="12">
-<h1><span class="header-section-number">12</span> Assessment<a href="assessment.html#assessment" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="spatial-analysis" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Spatial Analysis<a href="spatial-analysis.html#spatial-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Not surprisingly, you can use a spatial database to do more than just get lengths and areas of existing geometries, or change projections. Let’s go back to the DB Manager.</p>
+<div id="distance" class="section level3 hasAnchor" number="9.0.1">
+<h3><span class="header-section-number">9.0.1</span> Distance<a href="spatial-analysis.html#distance" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Let’s find out which watershed is closest to the city of San Francisco. We could go about this a number of ways, but let’s find the distance from the city’s center point to the centroid of each watershed:</p>
+<p><code>SELECT ST_Distance(MakePoint(37.7749, -122.4194), centroids.geom) FROM centroids;</code></p>
+<p>Here we used <em>MakePoint()</em> to turn a set of latitude/longitude coordinates into a format that the database tool understands, then put the results into the <em>Distance()</em> function.</p>
+<p>How could you make this table more informative? Could you add or rename some columns?</p>
+</div>
+<div id="buffer-nesting-functions" class="section level3 hasAnchor" number="9.0.2">
+<h3><span class="header-section-number">9.0.2</span> Buffer &amp; Nesting Functions<a href="spatial-analysis.html#buffer-nesting-functions" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>One interesting thing about SQL is that you can nest functions to do a series of functions in one query like you just saw above, but it can get more complex. For example, maybe I want to find out the area (in square kilometers) within 1 kilometer of all the <em>flowlines</em>.</p>
+<p><code>SELECT sum(ST_Area(ST_Buffer(geom, 1000)))/1000000 FROM flowlines;</code></p>
+<p>Here, we take the sum of the area of the buffer of 1000 meters, then divide the whole thing by 1,000,000 to convert square meters to square kilometers. Wow. That’s pretty complicated. But I didn’t have to make a bunch of intermediate files and add columns to an attribute table, then save a CSV, then sum it all up in Excel. Now which option sounds more complicated? Perhaps you’re starting to see some of the power of spatial SQL.</p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="additional-resources.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="viewing-a-query-to-qgis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="conclusion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -195,7 +209,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/99_assessment.Rmd",
+"link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/09_spatial_analysis.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -203,7 +217,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/99_assessment.Rmd",
+"link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/09_spatial_analysis.Rmd",
 "text": null
 },
 "download": ["_main.pdf"],

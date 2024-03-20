@@ -1,6 +1,6 @@
 # SQL Window
 
-Now we're just about ready to do some analysis with our database.  Click on the *SQL Window* Icon. ![alt text](/images/QGIS_SQLWindow.png) You may need to expand the window by dragging the lower right corner of the window out so you can see everything.
+Now we're just about ready to do some analysis with our database.  Click on the *SQL Window* Icon. ![alt text](./images/QGIS_SQLWindow.png "SQL Window icon has a wrench on top of a page with writing") You may need to expand the window by dragging the lower right corner of the window out so you can see everything.
 
 A query is a request for information from the database. You will type your queries into the big blank box at the top of the window (next to the 1 line number).  
 

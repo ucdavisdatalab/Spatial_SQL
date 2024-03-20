@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>12 Assessment | Spatial SQL</title>
-  <meta name="description" content="12 Assessment | Spatial SQL" />
+  <title>8 Viewing a Query to QGIS | Spatial SQL</title>
+  <meta name="description" content="8 Viewing a Query to QGIS | Spatial SQL" />
   <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="12 Assessment | Spatial SQL" />
+  <meta property="og:title" content="8 Viewing a Query to QGIS | Spatial SQL" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="ucdavisdatalab/Spatial_SQL" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="12 Assessment | Spatial SQL" />
+  <meta name="twitter:title" content="8 Viewing a Query to QGIS | Spatial SQL" />
   
   
   
@@ -31,8 +31,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="additional-resources.html"/>
-
+<link rel="prev" href="spatial-queries.html"/>
+<link rel="next" href="spatial-analysis.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -164,8 +164,25 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="assessment" class="section level1 hasAnchor" number="12">
-<h1><span class="header-section-number">12</span> Assessment<a href="assessment.html#assessment" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="viewing-a-query-to-qgis" class="section level1 hasAnchor" number="8">
+<h1><span class="header-section-number">8</span> Viewing a Query to QGIS<a href="viewing-a-query-to-qgis.html#viewing-a-query-to-qgis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>You don’t have to save a query as a table to view it in QGIS. Sometimes you just want to see the results, but don’t need to keep a table that you might not need later. Let’s see the spatial join we just did in the QGIS map canvas:</p>
+<ol style="list-style-type: decimal">
+<li>After you run the code to do the spatial join above, you will see a check box below the table that says <em>Load as new layer</em>. Click in the box to check it off. New options will appear.</li>
+<li>Check the box next to <em>Column with unique values</em> and select <em>id</em> from the list.</li>
+<li>Check the box next to <em>Geometry column</em> and select <em>geom</em> from the list.</li>
+<li>Fill in the <em>Layer name (prefix)</em> with “Flowlines in Watersheds”.</li>
+<li>Click the <em>Load</em> button. It may take it a few minutes to load because the <em>flowlines</em> layer is large.</li>
+</ol>
+<p>Now you have access to the <em>Layer Properties</em> and all the other tools you might use with any other vector layer in QGIS. For fun, let’s style this layer:</p>
+<ol style="list-style-type: decimal">
+<li>Open up the <em>Layer Properties</em> (right click on the layer in the <em>Layers Panel</em> and select <em>Properties</em>).</li>
+<li>Click on the <em>Symbology</em> tab.</li>
+<li>Instead of <em>Single Symbol</em>, let’s pick <em>Categorized</em> from the top drop-down menu.</li>
+<li>For the <em>Column</em>, pick <em>Watershed_Name</em></li>
+<li>Click the <em>Classify</em> button near the bottom.</li>
+<li>Finally, click <em>OK</em> to close the dialog and apply our changes.</li>
+</ol>
 
 </div>
             </section>
@@ -173,8 +190,8 @@
           </div>
         </div>
       </div>
-<a href="additional-resources.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="spatial-queries.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="spatial-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -195,7 +212,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/99_assessment.Rmd",
+"link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/08_viewing_data.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -203,7 +220,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/99_assessment.Rmd",
+"link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/08_viewing_data.Rmd",
 "text": null
 },
 "download": ["_main.pdf"],
