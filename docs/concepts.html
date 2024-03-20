@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en-us" xml:lang="en-us">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Concepts | Spatial SQL</title>
+  <meta name="description" content="1 Concepts | Spatial SQL" />
+  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Concepts | Spatial SQL" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta name="github-repo" content="ucdavisdatalab/Spatial_SQL" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Concepts | Spatial SQL" />
+  
+  
+  
+
+<meta name="author" content="Michele Tobias" />
+<meta name="author" content="Naomi Kalman" />
+
+
+<meta name="date" content="2024-03-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="assessment.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="https://datalab.ucdavis.edu/">
+  <img src="https://datalab.ucdavis.edu/wp-content/uploads/2019/07/datalab-logo-full-color-rgb-1.png" style="height: 100%; width: 100%; object-fit: contain" />
+</a></li>
+<li><a href="./" style="font-size: 18px">Spatial SQL</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Overview</a>
+<ul>
+<li class="chapter" data-level="0.1" data-path="index.html"><a href="index.html#workshop-description"><i class="fa fa-check"></i><b>0.1</b> Workshop Description</a>
+<ul>
+<li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#learning-objectives"><i class="fa fa-check"></i><b>0.1.1</b> Learning Objectives</a></li>
+<li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>0.1.2</b> Prerequisites</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="concepts.html"><a href="concepts.html"><i class="fa fa-check"></i><b>1</b> Concepts</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="concepts.html"><a href="concepts.html#what-is-a-relational-database"><i class="fa fa-check"></i><b>1.1</b> What is a relational database?</a></li>
+<li class="chapter" data-level="1.2" data-path="concepts.html"><a href="concepts.html#what-is-a-spatial-database"><i class="fa fa-check"></i><b>1.2</b> What is a Spatial Database?</a></li>
+<li class="chapter" data-level="1.3" data-path="concepts.html"><a href="concepts.html#what-is-spatial-sql"><i class="fa fa-check"></i><b>1.3</b> What is Spatial SQL?</a></li>
+<li class="chapter" data-level="1.4" data-path="concepts.html"><a href="concepts.html#why-should-you-learn-to-work-with-spatial-databases-and-spatial-sql"><i class="fa fa-check"></i><b>1.4</b> Why should you learn to work with spatial databases and spatial SQL?</a></li>
+<li class="chapter" data-level="1.5" data-path="concepts.html"><a href="concepts.html#what-makes-this-challenging"><i class="fa fa-check"></i><b>1.5</b> What makes this challenging?</a></li>
+<li class="chapter" data-level="1.6" data-path="concepts.html"><a href="concepts.html#databases-that-support-spatial-sql"><i class="fa fa-check"></i><b>1.6</b> Databases that support Spatial SQL:</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="assessment.html"><a href="assessment.html"><i class="fa fa-check"></i><b>2</b> Assessment</a></li>
+<li class="divider"></li>
+<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">
+  <img alt="CC BY-SA 4.0" src="https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg" style="float: right; padding-right: 10px;" />
+</a>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Spatial SQL</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="concepts" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Concepts<a href="concepts.html#concepts" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="what-is-a-relational-database" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> What is a relational database?<a href="concepts.html#what-is-a-relational-database" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A relational database is a set of data in tables that are related to each other in some way. That’s it. <strong>A database is just a collection of related tables.</strong></p>
+<p>Generally each table can be connected to another table by a column that both tables have that stores the information to match up the rows. This column is called a <strong>key</strong>. For example, your student or employee ID number is a key commonly used on campus.</p>
+<p>If you’ve done GIS, you already use a database. A shapefile is essentially just a fancy a table. And if you’re ever joined a .csv table to a shapefile, you’ve performed a database process called a join. Using multiple spatial datasets in a GIS relates the data by location, if not by tabular data.</p>
+</div>
+<div id="what-is-a-spatial-database" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> What is a Spatial Database?<a href="concepts.html#what-is-a-spatial-database" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A spatial database is a normal database (i.e. a set of related tables) but at least one of the tables has a column that holds spatial information commonly called the “geometry”. The geometry information is stored as a Binary Large Object (BLOB). The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.</p>
+<p>Below is an example of a database entity relationship diagram for tables in an example (imaginary, yet plausible) spatial database. At least one column in each table relates to a column in another table (indicated in this diagram by a line drawn between the two columns). Documenting a database with a diagram like this is common practice. It provides a quick visual reference to the data contained in each table and how the tables relate to each other. The <code>city</code> table is a spatial table. The <code>geometry</code> column provides the spatial information that allows the city polygons to be mapped. The other tables are tabular data that can be joined to the spatial table using the key, in this case, the Federal Information Processing System (FIPS) Code, a system that assigns unique numeric codes to geographic entities such as cities, counties, and states. FIPS codes help us have a standardized key that prevents mismatches from variations in names (such as “Davis” vs. “City of Davis”).</p>
+<p><img src="/images/ERD_Example.png" alt="image" /></p>
+</div>
+<div id="what-is-spatial-sql" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> What is Spatial SQL?<a href="concepts.html#what-is-spatial-sql" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>SQL stands for “structured query language” and it’s a language that allows you to ask questions of a database. Spatial SQL is regular SQL but with some additional functions that perform spatial analysis. Spatial SQL functions typically work on the geometry column.</p>
+<p>If you’ve ever written an attribute query in ArcGIS or QGIS, you’ve worked with SQL. Example: Hey GIS program, please highlight all the records in my attribute table that have “Yolo” in the “county” column! In SQL, we would write <code>SELECT * FROM city WHERE county = 'Yolo';</code> It’s actually quicker to write that query than to fill out the interface in the GIS.</p>
+<p>A spatial join is an example of a spatial operation that you may have performed in a GIS that can also be performed using SQL. For example, if we had a dataset of business locations, we might query which businesses are inside of city boundaries. <code>SELECT * from businesses, cities WHERE ST_Intersects(businesses.geometry, city.geometry);</code> It’s much quicker to write the query than fill out the spatial join interface.</p>
+</div>
+<div id="why-should-you-learn-to-work-with-spatial-databases-and-spatial-sql" class="section level2 hasAnchor" number="1.4">
+<h2><span class="header-section-number">1.4</span> Why should you learn to work with spatial databases and spatial SQL?<a href="concepts.html#why-should-you-learn-to-work-with-spatial-databases-and-spatial-sql" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>It’s a good way to work with large amounts of data</li>
+<li>Typically faster to run a process in a spatial database than in a desktop GIS program</li>
+<li>Store lots of data (compare with shapefile’s 70m row limit)</li>
+<li>One database file stores many, many tables –&gt; easier data management</li>
+<li>Write a query instead of making a new file (no exporting of intermediate results to shapefile necessary!)</li>
+</ul>
+</div>
+<div id="what-makes-this-challenging" class="section level2 hasAnchor" number="1.5">
+<h2><span class="header-section-number">1.5</span> What makes this challenging?<a href="concepts.html#what-makes-this-challenging" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If you’re a GIS user, you’re probably used to a graphical user interface (GUI) where you can see your data, have tools with guided interfaces, and can see the results of your processing immediately. These aren’t things you get with a typical database manager tool, however, we can connect our database to QGIS so we can see our results and, with practice, you will get used to the typical workflow and seeing everything won’t be so necessary.</p>
+<p>Frequently Asked Question: Can I use spatial databases with R or Python? Yes! Look for libraries that can read data from your database file or can query your database to create data tables to use in your code.</p>
+</div>
+<div id="databases-that-support-spatial-sql" class="section level2 hasAnchor" number="1.6">
+<h2><span class="header-section-number">1.6</span> Databases that support Spatial SQL:<a href="concepts.html#databases-that-support-spatial-sql" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<ul>
+<li>DB Manager in QGIS</li>
+<li>Oracle</li>
+<li>MySQL</li>
+<li>SQL Server</li>
+<li>SpatiaLite</li>
+<li>PostGRES with the PostGIS extension</li>
+<li>Others too!</li>
+</ul>
+<p>We’ll be working with the DB (database) Manager in QGIS, because it works on all the common computer operating systems and is fairly easy to install. QGIS also allows us to seamlessly view our results on a map. Once you learn the basics, you can choose the database program that best fits your needs.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="assessment.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": false,
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/01_concepts.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/01_concepts.Rmd",
+"text": null
+},
+"download": ["_main.pdf"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
