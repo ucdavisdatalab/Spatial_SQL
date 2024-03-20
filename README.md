@@ -1,3 +1,4 @@
+<!--
 # Template: Workshop Reader
 
 This repository is a template for workshop readers for the UC Davis DataLab.
@@ -63,6 +64,8 @@ repo:
 
 [bookdown]: https://bookdown.org/yihui/bookdown/html.html#html
 
+-->
+
 # Workshop: Spatial SQL
 
 _[UC Davis DataLab](https://datalab.ucdavis.edu/)_  
@@ -71,7 +74,7 @@ _Instructor: Michele Tobias <<mmtobias@ucdavis.edu>>_
 _Maintainer: Michele Tobias <<mmtobias@ucdavis.edu>>_
 _Authors: Michele Tobias <<mmtobias@ucdavis.edu>> & Naomi Kalman <<nbkalman@ucdavis.edu>>_
 
-* [Reader](https://github.com/ucdavisdatalab/Spatial_SQL)
+* [Reader](https://ucdavisdatalab.github.io/Spatial_SQL/)
 <!-- * [Event Page](https://datalab.ucdavis.edu/eventscalendar/YOUR_EVENT/) -->
 
 YOUR DESCRIPTION, LEARNING GOALS, PREREQUISITES, ETC
