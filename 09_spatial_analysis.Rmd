@@ -1,0 +1,21 @@
+# Spatial Analysis:
+
+Not surprisingly, you can use a spatial database to do more than just get lengths and areas of existing geometries, or change projections. Let's go back to the DB Manager.
+
+
+### Distance
+Let's find out which watershed is closest to the city of San Francisco.  We could go about this a number of ways, but let's find the distance from the city's center point to the centroid of each watershed:
+
+```SELECT ST_Distance(MakePoint(37.7749, -122.4194), centroids.geom) FROM centroids;```
+
+Here we used *MakePoint()* to turn a set of latitude/longitude coordinates into a format that  the database tool understands, then put the results into the *Distance()* function.
+
+How could you make this table more informative?  Could you add or rename some columns?
+ 
+
+### Buffer & Nesting Functions
+One interesting thing about SQL is that you can nest functions to do a series of functions in one query like you just saw above, but it can get more complex.  For example, maybe I want to find out the area (in square kilometers) within 1 kilometer of all the *flowlines*.
+
+```SELECT sum(ST_Area(ST_Buffer(geom, 1000)))/1000000 FROM flowlines;```
+
+Here, we take the sum of the area of the buffer of 1000 meters, then divide the whole thing by 1,000,000 to convert square meters to square kilometers.  Wow.  That's pretty complicated.  But I didn't have to make a bunch of intermediate files and add columns to an attribute table, then save a CSV, then sum it all up in Excel.  Now which option sounds more complicated?  Perhaps you're starting to see some of the power of spatial SQL.

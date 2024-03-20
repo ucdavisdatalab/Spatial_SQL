@@ -1,0 +1,16 @@
+# Load Data
+
+Let's add some data to our database:
+
+1. Click on *sfbay.sqlite* in the *Providers Panel* to select it in the list.
+1. Click on the *Table* menu, and select *Import Layer/File* to open the Import Vector Layer dialog.
+1. For the *Input*, click the button with the three dots (ellipsis mark) to browse your files. Select the *Flowlines.shp* file and click *Open*. If you're familiar with shapefiles, you might wonder, "Do I need to select all of the files that comprise a shapefile?" No, you just need to select the .shp and QGIS will know to look for the rest.
+1. In the *Table* box, type *flowlines* for the name of our new table - all lowercase
+1. In the *Options* section, check the *Source SRID* box. Use the "Select SRID" button to open the projection dialog. In the filter box at the top, type 3310 to narrow down the options. Select "NAD83 / California Albers EPSG:3310" for the Coordinate Reference System because the projection for this data is California Albers (NAD38) which has the SRID of 3310.
+1. NOTE: There are many other options here that you may find useful later. In particular, the Encoding option allows you to tell QGIS which character encoding you are using. Did your characters show up as rectangles or other unreadable characters? Reimport your data and specify your character encoding.
+
+You should see a pop-up that says "Import was successful." Click OK.
+
+You can repeat this process to add the other two datasets.  Call the *WBDHU8_Points_SF* table *centroids* and *WBDHU8_SF* table *watersheds*.
+
+Congratulations!  You now have a database with files related to the San Francisco Bay's watersheds!

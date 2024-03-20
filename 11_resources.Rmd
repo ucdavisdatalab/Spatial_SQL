@@ -1,0 +1,25 @@
+# Additional Resources:
+
+## More about Databases with DataLab
+
+[Introduction to Databases and Data Storage Technologies](https://ucdavisdatalab.github.io/workshop_intro_to_databases/)
+
+[Intro to SQL for Querying Databases](https://ucdavisdatalab.github.io/workshop_intro_to_sql/)
+
+## General SQL Resources:
+
+[W3 Schools' SQL Reference](https://www.w3schools.com/sql/)
+
+## Spatial SQL Resources:
+
+[QGIS Training Manual on DB Manager](https://docs.qgis.org/3.34/en/docs/training_manual/databases/db_manager.html)
+
+[SpatiaLite Function Reference List](http://www.gaia-gis.it/gaia-sins/spatialite-sql-4.2.0.html)
+
+[SpatiaLite Cookbook](https://www.gaia-gis.it/gaia-sins/spatialite-cookbook-5/index.html)
+
+## General Slides & Tutorials:
+
+[Todd Barr's Slides](https://www.slideshare.net/gis_todd/foss4g-2017-spatial-sql-for-rookies)
+
+[Mike Miller's Spatialite Tutorial](http://millermountain.com/geospatialblog/2017/10/23/qgis-and-spatialite/)

@@ -1,0 +1,13 @@
+# Data
+
+The data we'll be working with is a set of hydrology-related data for the San Francisco Bay Watershed.
+
+You'll need to download the following data from the data folder in this repository or from [this Box folder](https://ucdavis.box.com/s/wb5ui86q8z7ppylvcqb8o8pqqawpsj43) (click the download button in the upper right corner to download all the data in one .zip file):
+
+* Watershed Boundaries (Polygons)
+* Watershed Centroids (Points)
+* Rivers (Lines)
+
+If you downloaded a .zip file, be sure to unzip it.  
+
+![alt text](/images/DataPreview.png)

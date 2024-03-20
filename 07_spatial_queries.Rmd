@@ -1,0 +1,78 @@
+# Spatial Queries
+
+## Basic Spatial Query Examples:
+
+### View Geometry
+Let's start understanding spatial queries by looking at the geometries column: 
+
+```SELECT ST_AsText(geom) FROM flowlines;``` 
+
+*ST_AsText()* lets us see the geometry string in human-readable form.  This isn't very useful most of the time, but perhaps it's comforting to know it's there.  You can make columns in the results tables larger by placing your mouse cursor over the edge of the column and dragging it out once the expander handle appears (it looks like two arrows pointing different directions).
+
+### Length
+Let's do an analysis that you might come across.  Let's get the lengths of each of the *flowlines*: ```SELECT id, ST_Length(geom) FROM flowlines;``` 
+
+What are the units of the length query?  The units are meters because the units for the projection (California Albers; SRID 3310) are meters.
+
+We just found the length of the individual *flowlines*.  That was not a very informative query.  It would be more useful to know what the total length of the lines are summed by their fcode.  
+
+```SELECT fcode, SUM(ST_Length(geom)) FROM flowlines GROUP BY fcode;```
+
+### Area
+Let's look at an example to get the area of the *watershed* polygons: 
+
+```SELECT NAME, ST_AREA(geom) FROM watersheds;``` 
+
+Remember that if you don't like the column headings, you can alias them with *as*.
+
+## Projections:
+Because we are working with spatial data, we need to know how to handle projections.
+
+### Set the Projection
+When you import your data into the DB Manager, it asked you what the SRID (EPSG Code) was for your data.  It's easy to forget to do this or to put in the wrong one if you're in a hurry.  If you discover that you've made a mistake, you don't need to re-import the table; you can set the SRID to the correct projection with an update command.  For our data it would look like this: 
+
+```UPDATE flowlines SET geom = SetSRID(geom, 3310);```
+
+This query replaces the contents of the *geom* column with the results of the SetSRID command.  In our case, it doesn't really do anything new since we had our projection set correctly, but you should know how to do this, so we did.
+
+### Reproject
+To change the projection of a dataset, you need to use the *Transform* or *ST_Transform* command.
+
+Let's transform our watershed data into UTM Zone 10 North, the zone that San Francisco falls into.
+
+First, we'll start with a query that results in a returning information (but doesn't make a new table):
+
+```SELECT id, HUC8, NAME, geom FROM watersheds;```
+
+We have a table with a subset of the columns from the original watersheds table.  Now let's work on transforming the *geom* column.  We'll add a function around the *geom* column to reproject the data.  26910 is the SRID for UTM Zone 10 N.
+
+```SELECT id, HUC8, NAME, ST_Transform(geom, 26910) FROM watersheds;```
+
+It may look like nothing happened, but the column heading on the *geom* column should have changed.  Finally, we'll want do something to keep this data.  Remember that a SELECT statement just returns information, it doesn't save it.  We have two options.  (1) We could overwrite the *geom* column of the *watersheds* table, but that will mean the projection won't match the other data we have.  (2) The other option is to make a new table with a different projection.  We can do this by adding a CREATE TABLE statement to the query we already have:
+
+```CREATE TABLE watershedsUTM AS SELECT id, HUC8, NAME, ST_Transform(geom, 26910) as geom FROM watersheds;```
+
+To see the new table in the list, we'll need to refresh our database.  From the Database menu at the top of the DB Manager window, select *Refresh*.  Now we can see the table, but it's just a table.  The database doesn't seem to know the table is actually polygons.
+
+```SELECT * FROM watershedsUTM;``` Shows that all the columns we asked for, including the *geom* column are there.  What's going on?  We need to recover the geometry column so the database will recognize the table as a spatial table.
+
+```SELECT RecoverGeometryColumn('watershedsUTM', 'geom', 26910, 'MULTIPOLYGON', 'XY');```
+
+This query will return a single column and row.  Now we need to vacuum the database (yes, that sounds a little odd).  From the *Database* menu, select *Run Vacuum*.  Now the icon next to the *watershedsUTM* table should look like a set of polygons.
+
+Now we could add this to our map canvas to see the polygons.  Right click on the *watershedsUTM* table in the tree, and select *add to map canvas*.  Note that we just reprojected the data, so it won't look too much different.
+
+## Spatial Join
+Let's go back to the DB Browswer window and look at some more complex queries. 
+
+Spatial joins allow us to combine information from one table with another based on the location associated with each record.  Let's see if we can figure out which watershed each of our flowlines is in:
+
+```
+SELECT flowlines.*, watersheds.NAME as Watershed_Name
+FROM flowlines, watersheds
+WHERE ST_Contains(watersheds.geom, flowlines.geom);
+```
+
+Your table should look just like your *flowlines* table, but we've added the *NAME* column from our *watersheds* table (but called it "Watershed_Name" because this will make more sense if we needed to use the this data later and didn't remember where this information came from). 
+
+ST_Contains tells us if a line is completely within a particular watersheds polygon.  How would you change this query to identify which watershed each line *intersects* rather than is *contained by*? Hint: [SpatiaLite Function Reference List](http://www.gaia-gis.it/gaia-sins/spatialite-sql-4.2.0.html) 
