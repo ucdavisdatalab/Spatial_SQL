@@ -110,7 +110,7 @@ You can think of a database as a folder in which you keep tables that are relate
 We'll need to make a new database to keep our spatial tables in:
 
 1. Locate your Browser Panel. By default, it usually sits above or below the Layers Panel on the left side of the Map Canvas.  If you've closed it (like your instructor tends to do), you can get it back with *View* Menu --> *Panels* --> *Browser Panel*
-1. Right click on the SpatiaLite item (it has the feather icon) ![alt text](images/QGIS_Spatialite_Icon.png) and select *Create Database*
+1. Right click on the SpatiaLite item (it has the feather icon) ![alt text](/images/QGIS_Spatialite_Icon.png) and select *Create Database*
 1. Navigate to where you would like to keep your database, perhaps in the folder where you downloaded the data for this workshop.  Name your database *sfbay.sqlite* because we'll be working with San Francisco Bay data.  Yes, it should be all lowercase.
 
 You may have noticed that there are many database format options available to you besides SpatiaLite.  We're working with a SpatiaLite file today, but you can match your future databases to the needs of your project.  Different database formats have different functions available and can be better for certain types of analysis.  For example, PostGIS is great for geocoding and also for working with very large datasets, among other things.
@@ -143,7 +143,7 @@ Congratulations!  You now have a database with files related to the San Francisc
 
 ## The SQL Window
 
-Now we're just about ready to do some analysis with our database.  Click on the *SQL Window* Icon. ![alt text](images/QGIS_SQLWindow.png) You may need to expand the window by dragging the lower right corner of the window out so you can see everything.
+Now we're just about ready to do some analysis with our database.  Click on the *SQL Window* Icon. ![alt text](/images/QGIS_SQLWindow.png) You may need to expand the window by dragging the lower right corner of the window out so you can see everything.
 
 A query is a request for information from the database. You will type your queries into the big blank box at the top of the window (next to the 1 line number).  
 
@@ -318,7 +318,19 @@ Today we've gotten an introduction to Spatial Databases and Spatial SQL.  This i
 
 # Additional Resources:
 
+## More about Databases with DataLab
+
+[Introduction to Databases and Data Storage Technologies](https://ucdavisdatalab.github.io/workshop_intro_to_databases/)
+
+[Intro to SQL for Querying Databases](https://ucdavisdatalab.github.io/workshop_intro_to_sql/)
+
+## General SQL Resources:
+
+[W3 Schools' SQL Reference](https://www.w3schools.com/sql/)
+
 ## Spatial SQL Resources:
+
+[QGIS Training Manual on DB Manager](https://docs.qgis.org/3.34/en/docs/training_manual/databases/db_manager.html)
 
 [SpatiaLite Function Reference List](http://www.gaia-gis.it/gaia-sins/spatialite-sql-4.2.0.html)
 
@@ -328,4 +340,4 @@ Today we've gotten an introduction to Spatial Databases and Spatial SQL.  This i
 
 [Todd Barr's Slides](https://www.slideshare.net/gis_todd/foss4g-2017-spatial-sql-for-rookies)
 
-[Mike Miller's Tutorial](http://millermountain.com/geospatialblog/2017/10/23/qgis-and-spatialite/)
+[Mike Miller's Spatialite Tutorial](http://millermountain.com/geospatialblog/2017/10/23/qgis-and-spatialite/)
