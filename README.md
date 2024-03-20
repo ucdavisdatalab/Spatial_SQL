@@ -20,7 +20,7 @@ An introductory understanding of SQL is recommended, but not mandatory. For exam
 
 ## Software
 
-**Install QGIS:** You should have installed QGIS version 3.34 from [QGIS.org](https://qgis.org/en/site/forusers/download.html). Recent older versions of QGIS will also suffice.  
+**Install QGIS:** You should have installed QGIS version 3.34 from [QGIS.org](https://qgis.org/). Recent older versions of QGIS will also suffice.  
 
 
 # Concepts
@@ -86,7 +86,7 @@ You'll need to download the following data from the data folder in this reposito
 
 If you downloaded a .zip file, be sure to unzip it.  
 
-![alt text](https://github.com/MicheleTobias/Spatial_SQL/blob/master/images/DataPreview.png)
+![alt text](/images/DataPreview.png)
 
 ## Start QGIS
 Open QGIS. Start a new project by either clicking on the white rectangle icon (with the corner turned down) or selecting "new" under the Project menu. You now should have a blank map canvas ready to go.
