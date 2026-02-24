@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>1 Concepts | Spatial SQL</title>
   <meta name="description" content="1 Concepts | Spatial SQL" />
-  <meta name="generator" content="bookdown 0.38 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
   <meta property="og:title" content="1 Concepts | Spatial SQL" />
   <meta property="og:type" content="book" />
@@ -24,7 +24,7 @@
 <meta name="author" content="Naomi Kalman" />
 
 
-<meta name="date" content="2024-03-20" />
+<meta name="date" content="2026-02-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -174,7 +174,7 @@
 </div>
 <div id="what-is-a-spatial-database" class="section level2 hasAnchor" number="1.2">
 <h2><span class="header-section-number">1.2</span> What is a Spatial Database?<a href="concepts.html#what-is-a-spatial-database" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A spatial database is a normal database (i.e. a set of related tables) but at least one of the tables has a column that holds spatial information commonly called the “geometry”. The geometry information is stored as a Binary Large Object (BLOB). The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.</p>
+<p>A spatial database is a normal database (i.e. a set of related tables) but at least one of the tables has a column that holds spatial information commonly called the <strong>geometry</strong>. The geometry information is stored as a Binary Large Object (BLOB). <strong>The geometry information allows us to relate the tables to each other based on their location and also to perform spatial analysis on our data.</strong></p>
 <p>Below is an example of a database entity relationship diagram (ERD) for tables in an example (imaginary, yet plausible) spatial database. At least one column in each table relates to a column in another table (indicated in this diagram by a line drawn between the two columns). Documenting a database with a diagram like this is common practice. It provides a quick visual reference to the data contained in each table and how the tables relate to each other. The <code>city</code> table is a spatial table. The <code>geometry</code> column provides the spatial information that allows the city polygons to be mapped. The other tables are tabular data that can be joined to the spatial table using the key, in this case, the Federal Information Processing System (FIPS) Code, a system that assigns unique numeric codes to geographic entities such as cities, counties, and states. FIPS codes help us have a standardized key that prevents mismatches from variations in names (such as “Davis” vs. “City of Davis”).</p>
 <p><img src="images/ERD_Example.png" alt="Example of an Entity Relationship Diagram (ERD) showing data tables with lines connecting to related data" width="100%" />
 <!--![image](/images/ERD_Example.png)--></p>
@@ -211,7 +211,7 @@
 <li>PostGRES with the PostGIS extension</li>
 <li>Others too!</li>
 </ul>
-<p>We’ll be working with the DB (database) Manager in QGIS, because it works on all the common computer operating systems and is fairly easy to install. QGIS also allows us to seamlessly view our results on a map. Once you learn the basics, you can choose the database program that best fits your needs.</p>
+<p>We’ll be working with the build-in SpatiaLite tools in QGIS, because it works on all the common computer operating systems and is fairly easy to install. QGIS also allows us to seamlessly view our results on a map. Once you learn the basics, you can choose the database program that best fits your needs.</p>
 
 </div>
 </div>
