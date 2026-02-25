@@ -39,4 +39,3 @@ more-about-databases-with-datalab
 general-sql-resources
 spatial-sql-resources
 general-slides-tutorials
-assessment
