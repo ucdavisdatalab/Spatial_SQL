@@ -1,6 +1,6 @@
 ---
 title: Spatial SQL
-author: [Michele Tobias, Naomi Kalman]
+author: [Michele Tobias, Naomi Kalman, Alex Mandel]
 date: "`r Sys.Date()`"
 
 github-repo: ucdavisdatalab/Spatial_SQL
