@@ -11,7 +11,7 @@ databases-that-support-spatial-sql
 data
 creating-a-database
 start-qgis
-starting-the-db-manager-plugin
+browser-panel
 make-a-database
 load-data
 sql-window
