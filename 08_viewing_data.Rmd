@@ -28,4 +28,4 @@ Now you have access to the *Layer Properties* and all the other tools you might 
 1. For the *Column*, pick *FTYPE*
 1. Click the *Classify* button under the big white box.
 
-![alt text](./images/QGIS_sf_rivers_ftype.png "The flowlines in the San Francisco Bay watershed categorized by FTYPE.)
+![alt text](./images/QGIS_sf_rivers_ftype.png "The flowlines in the San Francisco Bay watershed categorized by FTYPE.")
