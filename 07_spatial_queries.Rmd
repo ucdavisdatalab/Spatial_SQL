@@ -10,7 +10,9 @@ Let's start understanding spatial queries by looking at the geometries column:
 *ST_AsText()* lets us see the geometry string in human-readable form.  This isn't very useful most of the time, but perhaps it's comforting to know it's there.  You can make columns in the results tables larger by placing your mouse cursor over the edge of the column and dragging it out once the expander handle appears (it looks like two arrows pointing different directions).
 
 ### Length
-Let's do an analysis that you might come across.  Let's get the lengths of each of the *flowlines*: ```SELECT id, ST_Length(geom) FROM flowlines;``` 
+Let's do an analysis that you might come across.  Let's get the lengths of each of the *flowlines*: 
+
+```SELECT id, ST_Length(geom) FROM flowlines;``` 
 
 What are the units of the length query?  The units are meters because the units for the projection (California Albers; SRID 3310) are meters.
 
@@ -52,13 +54,13 @@ It may look like nothing happened, but the column heading on the *geom* column s
 
 ```CREATE TABLE watershedsUTM AS SELECT id, HUC8, NAME, ST_Transform(geom, 26910) as geom FROM watersheds;```
 
-To see the new table in the list, we'll need to refresh our database.  From the Database menu at the top of the DB Manager window, select *Refresh*.  Now we can see the table, but it's just a table.  The database doesn't seem to know the table is actually polygons.
+To see the new table in the list, we'll need to refresh our *Browser* panel.  At the top of the *Browser* panel, click the *Refresh* button (it looks like two blue arrows chasing each other).  Now we can see the table, but it's just a table. Notice that the icon looks like a table, not a polygon.  The database doesn't seem to know the table is actually polygons.
 
 ```SELECT * FROM watershedsUTM;``` Shows that all the columns we asked for, including the *geom* column are there.  What's going on?  We need to recover the geometry column so the database will recognize the table as a spatial table.
 
 ```SELECT RecoverGeometryColumn('watershedsUTM', 'geom', 26910, 'MULTIPOLYGON', 'XY');```
 
-This query will return a single column and row.  Now we need to vacuum the database (yes, that sounds a little odd).  From the *Database* menu, select *Run Vacuum*.  Now the icon next to the *watershedsUTM* table should look like a set of polygons.
+This query will return a single column and row. Refresh your *Browser* again and the icon should change to a polygon.  Now we need to vacuum the database (yes, that sounds a little odd).  Right click on the database name in the *Browser*, select *Compact Database (VACUUM)*.  
 
 Now we could add this to our map canvas to see the polygons.  Right click on the *watershedsUTM* table in the tree, and select *add to map canvas*.  Note that we just reprojected the data, so it won't look too much different.
 
