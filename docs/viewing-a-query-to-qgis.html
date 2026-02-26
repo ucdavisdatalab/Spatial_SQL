@@ -75,7 +75,7 @@
 
 <ul class="summary">
 <li><a href="https://datalab.ucdavis.edu/">
-  <img src="https://datalab.ucdavis.edu/wp-content/uploads/2019/07/datalab-logo-full-color-rgb-1.png" style="height: 100%; width: 100%; object-fit: contain" />
+  <img src="https://datalab.ucdavis.edu/wp-content/uploads/2023/12/datalab-logo-lockup-reverse2.png" style="height: 100%; width: 100%; object-fit: contain" />
 </a></li>
 <li><a href="./" style="font-size: 18px">Spatial SQL</a></li>
 
@@ -175,7 +175,7 @@
 <p>Let’s build on the spatial join we just did to just keep the lines in the San Francisco Bay watershed and then add it to the QGIS map canvas. First, we write and execuite the query:</p>
 <pre><code>SELECT flowlines.*, watersheds.NAME as Watershed_Name
 FROM flowlines, watersheds
-WHERE ST_Contains(watersheds.geom, flowlines.geom) AND Watershed_Name LIKE &quot;San Francisco Bay&quot;;;</code></pre>
+WHERE ST_Contains(watersheds.geom, flowlines.geom) AND Watershed_Name LIKE &quot;San Francisco Bay&quot;;</code></pre>
 <p>Now we can load it into the map canvas:</p>
 <ol style="list-style-type: decimal">
 <li>At the bottom of the <em>Execute SQL</em> window, expand the <em>Load as new layer</em> menu by clicking on the black triangle.</li>
