@@ -62,11 +62,7 @@ To see the new table in the list, we'll need to refresh our *Browser* panel.  At
 
 This query will return a single column and row. Refresh your *Browser* again and the icon should change to a polygon.  Now we need to vacuum the database (yes, that sounds a little odd).  Right click on the database name in the *Browser*, select *Compact Database (VACUUM)*.
 
-
-
-***** UPDATE IN PROGRESS - NEW EDITS END HERE *****  
-
-Now we could add this to our map canvas to see the polygons.  Right click on the *watershedsUTM* table in the tree, and select *add to map canvas*.  Note that we just reprojected the data, so it won't look too much different.
+Now we could add this to our map canvas to see the polygons.  Double click on the *watershedsUTM* table in the *Browser* and it should appear on the map canvas. If the transformation window pops up, read through the options and pick the best one. Note that we just reprojected the data, so it won't look too much different.
 
 ## Spatial Join
 Let's go back to the DB Browswer window and look at some more complex queries. 
