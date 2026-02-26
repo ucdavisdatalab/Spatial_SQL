@@ -13,7 +13,10 @@ creating-a-database
 start-qgis
 browser-panel
 make-a-database
+connect-to-an-existing-database
 load-data
+import-existing-data
+remove-data-from-the-canvas
 sql-window
 review-non-spatial-queries
 lets-look-at-the-whole-table

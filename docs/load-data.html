@@ -22,6 +22,7 @@
 
 <meta name="author" content="Michele Tobias" />
 <meta name="author" content="Naomi Kalman" />
+<meta name="author" content="Alex Mandel" />
 
 
 <meta name="date" content="2026-02-25" />
@@ -102,8 +103,13 @@
 <li class="chapter" data-level="3.1" data-path="creating-a-database.html"><a href="creating-a-database.html#start-qgis"><i class="fa fa-check"></i><b>3.1</b> Start QGIS</a></li>
 <li class="chapter" data-level="3.2" data-path="creating-a-database.html"><a href="creating-a-database.html#browser-panel"><i class="fa fa-check"></i><b>3.2</b> Browser Panel</a></li>
 <li class="chapter" data-level="3.3" data-path="creating-a-database.html"><a href="creating-a-database.html#make-a-database"><i class="fa fa-check"></i><b>3.3</b> Make a Database</a></li>
+<li class="chapter" data-level="3.4" data-path="creating-a-database.html"><a href="creating-a-database.html#connect-to-an-existing-database"><i class="fa fa-check"></i><b>3.4</b> Connect to an Existing Database</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="load-data.html"><a href="load-data.html"><i class="fa fa-check"></i><b>4</b> Load Data</a></li>
+<li class="chapter" data-level="4" data-path="load-data.html"><a href="load-data.html"><i class="fa fa-check"></i><b>4</b> Load Data</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="load-data.html"><a href="load-data.html#import-existing-data"><i class="fa fa-check"></i><b>4.1</b> Import Existing Data</a></li>
+<li class="chapter" data-level="4.2" data-path="load-data.html"><a href="load-data.html#remove-data-from-the-canvas"><i class="fa fa-check"></i><b>4.2</b> Remove Data From the Canvas</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="sql-window.html"><a href="sql-window.html"><i class="fa fa-check"></i><b>5</b> SQL Window</a></li>
 <li class="chapter" data-level="6" data-path="review-non-spatial-queries.html"><a href="review-non-spatial-queries.html"><i class="fa fa-check"></i><b>6</b> Review Non-spatial Queries</a>
 <ul>
@@ -165,19 +171,31 @@
             <section class="normal" id="section-">
 <div id="load-data" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">4</span> Load Data<a href="load-data.html#load-data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Let’s add some data to our database:</p>
+<p>Adding data to a SpatiaLite database in QGIS is admittedly a little clunky. The good news is that we only need to load each table in once and then it’s done.</p>
+<p>The overview of the process is that we’ll add data to the QGIS interface, then we’ll be able to add the data we loaded to the database, then we’ll remove the data from QGIS, leaving the data in the databse. Yes, this is annoying. Now let’s try it.</p>
+<div id="import-existing-data" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Import Existing Data<a href="load-data.html#import-existing-data" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Here’s how we add data to our database:</p>
 <ol style="list-style-type: decimal">
-<li>Click on <em>sfbay.sqlite</em> in the <em>Providers Panel</em> to select it in the list.</li>
-<li>Click on the <em>Table</em> menu, and select <em>Import Layer/File</em> to open the Import Vector Layer dialog.</li>
-<li>For the <em>Input</em>, click the button with the three dots (ellipsis mark) to browse your files. Select the <em>Flowlines.shp</em> file and click <em>Open</em>. If you’re familiar with shapefiles, you might wonder, “Do I need to select all of the files that comprise a shapefile?” No, you just need to select the .shp and QGIS will know to look for the rest.</li>
-<li>In the <em>Table</em> box, type <em>flowlines</em> for the name of our new table - all lowercase</li>
-<li>In the <em>Options</em> section, check the <em>Source SRID</em> box. Use the “Select SRID” button to open the projection dialog. In the filter box at the top, type 3310 to narrow down the options. Select “NAD83 / California Albers EPSG:3310” for the Coordinate Reference System because the projection for this data is California Albers (NAD38) which has the SRID of 3310.</li>
-<li>NOTE: There are many other options here that you may find useful later. In particular, the Encoding option allows you to tell QGIS which character encoding you are using. Did your characters show up as rectangles or other unreadable characters? Reimport your data and specify your character encoding.</li>
+<li>Add the workshop data to your QGIS canvas. You can drag and drop the .shp files from your computer’s file explorer into the QGIS canvas, or you can use the <em>Data Source Manager</em> (from the tool bar or the <em>Layer</em> menu. All the data we are working with is vector data. With either option, the <em>Select Transformation</em> dialog is likely to pop up. Select the transformation that fits your data the best.</li>
+<li>In the <em>Browser</em> panel, right click on your <em>sfbay.sqlilte</em> database and select <em>Import Vector Layer…</em> The <em>Import Vector Layers</em> dialog will open.</li>
+<li>for the <em>Source Layer</em>, select the <em>Flowlines</em> data.</li>
+<li>For the <em>Table name</em>, call the table <em>flowlines</em> (all lowercase - nameing tables with all lowercase is convention for databases).</li>
+<li>The <em>Primary key</em> is <em>GNIS_ID</em> - the Geographic Names Information System ID given to each stream or river in the table.</li>
+<li><em>Geometry column</em> is <em>geom</em></li>
+<li><em>Output CRS</em> is <em>EPSG:3310 - NAD83 / California Albers</em> - here we specify the project the data came with, not the projection you want it to have.</li>
+<li>Check over the table preview and confirm that the <em>Type</em> is correct for each of the attribute columns. (Be careful using your scroll wheel in this part of the interface because the dropdowns will scroll if you get close to them, changing the data type.)</li>
+<li>Click <em>OK</em> to add your table to the database.</li>
+<li>You should now see <em>flowlines</em> added to your <em>Browser</em> panel in your <em>sfbay.sqlite</em> database.</li>
 </ol>
-<p>You should see a pop-up that says “Import was successful.” Click OK.</p>
-<p>You can repeat this process to add the other two datasets. Call the <em>WBDHU8_Points_SF</em> table <em>centroids</em> and <em>WBDHU8_SF</em> table <em>watersheds</em>.</p>
+<p>You can repeat this process to add the other two datasets. Call the <em>WBDHU8_Points_SF</em> table <em>centroids</em> and <em>WBDHU8_SF</em> table <em>watersheds</em>. For both of these files, use the <em>TNMID</em> column as the <em>Primary key</em>.</p>
 <p>Congratulations! You now have a database with files related to the San Francisco Bay’s watersheds!</p>
+</div>
+<div id="remove-data-from-the-canvas" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Remove Data From the Canvas<a href="load-data.html#remove-data-from-the-canvas" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Now that our data is in the database, we can remove the files from the map canvas. In the <em>Layers</em> panel, select all of the layers by either clicking and draging your mouse across all the files, or selecting the top one, holding down shift, and then clicking the bottom one. Right click on the selected layers. Select <em>Remove layer</em>. Confirm that you want to remove these layers by clicking <em>OK</em>. This does not delete your data from your computer. It only removes it from the project.</p>
 
+</div>
 </div>
             </section>
 
