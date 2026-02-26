@@ -10,6 +10,8 @@ You'll run the query by clicking the *Execute* button at the bottom of the windo
 
 The results of the query will appear in in a box below.  Sometimes the results will be a table; sometimes it will be a message.
 
+![alt text](./images/QGIS_Execute_SQL_query.png "The Execute SQL window with query results.")
+
 A query has a structure.  The most common one you'll see today is a "select statement".  These start with the SELECT command, followed by the information you want to know, then the name of the table you want the information from, and finally (and optionally) other parameters that limit the results or provide some important caveats.  Queries end with a semicolon.
 
 In the next section, we'll try some queries!
