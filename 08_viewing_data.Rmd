@@ -7,7 +7,7 @@ Let's build on the spatial join we just did to just keep the lines in the San Fr
 ```
 SELECT flowlines.*, watersheds.NAME as Watershed_Name
 FROM flowlines, watersheds
-WHERE ST_Contains(watersheds.geom, flowlines.geom) AND Watershed_Name LIKE "San Francisco Bay";;
+WHERE ST_Contains(watersheds.geom, flowlines.geom) AND Watershed_Name LIKE "San Francisco Bay";
 ```
 
 Now we can load it into the map canvas:
