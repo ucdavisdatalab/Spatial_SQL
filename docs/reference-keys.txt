@@ -17,7 +17,7 @@ connect-to-an-existing-database
 load-data
 import-existing-data
 remove-data-from-the-canvas
-sql-window
+execute-sql-tool
 review-non-spatial-queries
 lets-look-at-the-whole-table
 add-a-where-clause

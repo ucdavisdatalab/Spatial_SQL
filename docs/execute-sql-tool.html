@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>2 Data | Spatial SQL</title>
-  <meta name="description" content="2 Data | Spatial SQL" />
+  <title>5 Execute SQL Tool | Spatial SQL</title>
+  <meta name="description" content="5 Execute SQL Tool | Spatial SQL" />
   <meta name="generator" content="bookdown 0.43 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="2 Data | Spatial SQL" />
+  <meta property="og:title" content="5 Execute SQL Tool | Spatial SQL" />
   <meta property="og:type" content="book" />
   
   
   <meta name="github-repo" content="ucdavisdatalab/Spatial_SQL" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="2 Data | Spatial SQL" />
+  <meta name="twitter:title" content="5 Execute SQL Tool | Spatial SQL" />
   
   
   
@@ -32,8 +32,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="concepts.html"/>
-<link rel="next" href="creating-a-database.html"/>
+<link rel="prev" href="load-data.html"/>
+<link rel="next" href="review-non-spatial-queries.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -169,17 +169,15 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data" class="section level1 hasAnchor" number="2">
-<h1><span class="header-section-number">2</span> Data<a href="data.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>The data we’ll be working with is a set of hydrology-related data for the San Francisco Bay Watershed.</p>
-<p>You’ll need to download the following data from the data folder in this repository or from <a href="https://ucdavis.box.com/s/wb5ui86q8z7ppylvcqb8o8pqqawpsj43">this Box folder</a> (click the download button in the upper right corner to download all the data in one .zip file):</p>
-<ul>
-<li>Watershed Boundaries (Polygons)</li>
-<li>Watershed Centroids (Points)</li>
-<li>Rivers (Lines)</li>
-</ul>
-<p>If you downloaded a .zip file, be sure to unzip it.</p>
-<p><img src="images/DataPreview.png" title="a map showing the watershed polygon boundaries overlayed with the river lines and centroid points" alt="alt text" /></p>
+<div id="execute-sql-tool" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">5</span> Execute SQL Tool<a href="execute-sql-tool.html#execute-sql-tool" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Now we’re just about ready to do some analysis with our database. Right click on <em>sfbay.sqlite</em> in the <em>Browser</em> panel and choose <em>Execute SQL</em>. The <em>Execute SQL</em> window should pop up. You may need to expand the window by dragging the lower right corner.</p>
+<p><img src="images/QGIS_Execute_SQL_blank.png" title="The Execute SQL window on start up." alt="alt text" /></p>
+<p>This interface is pretty sparse. A query is a request for information from the database. You will type your queries into the big blank box in the middle of the window.</p>
+<p>You’ll run the query by clicking the <em>Execute</em> button at the bottom of the window.</p>
+<p>The results of the query will appear in in a box below. Sometimes the results will be a table; sometimes it will be a message.</p>
+<p>A query has a structure. The most common one you’ll see today is a “select statement”. These start with the SELECT command, followed by the information you want to know, then the name of the table you want the information from, and finally (and optionally) other parameters that limit the results or provide some important caveats. Queries end with a semicolon.</p>
+<p>In the next section, we’ll try some queries!</p>
 
 </div>
             </section>
@@ -187,8 +185,8 @@
           </div>
         </div>
       </div>
-<a href="concepts.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="creating-a-database.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="load-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="review-non-spatial-queries.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -209,7 +207,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/02_data.Rmd",
+"link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/05_sql_window.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -217,7 +215,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/02_data.Rmd",
+"link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/05_sql_window.Rmd",
 "text": null
 },
 "download": ["_main.pdf"],
