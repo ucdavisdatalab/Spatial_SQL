@@ -181,14 +181,14 @@
 <li>In the <em>Browser</em> panel, right click on your <em>sfbay.sqlilte</em> database and select <em>Import Vector Layer…</em> The <em>Import Vector Layers</em> dialog will open.</li>
 <li>for the <em>Source Layer</em>, select the <em>Flowlines</em> data.</li>
 <li>For the <em>Table name</em>, call the table <em>flowlines</em> (all lowercase - nameing tables with all lowercase is convention for databases).</li>
-<li>The <em>Primary key</em> is <em>GNIS_ID</em> - the Geographic Names Information System ID given to each stream or river in the table.</li>
+<li>Change the <em>Primary key</em> to <em>id</em>. This will make a unique identifier for each row.</li>
 <li><em>Geometry column</em> is <em>geom</em></li>
 <li><em>Output CRS</em> is <em>EPSG:3310 - NAD83 / California Albers</em> - here we specify the project the data came with, not the projection you want it to have.</li>
 <li>Check over the table preview and confirm that the <em>Type</em> is correct for each of the attribute columns. (Be careful using your scroll wheel in this part of the interface because the dropdowns will scroll if you get close to them, changing the data type.)</li>
 <li>Click <em>OK</em> to add your table to the database.</li>
 <li>You should now see <em>flowlines</em> added to your <em>Browser</em> panel in your <em>sfbay.sqlite</em> database.</li>
 </ol>
-<p>You can repeat this process to add the other two datasets. Call the <em>WBDHU8_Points_SF</em> table <em>centroids</em> and <em>WBDHU8_SF</em> table <em>watersheds</em>. For both of these files, use the <em>TNMID</em> column as the <em>Primary key</em>.</p>
+<p>You can repeat this process to add the other two datasets. Call the <em>WBDHU8_Points_SF</em> table <em>centroids</em> and <em>WBDHU8_SF</em> table <em>watersheds</em>, but the rest of the parameters should be the same as those we used for the <em>flowlines</em> table.</p>
 <p>Congratulations! You now have a database with files related to the San Francisco Bay’s watersheds!</p>
 </div>
 <div id="remove-data-from-the-canvas" class="section level2 hasAnchor" number="4.2">

@@ -181,7 +181,8 @@
 </div>
 <div id="length" class="section level3 hasAnchor" number="7.1.2">
 <h3><span class="header-section-number">7.1.2</span> Length<a href="spatial-queries.html#length" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Let’s do an analysis that you might come across. Let’s get the lengths of each of the <em>flowlines</em>: <code>SELECT id, ST_Length(geom) FROM flowlines;</code></p>
+<p>Let’s do an analysis that you might come across. Let’s get the lengths of each of the <em>flowlines</em>:</p>
+<p><code>SELECT id, ST_Length(geom) FROM flowlines;</code></p>
 <p>What are the units of the length query? The units are meters because the units for the projection (California Albers; SRID 3310) are meters.</p>
 <p>We just found the length of the individual <em>flowlines</em>. That was not a very informative query. It would be more useful to know what the total length of the lines are summed by their fcode.</p>
 <p><code>SELECT fcode, SUM(ST_Length(geom)) FROM flowlines GROUP BY fcode;</code></p>
@@ -212,10 +213,11 @@
 <p><code>SELECT id, HUC8, NAME, ST_Transform(geom, 26910) FROM watersheds;</code></p>
 <p>It may look like nothing happened, but the column heading on the <em>geom</em> column should have changed. Finally, we’ll want do something to keep this data. Remember that a SELECT statement just returns information, it doesn’t save it. We have two options. (1) We could overwrite the <em>geom</em> column of the <em>watersheds</em> table, but that will mean the projection won’t match the other data we have. (2) The other option is to make a new table with a different projection. We can do this by adding a CREATE TABLE statement to the query we already have:</p>
 <p><code>CREATE TABLE watershedsUTM AS SELECT id, HUC8, NAME, ST_Transform(geom, 26910) as geom FROM watersheds;</code></p>
-<p>To see the new table in the list, we’ll need to refresh our database. From the Database menu at the top of the DB Manager window, select <em>Refresh</em>. Now we can see the table, but it’s just a table. The database doesn’t seem to know the table is actually polygons.</p>
+<p>To see the new table in the list, we’ll need to refresh our <em>Browser</em> panel. At the top of the <em>Browser</em> panel, click the <em>Refresh</em> button (it looks like two blue arrows chasing each other). Now we can see the table, but it’s just a table. Notice that the icon looks like a table, not a polygon. The database doesn’t seem to know the table is actually polygons.</p>
 <p><code>SELECT * FROM watershedsUTM;</code> Shows that all the columns we asked for, including the <em>geom</em> column are there. What’s going on? We need to recover the geometry column so the database will recognize the table as a spatial table.</p>
 <p><code>SELECT RecoverGeometryColumn('watershedsUTM', 'geom', 26910, 'MULTIPOLYGON', 'XY');</code></p>
-<p>This query will return a single column and row. Now we need to vacuum the database (yes, that sounds a little odd). From the <em>Database</em> menu, select <em>Run Vacuum</em>. Now the icon next to the <em>watershedsUTM</em> table should look like a set of polygons.</p>
+<p>This query will return a single column and row. Refresh your <em>Browser</em> again and the icon should change to a polygon. Now we need to vacuum the database (yes, that sounds a little odd). Right click on the database name in the <em>Browser</em>, select <em>Compact Database (VACUUM)</em>.</p>
+<p>***** UPDATE IN PROGRESS - NEW EDITS END HERE *****</p>
 <p>Now we could add this to our map canvas to see the polygons. Right click on the <em>watershedsUTM</em> table in the tree, and select <em>add to map canvas</em>. Note that we just reprojected the data, so it won’t look too much different.</p>
 </div>
 </div>
