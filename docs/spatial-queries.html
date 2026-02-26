@@ -25,7 +25,7 @@
 <meta name="author" content="Alex Mandel" />
 
 
-<meta name="date" content="2026-02-25" />
+<meta name="date" content="2026-02-26" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -217,8 +217,7 @@
 <p><code>SELECT * FROM watershedsUTM;</code> Shows that all the columns we asked for, including the <em>geom</em> column are there. What’s going on? We need to recover the geometry column so the database will recognize the table as a spatial table.</p>
 <p><code>SELECT RecoverGeometryColumn('watershedsUTM', 'geom', 26910, 'MULTIPOLYGON', 'XY');</code></p>
 <p>This query will return a single column and row. Refresh your <em>Browser</em> again and the icon should change to a polygon. Now we need to vacuum the database (yes, that sounds a little odd). Right click on the database name in the <em>Browser</em>, select <em>Compact Database (VACUUM)</em>.</p>
-<p>***** UPDATE IN PROGRESS - NEW EDITS END HERE *****</p>
-<p>Now we could add this to our map canvas to see the polygons. Right click on the <em>watershedsUTM</em> table in the tree, and select <em>add to map canvas</em>. Note that we just reprojected the data, so it won’t look too much different.</p>
+<p>Now we could add this to our map canvas to see the polygons. Double click on the <em>watershedsUTM</em> table in the <em>Browser</em> and it should appear on the map canvas. If the transformation window pops up, read through the options and pick the best one. Note that we just reprojected the data, so it won’t look too much different.</p>
 </div>
 </div>
 <div id="spatial-join" class="section level2 hasAnchor" number="7.3">
