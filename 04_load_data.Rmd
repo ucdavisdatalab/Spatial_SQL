@@ -11,14 +11,14 @@ Here's how we add data to our database:
 1. In the *Browser* panel, right click on your *sfbay.sqlilte* database and select *Import Vector Layer...*  The *Import Vector Layers* dialog will open.
 1. for the *Source Layer*, select the *Flowlines* data. 
 1. For the *Table name*, call the table *flowlines* (all lowercase - nameing tables with all lowercase is convention for databases).
-1. The *Primary key* is *GNIS_ID* - the Geographic Names Information System ID given to each stream or river in the table.
+1. Change the *Primary key* to *id*. This will make a unique identifier for each row.
 1. *Geometry column* is *geom*
 1. *Output CRS* is *EPSG:3310 - NAD83 / California Albers* - here we specify the project the data came with, not the projection you want it to have.
 1. Check over the table preview and confirm that the *Type* is correct for each of the attribute columns. (Be careful using your scroll wheel in this part of the interface because the dropdowns will scroll if you get close to them, changing the data type.)
 1. Click *OK* to add your table to the database.
 1. You should now see *flowlines* added to your *Browser* panel in your *sfbay.sqlite* database.
 
-You can repeat this process to add the other two datasets.  Call the *WBDHU8_Points_SF* table *centroids* and *WBDHU8_SF* table *watersheds*. For both of these files, use the *TNMID* column as the *Primary key*.
+You can repeat this process to add the other two datasets.  Call the *WBDHU8_Points_SF* table *centroids* and *WBDHU8_SF* table *watersheds*, but the rest of the parameters should be the same as those we used for the *flowlines* table.
 
 Congratulations!  You now have a database with files related to the San Francisco Bay's watersheds!
 
