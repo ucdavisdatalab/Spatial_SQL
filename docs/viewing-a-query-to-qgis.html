@@ -171,23 +171,29 @@
             <section class="normal" id="section-">
 <div id="viewing-a-query-to-qgis" class="section level1 hasAnchor" number="8">
 <h1><span class="header-section-number">8</span> Viewing a Query to QGIS<a href="viewing-a-query-to-qgis.html#viewing-a-query-to-qgis" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>You don’t have to save a query as a table to view it in QGIS. Sometimes you just want to see the results, but don’t need to keep a table that you might not need later. Let’s see the spatial join we just did in the QGIS map canvas:</p>
+<p>You don’t have to save a query as a table to view it in QGIS. Sometimes you just want to see the results, but don’t need to keep a table that you might not need later.</p>
+<p>Let’s build on the spatial join we just did to just keep the lines in the San Francisco Bay watershed and then add it to the QGIS map canvas. First, we write and execuite the query:</p>
+<pre><code>SELECT flowlines.*, watersheds.NAME as Watershed_Name
+FROM flowlines, watersheds
+WHERE ST_Contains(watersheds.geom, flowlines.geom) AND Watershed_Name LIKE &quot;San Francisco Bay&quot;;;</code></pre>
+<p>Now we can load it into the map canvas:</p>
 <ol style="list-style-type: decimal">
-<li>After you run the code to do the spatial join above, you will see a check box below the table that says <em>Load as new layer</em>. Click in the box to check it off. New options will appear.</li>
-<li>Check the box next to <em>Column with unique values</em> and select <em>id</em> from the list.</li>
-<li>Check the box next to <em>Geometry column</em> and select <em>geom</em> from the list.</li>
-<li>Fill in the <em>Layer name (prefix)</em> with “Flowlines in Watersheds”.</li>
-<li>Click the <em>Load</em> button. It may take it a few minutes to load because the <em>flowlines</em> layer is large.</li>
+<li>At the bottom of the <em>Execute SQL</em> window, expand the <em>Load as new layer</em> menu by clicking on the black triangle.</li>
+<li>Check the box next to <em>Geometry column</em> and make sure the drop down is set to the correct column, <em>geom</em>.</li>
+<li>Leave the subset filter blank (we can write SQL now so we don’t need to use this).</li>
+<li>For the <em>Layer name</em>, call it <em>sf_rivers</em>. This will be the name of the layer in the <em>Layers</em> panel once we load it.</li>
+<li>Click the <em>Load Layer</em> button.</li>
+<li>You should now have just the flowlines in the San Francisco Bay watershed.</li>
 </ol>
+<p><img src="images/QGIS_Execute_SQL_load_layer_dialog.png" title="The Execute SQL window with a query and parameters to load the layer into the map canvas." alt="alt text" /></p>
 <p>Now you have access to the <em>Layer Properties</em> and all the other tools you might use with any other vector layer in QGIS. For fun, let’s style this layer:</p>
 <ol style="list-style-type: decimal">
-<li>Open up the <em>Layer Properties</em> (right click on the layer in the <em>Layers Panel</em> and select <em>Properties</em>).</li>
-<li>Click on the <em>Symbology</em> tab.</li>
+<li>Open up the <em>Layer Properties</em> (<em>View</em> menu &gt; <em>Panels</em> &gt; check <em>Layer Styling</em>).</li>
 <li>Instead of <em>Single Symbol</em>, let’s pick <em>Categorized</em> from the top drop-down menu.</li>
-<li>For the <em>Column</em>, pick <em>Watershed_Name</em></li>
-<li>Click the <em>Classify</em> button near the bottom.</li>
-<li>Finally, click <em>OK</em> to close the dialog and apply our changes.</li>
+<li>For the <em>Column</em>, pick <em>FTYPE</em></li>
+<li>Click the <em>Classify</em> button under the big white box.</li>
 </ol>
+<p>![alt text](./images/QGIS_sf_rivers_ftype.png “The flowlines in the San Francisco Bay watershed categorized by FTYPE.)</p>
 
 </div>
             </section>
