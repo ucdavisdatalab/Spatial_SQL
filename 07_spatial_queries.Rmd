@@ -31,7 +31,7 @@ Remember that if you don't like the column headings, you can alias them with *as
 Because we are working with spatial data, we need to know how to handle projections.
 
 ### Set the Projection
-When you import your data into the DB Manager, it asked you what the SRID (EPSG Code) was for your data.  It's easy to forget to do this or to put in the wrong one if you're in a hurry.  If you discover that you've made a mistake, you don't need to re-import the table; you can set the SRID to the correct projection with an update command.  For our data it would look like this: 
+When you import your data into the database, it asked you what the SRID (EPSG Code) was for your data.  It's easy to forget to do this or to put in the wrong one if you're in a hurry.  If you discover that you've made a mistake, you don't need to re-import the table; you can set the SRID to the correct projection with an update command.  For our data it would look like this: 
 
 ```UPDATE flowlines SET geom = SetSRID(geom, 3310);```
 
@@ -65,7 +65,7 @@ This query will return a single column and row. Refresh your *Browser* again and
 Now we could add this to our map canvas to see the polygons.  Double click on the *watershedsUTM* table in the *Browser* and it should appear on the map canvas. If the transformation window pops up, read through the options and pick the best one. Note that we just reprojected the data, so it won't look too much different.
 
 ## Spatial Join
-Let's go back to the DB Browswer window and look at some more complex queries. 
+Let's go back to the query window and look at some more complex queries. 
 
 Spatial joins allow us to combine information from one table with another based on the location associated with each record.  Let's see if we can figure out which watershed each of our flowlines is in:
 

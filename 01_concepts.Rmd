@@ -37,7 +37,7 @@ If you're a GIS user, you're probably used to a graphical user interface (GUI) w
 Frequently Asked Question: Can I use spatial databases with R or Python? Yes! Look for libraries that can read data from your database file or can query your database to create data tables to use in your code.
 
 ## Databases that support Spatial SQL:
-* DB Manager in QGIS
+* QGIS
 * Oracle
 * MySQL
 * SQL Server
