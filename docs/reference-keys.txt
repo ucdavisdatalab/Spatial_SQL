@@ -1,6 +1,7 @@
 workshop-description
 learning-objectives
 prerequisites
+software
 concepts
 what-is-a-relational-database
 what-is-a-spatial-database

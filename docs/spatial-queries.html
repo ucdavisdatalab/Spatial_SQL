@@ -25,7 +25,7 @@
 <meta name="author" content="Alex Mandel" />
 
 
-<meta name="date" content="2026-02-26" />
+<meta name="date" content="2026-04-24" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -86,6 +86,7 @@
 <ul>
 <li class="chapter" data-level="0.1.1" data-path="index.html"><a href="index.html#learning-objectives"><i class="fa fa-check"></i><b>0.1.1</b> Learning Objectives</a></li>
 <li class="chapter" data-level="0.1.2" data-path="index.html"><a href="index.html#prerequisites"><i class="fa fa-check"></i><b>0.1.2</b> Prerequisites</a></li>
+<li class="chapter" data-level="0.1.3" data-path="index.html"><a href="index.html#software"><i class="fa fa-check"></i><b>0.1.3</b> Software</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="1" data-path="concepts.html"><a href="concepts.html"><i class="fa fa-check"></i><b>1</b> Concepts</a>
@@ -199,7 +200,7 @@
 <p>Because we are working with spatial data, we need to know how to handle projections.</p>
 <div id="set-the-projection" class="section level3 hasAnchor" number="7.2.1">
 <h3><span class="header-section-number">7.2.1</span> Set the Projection<a href="spatial-queries.html#set-the-projection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>When you import your data into the DB Manager, it asked you what the SRID (EPSG Code) was for your data. It’s easy to forget to do this or to put in the wrong one if you’re in a hurry. If you discover that you’ve made a mistake, you don’t need to re-import the table; you can set the SRID to the correct projection with an update command. For our data it would look like this:</p>
+<p>When you import your data into the database, it asked you what the SRID (EPSG Code) was for your data. It’s easy to forget to do this or to put in the wrong one if you’re in a hurry. If you discover that you’ve made a mistake, you don’t need to re-import the table; you can set the SRID to the correct projection with an update command. For our data it would look like this:</p>
 <p><code>UPDATE flowlines SET geom = SetSRID(geom, 3310);</code></p>
 <p>This query replaces the contents of the <em>geom</em> column with the results of the SetSRID command. In our case, it doesn’t really do anything new since we had our projection set correctly, but you should know how to do this, so we did.</p>
 </div>
@@ -216,13 +217,13 @@
 <p>To see the new table in the list, we’ll need to refresh our <em>Browser</em> panel. At the top of the <em>Browser</em> panel, click the <em>Refresh</em> button (it looks like two blue arrows chasing each other). Now we can see the table, but it’s just a table. Notice that the icon looks like a table, not a polygon. The database doesn’t seem to know the table is actually polygons.</p>
 <p><code>SELECT * FROM watershedsUTM;</code> Shows that all the columns we asked for, including the <em>geom</em> column are there. What’s going on? We need to recover the geometry column so the database will recognize the table as a spatial table.</p>
 <p><code>SELECT RecoverGeometryColumn('watershedsUTM', 'geom', 26910, 'MULTIPOLYGON', 'XY');</code></p>
-<p>This query will return a single column and row. Refresh your <em>Browser</em> again and the icon should change to a polygon. Now we need to vacuum the database (yes, that sounds a little odd). Right click on the database name in the <em>Browser</em>, select <em>Compact Database (VACUUM)</em>.</p>
+<p>This query will return a single column and row. Refresh your <em>Browser</em> again and the icon should change to a polygon. Now we need to vacuum the database (yes, that sounds a little odd) to clean out any obsolete data that was leftover after we made these big changes. Right click on the database name in the <em>Browser</em>, select <em>Compact Database (VACUUM)</em>.</p>
 <p>Now we could add this to our map canvas to see the polygons. Double click on the <em>watershedsUTM</em> table in the <em>Browser</em> and it should appear on the map canvas. If the transformation window pops up, read through the options and pick the best one. Note that we just reprojected the data, so it won’t look too much different.</p>
 </div>
 </div>
 <div id="spatial-join" class="section level2 hasAnchor" number="7.3">
 <h2><span class="header-section-number">7.3</span> Spatial Join<a href="spatial-queries.html#spatial-join" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Let’s go back to the DB Browswer window and look at some more complex queries.</p>
+<p>Let’s go back to the query window and look at some more complex queries.</p>
 <p>Spatial joins allow us to combine information from one table with another based on the location associated with each record. Let’s see if we can figure out which watershed each of our flowlines is in:</p>
 <pre><code>SELECT flowlines.*, watersheds.NAME as Watershed_Name
 FROM flowlines, watersheds
@@ -252,32 +253,32 @@ WHERE ST_Contains(watersheds.geom, flowlines.geom);</code></pre>
 <script>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
-"sharing": false,
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/07_spatial_queries.Rmd",
-"text": "Edit"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/07_spatial_queries.Rmd",
-"text": null
-},
-"download": ["_main.pdf"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "section"
-}
+  "sharing": false,
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/ucdavisdatalab/Spatial_SQL/edit/master/07_spatial_queries.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": "https://github.com/ucdavisdatalab/Spatial_SQL/blob/master/07_spatial_queries.Rmd",
+    "text": null
+  },
+  "download": ["_main.pdf"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "section"
+  }
 });
 });
 </script>
