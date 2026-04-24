@@ -32,3 +32,7 @@ By the end of this workshop, participants will be able to
 
 An introductory understanding of SQL is recommended, but not mandatory. For example, knowing how to compose a SELECT statement using SQL and the general concept of joining tables will serve learners well. For learners without a foundation in SQL, we recommend attending or reviewing the materials for DataLab's [Introduction to Databases and Data Storage Technologies](https://ucdavisdatalab.github.io/workshop_intro_to_databases/), which introduces the concept of databases, and [Intro to SQL for Querying Databases](https://ucdavisdatalab.github.io/workshop_intro_to_sql/), which teaches the basics of querying data using SQL. These are, however, not mandatory and attendees can attend without previous knowledge of databases or spatial data.
 
+### Software
+
+Download and install QGIS from the [QGIS Website](https://qgis.org/). QGIS is a free and open source geographic information system (GIS) that is available for all major computing operating systems.  This workshop was proofed with version 3.44.7 "Solothurn". The workflows described here do not work with older versions.
+
